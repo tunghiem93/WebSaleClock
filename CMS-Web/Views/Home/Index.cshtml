@@ -1,0 +1,1051 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model CMS_DTO.CMSProduct.ProductViewModels
+@using CMS_Shared;
+@{
+    var _ListSlider = Session["SliderSession"] as List<CMS_DTO.CMSSession.SliderSession>;
+}
+          
+<main class="main-content">
+    <section id="slideshow" class="clearfix">
+        <div class="slider-container ">
+            <div id="sliderlayer" class="apollo_slides clearfix">
+                <a href="/collections/all" class="slide-link">
+                    <img class="img-responsive" alt="wooden clock" src="//cdn.shopify.com/s/files/1/1359/9953/t/2/assets/slideshow_image_1.jpg?6710597985434054077"
+                            title="#htmlcaption1" />
+                </a>
+                <img class="img-responsive" alt="Wood cup of tea" src="//cdn.shopify.com/s/files/1/1359/9953/t/2/assets/slideshow_image_2.jpg?6710597985434054077"
+                        title="#htmlcaption2" />
+            </div>
+            <div id="htmlcaption1" class="apollo-html-caption">
+                <div class="caption-fullwidth container">
+                    <div class="slide-caption caption_1">
+                        <div class="">
+                            <div class="text_first" style="color:#000000">MORE LUXURY & TRENDING</div>
+                            <h3 style="color:#000000">wooden clock</h3>
+                            <p style="color:#666666">
+                                Claritas processus dynamicus sequitur mutationem consuetudium lectorum. Mirum est notare quam littera
+                                gothica, quam putamus parum claram anteposuerit decima
+                            </p>
+                            <a class="btn btn-slide" href="#" title="Shop Now">Shop Now</a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="htmlcaption2" class="apollo-html-caption">
+                <div class="caption-fullwidth container">
+                    <div class="slide-caption caption_2">
+                        <div class="">
+                            <div class="text_first" style="color:#000000">MORE LUXURY & TRENDING</div>
+                            <h3 style="color:#000000">Wood cup of tea</h3>
+                            <p style="color:#666666">
+                                Claritas processus dynamicus sequitur mutationem consuetudium lectorum. Mirum est notare quam littera
+                                gothica, quam putamus parum claram anteposuerit decima
+                            </p>
+                            <a class="btn btn-slide" href="#" title="Shop now">Shop now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+$(document).ready(function () {
+    $('#sliderlayer').nivoSlider({
+    effect: 'random',
+    animSpeed: 500,
+    pauseTime: 80000
+    });
+    $('#sliderlayer').on('swipeleft', function (e) {
+    $('a.nivo-nextNav').trigger('click');
+    e.stopPropagation();
+    return false;
+    });
+    $('#sliderlayer').on('swiperight', function (e) {
+    $('a.nivo-prevNav').trigger('click');
+    e.stopPropagation();
+    return false;
+    });
+});
+        </script>
+    </section>
+
+    <section id="columns" class="columns-container">
+        <div class="container">
+            <div class="row">
+                <aside>
+                    <div id="left_column" class="left_column sidebar col-xs-12 col-sm-4 col-md-3">
+                        <div id="categories_block" class="block sidebarCategories ">
+                            <h4 class="title_block">Thể loại</h4>
+                            <div class="block_content" style="">
+                                <ul class="listSidebar list-unstyled">
+                                    @if (Model.ListCate != null && Model.ListCate.Any())
+                                    {
+                                        foreach (var item in Model.ListCate)
+                                        {
+                                            <li>
+                                                <a href="/collections/best-seller" title="@item.CategoryName">
+                                                    @string.Format("{0}", item.CategoryName.Length > 30 ? item.CategoryName.Substring(0, 30) + "..." : item.CategoryName)
+                                                    <span id="" class="apolloQty pull-right">@item.NumberOfProduct</span>
+                                                </a>
+                                            </li>
+                                        }
+                                    }                                    
+                                </ul>
+                            </div>
+                        </div>
+                        <div id="shopbyvendor" class="block block_shopby ">
+                            <div class="title_block">
+                                Thương hiệu
+                            </div>
+                            <div class="block_content" style="">
+                                <ul id="ul_catalog_vendor" class="listSidebar list-unstyled">
+                                    @if (Model.ListBrand != null && Model.ListBrand.Any())
+                                    {
+                                        foreach (var item in Model.ListBrand)
+                                        {
+                                            <li data-group="BRANDS">
+                                                <a href="/collections/best-seller" title="@item.BrandName">
+                                                    @string.Format("{0}", item.BrandName.Length > 30 ? item.BrandName.Substring(0, 30) + "..." : item.BrandName)
+                                                    <span id="" class="apolloQty pull-right">@item.NumberOfProduct</span>
+                                                </a>
+                                            </li>
+                                        }
+                                    }                                    
+                                </ul>
+                            </div>
+                        </div>
+                        <div id="products_sider_block" class="block products_block nopadding ">
+                            <h4 class="title_block">
+                                <a href="/collections/best-seller" title="Best Sellers">Sản phẩm mới nhất</a>
+                            </h4>
+                            <div class="block_content products-block" style="">
+                                <ul class="products products-block list-unstyled">
+                                    @if (Model.ListProductTopSales != null && Model.ListProductTopSales.Any())
+                                    {
+                                        foreach (var item in Model.ListProductTopSales)
+                                        {
+                                            <li class="media clearfix">
+                                                <div class="product-block">
+                                                    <div class="product-container media">
+                                                        <a class="products-block-image img pull-left" href="#" title="@item.ProductName">
+                                                            <img class="replace-2x img-responsive" src="@item.ImageURL" alt="@item.ProductName">
+                                                        </a>
+                                                        <div class="media-body">
+                                                            <div class="product-content">
+                                                                <h5 class="name media-heading">
+                                                                    <a class="product-name" href="/products/anton-denim-coupe" title="Clock Wooden">@string.Format("{0}", item.ProductName.Length > 20 ? item.ProductName.Substring(0, 20) + "..." : item.ProductName)</a>
+                                                                </h5>
+                                                                <div class="content_price price">
+                                                                    <span class="price product-price">
+                                                                        <span class="money">@item.ProductPrice VNĐ</span>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+                <div id="center_column" class="center_column col-xs-12 col-sm-8 col-md-9">
+                    <div class="content_scene_cat"> </div>
+                    <h1 class="page-heading product-listing cat-name">Sản phẩm chúng tôi</h1>
+                    <div class="category-heading clearfix">
+                        <div class="sortPagiBar clearfix row">
+                            <div class="col-md-6 col-sm-6 col-xs-4">
+                                <div class="collection-view">
+                                    <button type="button" title="Grid view" class="change-view change-view--active" data-view="grid">
+                                        <span class="icon-fallback-text">
+                                            <span class="fa fa-th-large" aria-hidden="true"></span>
+                                            <span class="fallback-text">Danh sách</span>
+                                        </span>
+                                    </button>
+                                    <button type="button" title="List view" class="change-view" data-view="list">
+                                        <span class="icon-fallback-text">
+                                            <span class="fa fa-list-ul" aria-hidden="true"></span>
+                                            <span class="fallback-text">Sản phẩm</span>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-8">
+                                <div class="form-horizontal">
+                                    <label for="SortBy">Sắp xếp</label>
+                                    @Html.DropDownListFor(model => model.RangeType,
+                                    new SelectList(ViewBag.Range, "Value", "Text", Model.RangeType), null,
+                                    new
+                                    {
+                                        @class = "form-control select2_multiple",
+                                        @id = "RangeDdl",
+                                        @style = "width:100%;"
+                                    })                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="product_list" class="product_list grid">
+                        @if (Model.ListProduct != null && Model.ListProduct.Any())
+                        {
+                            int _index = 0;
+                            foreach (var item in Model.ListProduct)
+                            {
+                        <div class="product-items">
+                            <div class="row">
+                                <div class="product_block wow fadeIn col-md-4 col-xs-6 col-sp-12 animated" data-wow-delay="@_index ms" style="visibility: hidden; animation-delay: @_index ms; animation-name: none;">
+                                    <div class="product-container text-left product-block">
+                                        <div class="product-image-container image">
+                                            <a class="product_img_link" href="#">
+                                                <img class="img-responsive" src="@item.ImageURL" alt="@item.ProductName">
+                                            </a>
+                                            <span class="new-box">
+                                                <span class="label-new label">Mới</span>
+                                            </span>
+                                        </div>
+                                        <div class="product-meta">
+                                            <div class="review">
+                                                <span class="spr-badge" id="spr_badge_7254049923" data-rating="4.0">
+                                                    <span class="spr-starrating spr-badge-starrating"><i class="spr-icon spr-icon-star"></i><i class="spr-icon spr-icon-star"></i><i class="spr-icon spr-icon-star"></i><i class="spr-icon spr-icon-star"></i><i class="spr-icon spr-icon-star-empty"></i></span><span class="spr-badge-caption"></span>
+                                                </span>
+                                            </div>
+                                            <h5 class="name">
+                                                <a class="product-name" href="#" title="@item.ProductName">Clock @string.Format("{0}", item.ProductName.Length > 35 ? item.ProductName.Substring(0, 35) + "..." : item.ProductName)</a>
+                                            </h5>
+                                            <div class="product-desc">@item.Short_Description</div>
+                                            <div class="content_price">
+                                                <span class="price product-price ">
+                                                    <span class="money">
+                                                        @if (item.ProductExtraPrice < item.ProductPrice)
+                                                        {
+                                                            <span class="old-price product-price"><span class="money">@item.ProductPrice VNĐ</span></span>
+                                                            <span class="price product-price sale-price">
+                                                                <span class="money">@item.ProductExtraPrice VNĐ</span>
+                                                            </span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="price product-price ">
+                                                                <span class="money">@item.ProductPrice VNĐ</span>
+                                                            </span>
+                                                        }
+                                                    </span>
+                                                </span>
+                                            </div>
+                                            <div class="functional-buttons clearfix">
+                                                <div class="quickview">
+                                                    <a class="quick-view btn" href="#" data-handle="longsleeve-spacedye-nep" title="Xem nhanh">
+                                                        <i class="fa fa-plus"></i>
+                                                        <span>Xem nhanh</span>
+                                                    </a>
+                                                </div>
+                                                <div class="cart">
+                                                    <div class="action">
+                                                        <form action="/cart/add" method="post" enctype="multipart/form-data" class="form-ajaxtocart">
+                                                            <input type="hidden" name="id" value="22632152963">
+                                                            <a class="button ajax_addtocart btn" href="#" title="Thêm giỏ hàng">
+                                                                <span class="fa fa-shopping-cart"></span>
+                                                                <span class="select_options">Thêm giỏ hàng</span>
+                                                            </a>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <div class="wishlist">
+                                                    <a class="btn btn-outline-inverse btn-wishlist" href="/account/login" title="Thêm mục ưu thích">
+                                                        <i class="fa fa-heart"></i>
+                                                        <span>Thêm mục ưu thích</span>
+                                                    </a>
+
+                                                </div>
+                                                @*<div class="view_detail">
+                                                    <a class="btn lnk_view" href="/products/longsleeve-spacedye-nep" title="View product">
+                                                        <i class="fa fa-eye"></i><span>View product</span>
+                                                    </a>
+                                                </div>*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="product_block wow fadeIn col-md-4 col-xs-6 col-sp-12 animated" data-wow-delay="100ms" style="visibility: hidden; animation-delay: 100ms; animation-name: none;">
+                                    <div class="product-container text-left product-block">
+                                        <div class="product-image-container image">
+                                            <a class="product_img_link" href="/products/printed-chiffon-dress">
+
+                                                <img class="img-responsive" src="//cdn.shopify.com/s/files/1/1359/9953/products/3-min_39765ab1-7092-4581-9041-95fd3a638791_large.jpg?v=1467274259" alt="Clock Wooden">
+                                            </a>
+                                            <span class="new-box">
+                                                <span class="label-new label">New</span>
+                                            </span>
+                                            <span class="sale-box">
+                                                <span class="label-sale label">Sale</span>
+                                            </span>
+                                        </div>
+                                        <div class="product-meta">
+                                            <div class="review">
+                                                <span class="spr-badge" id="spr_badge_7254052739" data-rating="5.0">
+                                                    <span class="spr-starrating spr-badge-starrating"><i class="spr-icon spr-icon-star"></i><i class="spr-icon spr-icon-star"></i><i class="spr-icon spr-icon-star"></i><i class="spr-icon spr-icon-star"></i><i class="spr-icon spr-icon-star"></i></span><span class="spr-badge-caption">1 review</span>
+                                                </span>
+                                            </div>
+                                            <h5 class="name">
+                                                <a class="product-name" href="/products/printed-chiffon-dress" title="Clock Wooden">Clock Wooden</a>
+                                            </h5>
+                                            <div class="product-desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat...</div>
+                                            <div class="content_price">
+
+                                                <span class="old-price product-price"><span class="money" data-currency-usd="$25.50" data-currency="USD">$25.50</span></span>
+
+                                                <span class="price product-price sale-price">
+                                                    <span class="money" data-currency-usd="$23.40" data-currency="USD">$23.40</span>
+                                                </span>
+                                            </div>
+                                            <div class="functional-buttons clearfix">
+
+                                                <div class="quickview">
+                                                    <a class="quick-view btn" href="#quick-view-product" data-handle="printed-chiffon-dress" title="Quick View">
+                                                        <i class="fa fa-plus"></i>
+                                                        <span>Quick View</span>
+                                                    </a>
+                                                </div>
+
+                                                <div class="cart">
+
+                                                    <div class="action">
+                                                        <form action="/cart/add" method="post" enctype="multipart/form-data" class="form-ajaxtocart">
+                                                            <input type="hidden" name="id" value="22632162179">
+
+
+                                                            <button class="button ajax_addtocart btn" title="Add to Cart" type="submit" value="Submit">
+                                                                <span class="fa fa-shopping-cart"></span>
+                                                                <span>Add to Cart</span>
+                                                            </button>
+
+
+                                                        </form>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="wishlist">
+
+                                                    <a class="btn btn-outline-inverse btn-wishlist" href="/account/login" title="Add to Wishlist">
+                                                        <i class="fa fa-heart"></i>
+                                                        <span>Add to Wishlist</span>
+                                                    </a>
+
+                                                </div>
+
+
+
+                                                <div class="view_detail">
+                                                    <a class="btn lnk_view" href="/products/printed-chiffon-dress" title="View product">
+                                                        <i class="fa fa-eye"></i><span>View product</span>
+                                                    </a>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="product_block wow fadeIn col-md-4 col-xs-6 col-sp-12 animated" data-wow-delay="200ms" style="visibility: hidden; animation-delay: 200ms; animation-name: none;">
+                                    <div class="product-container text-left product-block">
+                                        <div class="product-image-container image">
+                                            <a class="product_img_link" href="/products/anton-denim-coupe">
+
+                                                <img class="img-responsive" src="//cdn.shopify.com/s/files/1/1359/9953/products/4-min_large.jpg?v=1467272796" alt="Clock Wooden">
+                                            </a>
+                                            <span class="new-box">
+                                                <span class="label-new label">New</span>
+                                            </span>
+                                        </div>
+                                        <div class="product-meta">
+                                            <div class="review">
+                                                <span class="spr-badge" id="spr_badge_7254055555" data-rating="0.0">
+                                                    <span class="spr-starrating spr-badge-starrating"><i class="spr-icon spr-icon-star-empty"></i><i class="spr-icon spr-icon-star-empty"></i><i class="spr-icon spr-icon-star-empty"></i><i class="spr-icon spr-icon-star-empty"></i><i class="spr-icon spr-icon-star-empty"></i></span><span class="spr-badge-caption">No reviews</span>
+                                                </span>
+                                            </div>
+
+                                            <h5 class="name">
+                                                <a class="product-name" href="/products/anton-denim-coupe" title="Clock Wooden">Clock Wooden</a>
+                                            </h5>
+                                            <div class="product-desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat...</div>
+                                            <div class="content_price">
+
+                                                <span class="price product-price ">
+                                                    <span class="money" data-currency-usd="$14.88" data-currency="USD">$14.88</span>
+                                                </span>
+                                            </div>
+                                            <div class="functional-buttons clearfix">
+
+                                                <div class="quickview">
+                                                    <a class="quick-view btn" href="#quick-view-product" data-handle="anton-denim-coupe" title="Quick View">
+                                                        <i class="fa fa-plus"></i>
+                                                        <span>Quick View</span>
+                                                    </a>
+                                                </div>
+                                                <div class="cart">
+                                                    <div class="action">
+                                                        <form action="/cart/add" method="post" enctype="multipart/form-data" class="form-ajaxtocart">
+                                                            <input type="hidden" name="id" value="22632170691">
+
+
+                                                            <a class="button ajax_addtocart btn" href="/products/anton-denim-coupe" title="Select options">
+                                                                <span class="fa fa-shopping-cart"></span>
+                                                                <span class="select_options">Select options</span>
+                                                            </a>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <div class="wishlist">
+                                                    <a class="btn btn-outline-inverse btn-wishlist" href="/account/login" title="Add to Wishlist">
+                                                        <i class="fa fa-heart"></i>
+                                                        <span>Add to Wishlist</span>
+                                                    </a>
+                                                </div>
+                                                <div class="view_detail">
+                                                    <a class="btn lnk_view" href="/products/anton-denim-coupe" title="View product">
+                                                        <i class="fa fa-eye"></i><span>View product</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            }
+                        }
+                        <div class="product-items">
+                            <div class="row">
+                                <div class="product_block wow fadeIn col-md-4 col-xs-6 col-sp-12 animated" data-wow-delay="0ms" style="visibility: hidden; animation-delay: 0ms; animation-name: none;">
+                                    <div class="product-container text-left product-block">
+                                        <div class="product-image-container image">
+                                            <a class="product_img_link" href="/products/longsleeve-spacedye-nep">
+                                                <img class="img-responsive" src="//cdn.shopify.com/s/files/1/1359/9953/products/1-min_0f4a65ea-d62e-4ed3-a0cb-87847ba0e690_large.jpg?v=1467274007" alt="Clock handmade">
+                                            </a>
+                                            <span class="new-box">
+                                                <span class="label-new label">New</span>
+                                            </span>
+                                        </div>
+                                        <div class="product-meta">
+                                            <div class="review">
+                                                <span class="spr-badge" id="spr_badge_7254049923" data-rating="4.0">
+                                                    <span class="spr-starrating spr-badge-starrating"><i class="spr-icon spr-icon-star"></i><i class="spr-icon spr-icon-star"></i><i class="spr-icon spr-icon-star"></i><i class="spr-icon spr-icon-star"></i><i class="spr-icon spr-icon-star-empty"></i></span><span class="spr-badge-caption">1 review</span>
+                                                </span>
+                                            </div>
+                                            <h5 class="name">
+                                                <a class="product-name" href="/products/longsleeve-spacedye-nep" title="Clock handmade">Clock handmade</a>
+                                            </h5>
+                                            <div class="product-desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat...</div>
+                                            <div class="content_price">
+                                                <span class="price product-price ">
+                                                    <span class="money" data-currency-usd="$15.00" data-currency="USD">$15.00</span>
+                                                </span>
+                                            </div>
+                                            <div class="functional-buttons clearfix">
+
+                                                <div class="quickview">
+                                                    <a class="quick-view btn" href="#quick-view-product" data-handle="longsleeve-spacedye-nep" title="Quick View">
+                                                        <i class="fa fa-plus"></i>
+                                                        <span>Quick View</span>
+                                                    </a>
+                                                </div>
+
+                                                <div class="cart">
+
+                                                    <div class="action">
+                                                        <form action="/cart/add" method="post" enctype="multipart/form-data" class="form-ajaxtocart">
+                                                            <input type="hidden" name="id" value="22632152963">
+
+
+                                                            <a class="button ajax_addtocart btn" href="/products/longsleeve-spacedye-nep" title="Select options">
+                                                                <span class="fa fa-shopping-cart"></span>
+                                                                <span class="select_options">Select options</span>
+                                                            </a>
+
+
+                                                        </form>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="wishlist">
+
+                                                    <a class="btn btn-outline-inverse btn-wishlist" href="/account/login" title="Add to Wishlist">
+                                                        <i class="fa fa-heart"></i>
+                                                        <span>Add to Wishlist</span>
+                                                    </a>
+
+                                                </div>
+
+
+
+                                                <div class="view_detail">
+                                                    <a class="btn lnk_view" href="/products/longsleeve-spacedye-nep" title="View product">
+                                                        <i class="fa fa-eye"></i><span>View product</span>
+                                                    </a>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="product_block wow fadeIn col-md-4 col-xs-6 col-sp-12 animated" data-wow-delay="100ms" style="visibility: hidden; animation-delay: 100ms; animation-name: none;">
+                                    <div class="product-container text-left product-block">
+                                        <div class="product-image-container image">
+                                            <a class="product_img_link" href="/products/printed-chiffon-dress">
+
+                                                <img class="img-responsive" src="//cdn.shopify.com/s/files/1/1359/9953/products/3-min_39765ab1-7092-4581-9041-95fd3a638791_large.jpg?v=1467274259" alt="Clock Wooden">
+                                            </a>
+                                            <span class="new-box">
+                                                <span class="label-new label">New</span>
+                                            </span>
+                                            <span class="sale-box">
+                                                <span class="label-sale label">Sale</span>
+                                            </span>
+                                        </div>
+                                        <div class="product-meta">
+                                            <div class="review">
+                                                <span class="spr-badge" id="spr_badge_7254052739" data-rating="5.0">
+                                                    <span class="spr-starrating spr-badge-starrating"><i class="spr-icon spr-icon-star"></i><i class="spr-icon spr-icon-star"></i><i class="spr-icon spr-icon-star"></i><i class="spr-icon spr-icon-star"></i><i class="spr-icon spr-icon-star"></i></span><span class="spr-badge-caption">1 review</span>
+                                                </span>
+                                            </div>
+                                            <h5 class="name">
+                                                <a class="product-name" href="/products/printed-chiffon-dress" title="Clock Wooden">Clock Wooden</a>
+                                            </h5>
+                                            <div class="product-desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat...</div>
+                                            <div class="content_price">
+
+                                                <span class="old-price product-price"><span class="money" data-currency-usd="$25.50" data-currency="USD">$25.50</span></span>
+
+                                                <span class="price product-price sale-price">
+                                                    <span class="money" data-currency-usd="$23.40" data-currency="USD">$23.40</span>
+                                                </span>
+                                            </div>
+                                            <div class="functional-buttons clearfix">
+
+                                                <div class="quickview">
+                                                    <a class="quick-view btn" href="#quick-view-product" data-handle="printed-chiffon-dress" title="Quick View">
+                                                        <i class="fa fa-plus"></i>
+                                                        <span>Quick View</span>
+                                                    </a>
+                                                </div>
+
+                                                <div class="cart">
+
+                                                    <div class="action">
+                                                        <form action="/cart/add" method="post" enctype="multipart/form-data" class="form-ajaxtocart">
+                                                            <input type="hidden" name="id" value="22632162179">
+
+
+                                                            <button class="button ajax_addtocart btn" title="Add to Cart" type="submit" value="Submit">
+                                                                <span class="fa fa-shopping-cart"></span>
+                                                                <span>Add to Cart</span>
+                                                            </button>
+
+
+                                                        </form>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="wishlist">
+
+                                                    <a class="btn btn-outline-inverse btn-wishlist" href="/account/login" title="Add to Wishlist">
+                                                        <i class="fa fa-heart"></i>
+                                                        <span>Add to Wishlist</span>
+                                                    </a>
+
+                                                </div>
+
+
+
+                                                <div class="view_detail">
+                                                    <a class="btn lnk_view" href="/products/printed-chiffon-dress" title="View product">
+                                                        <i class="fa fa-eye"></i><span>View product</span>
+                                                    </a>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="product_block wow fadeIn col-md-4 col-xs-6 col-sp-12 animated" data-wow-delay="200ms" style="visibility: hidden; animation-delay: 200ms; animation-name: none;">
+                                    <div class="product-container text-left product-block">
+                                        <div class="product-image-container image">
+                                            <a class="product_img_link" href="/products/anton-denim-coupe">
+
+                                                <img class="img-responsive" src="//cdn.shopify.com/s/files/1/1359/9953/products/4-min_large.jpg?v=1467272796" alt="Clock Wooden">
+                                            </a>
+                                            <span class="new-box">
+                                                <span class="label-new label">New</span>
+                                            </span>
+                                        </div>
+                                        <div class="product-meta">
+                                            <div class="review">
+                                                <span class="spr-badge" id="spr_badge_7254055555" data-rating="0.0">
+                                                    <span class="spr-starrating spr-badge-starrating"><i class="spr-icon spr-icon-star-empty"></i><i class="spr-icon spr-icon-star-empty"></i><i class="spr-icon spr-icon-star-empty"></i><i class="spr-icon spr-icon-star-empty"></i><i class="spr-icon spr-icon-star-empty"></i></span><span class="spr-badge-caption">No reviews</span>
+                                                </span>
+                                            </div>
+
+                                            <h5 class="name">
+                                                <a class="product-name" href="/products/anton-denim-coupe" title="Clock Wooden">Clock Wooden</a>
+                                            </h5>
+                                            <div class="product-desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat...</div>
+                                            <div class="content_price">
+
+                                                <span class="price product-price ">
+                                                    <span class="money" data-currency-usd="$14.88" data-currency="USD">$14.88</span>
+                                                </span>
+                                            </div>
+                                            <div class="functional-buttons clearfix">
+
+                                                <div class="quickview">
+                                                    <a class="quick-view btn" href="#quick-view-product" data-handle="anton-denim-coupe" title="Quick View">
+                                                        <i class="fa fa-plus"></i>
+                                                        <span>Quick View</span>
+                                                    </a>
+                                                </div>
+                                                <div class="cart">
+                                                    <div class="action">
+                                                        <form action="/cart/add" method="post" enctype="multipart/form-data" class="form-ajaxtocart">
+                                                            <input type="hidden" name="id" value="22632170691">
+
+
+                                                            <a class="button ajax_addtocart btn" href="/products/anton-denim-coupe" title="Select options">
+                                                                <span class="fa fa-shopping-cart"></span>
+                                                                <span class="select_options">Select options</span>
+                                                            </a>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <div class="wishlist">
+                                                    <a class="btn btn-outline-inverse btn-wishlist" href="/account/login" title="Add to Wishlist">
+                                                        <i class="fa fa-heart"></i>
+                                                        <span>Add to Wishlist</span>
+                                                    </a>
+                                                </div>
+                                                <div class="view_detail">
+                                                    <a class="btn lnk_view" href="/products/anton-denim-coupe" title="View product">
+                                                        <i class="fa fa-eye"></i><span>View product</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-items">
+                            <div class="row">
+                                <div class="product_block wow fadeIn col-md-4 col-xs-6 col-sp-12" data-wow-delay="300ms" style="visibility: hidden; animation-delay: 300ms; animation-name: none;">
+                                    <div class="product-container text-left product-block">
+                                        <div class="product-image-container image">
+                                            <a class="product_img_link" href="/products/high-neck-dress-in-olive">
+
+                                                <img class="img-responsive" src="//cdn.shopify.com/s/files/1/1359/9953/products/3-min_large.jpg?v=1467273840" alt="Clock Wooden">
+                                            </a>
+                                            <span class="new-box">
+                                                <span class="label-new label">New</span>
+                                            </span>
+                                            <span class="sale-box">
+                                                <span class="label-sale label">Sale</span>
+                                            </span>
+                                        </div>
+                                        <div class="product-meta">
+                                            <div class="review">
+                                                <span class="spr-badge" id="spr_badge_7254058627" data-rating="4.0">
+                                                    <span class="spr-starrating spr-badge-starrating"><i class="spr-icon spr-icon-star"></i><i class="spr-icon spr-icon-star"></i><i class="spr-icon spr-icon-star"></i><i class="spr-icon spr-icon-star"></i><i class="spr-icon spr-icon-star-empty"></i></span><span class="spr-badge-caption">1 review</span>
+                                                </span>
+                                            </div>
+                                            <h5 class="name">
+                                                <a class="product-name" href="/products/high-neck-dress-in-olive" title="Clock Wooden">Clock Wooden</a>
+                                            </h5>
+                                            <div class="product-desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat...</div>
+                                            <div class="content_price">
+                                                <span class="old-price product-price"><span class="money" data-currency-usd="$50.00" data-currency="USD">$50.00</span></span>
+
+                                                <span class="price product-price sale-price">
+                                                    <span class="money" data-currency-usd="$40.00" data-currency="USD">$40.00</span>
+                                                </span>
+                                            </div>
+                                            <div class="functional-buttons clearfix">
+                                                <div class="quickview">
+                                                    <a class="quick-view btn" href="#quick-view-product" data-handle="high-neck-dress-in-olive" title="Quick View">
+                                                        <i class="fa fa-plus"></i>
+                                                        <span>Quick View</span>
+                                                    </a>
+                                                </div>
+                                                <div class="cart">
+                                                    <div class="action">
+                                                        <form action="/cart/add" method="post" enctype="multipart/form-data" class="form-ajaxtocart">
+                                                            <input type="hidden" name="id" value="22632184387">
+                                                            <a class="button ajax_addtocart btn" href="/products/high-neck-dress-in-olive" title="Select options">
+                                                                <span class="fa fa-shopping-cart"></span>
+                                                                <span class="select_options">Select options</span>
+                                                            </a>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <div class="wishlist">
+
+                                                    <a class="btn btn-outline-inverse btn-wishlist" href="/account/login" title="Add to Wishlist">
+                                                        <i class="fa fa-heart"></i>
+                                                        <span>Add to Wishlist</span>
+                                                    </a>
+                                                </div>
+                                                <div class="view_detail">
+                                                    <a class="btn lnk_view" href="/products/high-neck-dress-in-olive" title="View product">
+                                                        <i class="fa fa-eye"></i><span>View product</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="product_block wow fadeIn col-md-4 col-xs-6 col-sp-12" data-wow-delay="400ms" style="visibility: hidden; animation-delay: 400ms; animation-name: none;">
+                                    <div class="product-container text-left product-block">
+                                        <div class="product-image-container image">
+                                            <a class="product_img_link" href="/products/navy-military-grandad-tee">
+
+                                                <img class="img-responsive" src="//cdn.shopify.com/s/files/1/1359/9953/products/2-min_large.jpg?v=1467274253" alt="Cup Of Coffee">
+                                            </a>
+                                            <span class="new-box">
+                                                <span class="label-new label">New</span>
+                                            </span>
+                                            <span class="sale-box">
+                                                <span class="label-sale label">Sale</span>
+                                            </span>
+                                        </div>
+                                        <div class="product-meta">
+                                            <div class="review">
+                                                <span class="spr-badge" id="spr_badge_7254056771" data-rating="0.0">
+                                                    <span class="spr-starrating spr-badge-starrating"><i class="spr-icon spr-icon-star-empty"></i><i class="spr-icon spr-icon-star-empty"></i><i class="spr-icon spr-icon-star-empty"></i><i class="spr-icon spr-icon-star-empty"></i><i class="spr-icon spr-icon-star-empty"></i></span><span class="spr-badge-caption">No reviews</span>
+                                                </span>
+                                            </div>
+                                            <h5 class="name">
+                                                <a class="product-name" href="/products/navy-military-grandad-tee" title="Cup Of Coffee">Cup Of Coffee</a>
+                                            </h5>
+                                            <div class="product-desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat...</div>
+                                            <div class="content_price">
+                                                <span class="old-price product-price"><span class="money" data-currency-usd="$30.51" data-currency="USD">$30.51</span></span>
+                                                <span class="price product-price sale-price">
+                                                    <span class="money" data-currency-usd="$28.86" data-currency="USD">$28.86</span>
+                                                </span>
+                                            </div>
+                                            <div class="functional-buttons clearfix">
+                                                <div class="quickview">
+                                                    <a class="quick-view btn" href="#quick-view-product" data-handle="navy-military-grandad-tee" title="Quick View">
+                                                        <i class="fa fa-plus"></i>
+                                                        <span>Quick View</span>
+                                                    </a>
+                                                </div>
+                                                <div class="cart">
+                                                    <div class="action">
+                                                        <form action="/cart/add" method="post" enctype="multipart/form-data" class="form-ajaxtocart">
+                                                            <input type="hidden" name="id" value="22632174659">
+                                                            <button class="button ajax_addtocart btn" title="Add to Cart" type="submit" value="Submit">
+                                                                <span class="fa fa-shopping-cart"></span>
+                                                                <span>Add to Cart</span>
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <div class="wishlist">
+                                                    <a class="btn btn-outline-inverse btn-wishlist" href="/account/login" title="Add to Wishlist">
+                                                        <i class="fa fa-heart"></i>
+                                                        <span>Add to Wishlist</span>
+                                                    </a>
+                                                </div>
+                                                <div class="view_detail">
+                                                    <a class="btn lnk_view" href="/products/navy-military-grandad-tee" title="View product">
+                                                        <i class="fa fa-eye"></i><span>View product</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="product_block wow fadeIn col-md-4 col-xs-6 col-sp-12" data-wow-delay="500ms" style="visibility: hidden; animation-delay: 500ms; animation-name: none;">
+                                    <div class="product-container text-left product-block">
+                                        <div class="product-image-container image">
+                                            <a class="product_img_link" href="/products/aenean-consequat-sagittis-commodo-habitasse-lacus">
+                                                <img class="img-responsive" src="//cdn.shopify.com/s/files/1/1359/9953/products/2-min_689dbeef-2aa7-458b-8baf-14c4d4228c5f_large.jpg?v=1467272502" alt="Cup Of Coffee">
+                                            </a>
+                                            <span class="new-box">
+                                                <span class="label-new label">New</span>
+                                            </span>
+                                            <span class="sale-box">
+                                                <span class="label-sale label">Sale</span>
+                                            </span>
+                                        </div>
+                                        <div class="product-meta">
+                                            <div class="review">
+                                                <span class="spr-badge" id="spr_badge_7254065283" data-rating="0.0">
+                                                    <span class="spr-starrating spr-badge-starrating"><i class="spr-icon spr-icon-star-empty"></i><i class="spr-icon spr-icon-star-empty"></i><i class="spr-icon spr-icon-star-empty"></i><i class="spr-icon spr-icon-star-empty"></i><i class="spr-icon spr-icon-star-empty"></i></span><span class="spr-badge-caption">No reviews</span>
+                                                </span>
+                                            </div>
+                                            <h5 class="name">
+                                                <a class="product-name" href="/products/aenean-consequat-sagittis-commodo-habitasse-lacus" title="Cup Of Coffee">Cup Of Coffee</a>
+                                            </h5>
+                                            <div class="product-desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat...</div>
+                                            <div class="content_price">
+                                                <span class="old-price product-price"><span class="money" data-currency-usd="$10.00" data-currency="USD">$10.00</span></span>
+                                                <span class="price product-price sale-price">
+                                                    <span class="money" data-currency-usd="$5.89" data-currency="USD">$5.89</span>
+                                                </span>
+                                            </div>
+                                            <div class="functional-buttons clearfix">
+                                                <div class="quickview">
+                                                    <a class="quick-view btn" href="#quick-view-product" data-handle="aenean-consequat-sagittis-commodo-habitasse-lacus" title="Quick View">
+                                                        <i class="fa fa-plus"></i>
+                                                        <span>Quick View</span>
+                                                    </a>
+                                                </div>
+                                                <div class="cart">
+                                                    <div class="action">
+                                                        <form action="/cart/add" method="post" enctype="multipart/form-data" class="form-ajaxtocart">
+                                                            <input type="hidden" name="id" value="22632209475">
+                                                            <a class="button ajax_addtocart btn" href="/products/aenean-consequat-sagittis-commodo-habitasse-lacus" title="Select options">
+                                                                <span class="fa fa-shopping-cart"></span>
+                                                                <span class="select_options">Select options</span>
+                                                            </a>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <div class="wishlist">
+                                                    <a class="btn btn-outline-inverse btn-wishlist" href="/account/login" title="Add to Wishlist">
+                                                        <i class="fa fa-heart"></i>
+                                                        <span>Add to Wishlist</span>
+                                                    </a>
+                                                </div>
+                                                <div class="view_detail">
+                                                    <a class="btn lnk_view" href="/products/aenean-consequat-sagittis-commodo-habitasse-lacus" title="View product">
+                                                        <i class="fa fa-eye"></i><span>View product</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-items">
+                            <div class="row">
+                                <div class="product_block wow fadeIn col-md-4 col-xs-6 col-sp-12" data-wow-delay="600ms" style="visibility: hidden; animation-delay: 600ms; animation-name: none;">
+                                    <div class="product-container text-left product-block">
+                                        <div class="product-image-container image">
+                                            <a class="product_img_link" href="/products/longsleeve-spacedye-nep-1">
+
+                                                <img class="img-responsive" src="//cdn.shopify.com/s/files/1/1359/9953/products/7-min_large.jpg?v=1467273892" alt="Cup Wooden">
+                                            </a>
+                                            <span class="new-box">
+                                                <span class="label-new label">New</span>
+                                            </span>
+                                            <span class="sale-box">
+                                                <span class="label-sale label">Sale</span>
+                                            </span>
+                                        </div>
+                                        <div class="product-meta">
+                                            <div class="review">
+                                                <span class="spr-badge" id="spr_badge_7254048579" data-rating="0.0">
+                                                    <span class="spr-starrating spr-badge-starrating"><i class="spr-icon spr-icon-star-empty"></i><i class="spr-icon spr-icon-star-empty"></i><i class="spr-icon spr-icon-star-empty"></i><i class="spr-icon spr-icon-star-empty"></i><i class="spr-icon spr-icon-star-empty"></i></span><span class="spr-badge-caption">No reviews</span>
+                                                </span>
+                                            </div>
+                                            <h5 class="name">
+                                                <a class="product-name" href="/products/longsleeve-spacedye-nep-1" title="Cup Wooden">Cup Wooden</a>
+                                            </h5>
+                                            <div class="product-desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat...</div>
+                                            <div class="content_price">
+                                                <span class="old-price product-price"><span class="money" data-currency-usd="$55.00" data-currency="USD">$55.00</span></span>
+                                                <span class="price product-price sale-price">
+                                                    <span class="money" data-currency-usd="$48.00" data-currency="USD">$48.00</span>
+                                                </span>
+                                            </div>
+                                            <div class="functional-buttons clearfix">
+                                                <div class="quickview">
+                                                    <a class="quick-view btn" href="#quick-view-product" data-handle="longsleeve-spacedye-nep-1" title="Quick View">
+                                                        <i class="fa fa-plus"></i>
+                                                        <span>Quick View</span>
+                                                    </a>
+                                                </div>
+                                                <div class="cart">
+                                                    <div class="action">
+                                                        <form action="/cart/add" method="post" enctype="multipart/form-data" class="form-ajaxtocart">
+                                                            <input type="hidden" name="id" value="22632148739">
+                                                            <button class="button ajax_addtocart btn" title="Add to Cart" type="submit" value="Submit">
+                                                                <span class="fa fa-shopping-cart"></span>
+                                                                <span>Add to Cart</span>
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <div class="wishlist">
+                                                    <a class="btn btn-outline-inverse btn-wishlist" href="/account/login" title="Add to Wishlist">
+                                                        <i class="fa fa-heart"></i>
+                                                        <span>Add to Wishlist</span>
+                                                    </a>
+                                                </div>
+                                                <div class="view_detail">
+                                                    <a class="btn lnk_view" href="/products/longsleeve-spacedye-nep-1" title="View product">
+                                                        <i class="fa fa-eye"></i><span>View product</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="product_block wow fadeIn col-md-4 col-xs-6 col-sp-12" data-wow-delay="700ms" style="visibility: hidden; animation-delay: 700ms; animation-name: none;">
+                                    <div class="product-container text-left product-block">
+                                        <div class="product-image-container image">
+                                            <a class="product_img_link" href="/products/core-pull-over-hoodie">
+                                                <img class="img-responsive" src="//cdn.shopify.com/s/files/1/1359/9953/products/1-min_large.jpg?v=1467273436" alt="Handmade">
+                                            </a>
+                                            <span class="new-box">
+                                                <span class="label-new label">New</span>
+                                            </span>
+                                            <span class="sale-box">
+                                                <span class="label-sale label">Sale</span>
+                                            </span>
+                                        </div>
+                                        <div class="product-meta">
+                                            <div class="review">
+                                                <span class="spr-badge" id="spr_badge_7254060227" data-rating="0.0">
+                                                    <span class="spr-starrating spr-badge-starrating"><i class="spr-icon spr-icon-star-empty"></i><i class="spr-icon spr-icon-star-empty"></i><i class="spr-icon spr-icon-star-empty"></i><i class="spr-icon spr-icon-star-empty"></i><i class="spr-icon spr-icon-star-empty"></i></span><span class="spr-badge-caption">No reviews</span>
+                                                </span>
+                                            </div>
+                                            <h5 class="name">
+                                                <a class="product-name" href="/products/core-pull-over-hoodie" title="Handmade">Handmade</a>
+                                            </h5>
+                                            <div class="product-desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat...</div>
+                                            <div class="content_price">
+                                                <span class="old-price product-price"><span class="money" data-currency-usd="$35.00" data-currency="USD">$35.00</span></span>
+                                                <span class="price product-price sale-price">
+                                                    <span class="money" data-currency-usd="$23.05" data-currency="USD">$23.05</span>
+                                                </span>
+                                            </div>
+                                            <div class="functional-buttons clearfix">
+                                                <div class="quickview">
+                                                    <a class="quick-view btn" href="#quick-view-product" data-handle="core-pull-over-hoodie" title="Quick View">
+                                                        <i class="fa fa-plus"></i>
+                                                        <span>Quick View</span>
+                                                    </a>
+                                                </div>
+                                                <div class="cart">
+                                                    <div class="action">
+                                                        <form action="/cart/add" method="post" enctype="multipart/form-data" class="form-ajaxtocart">
+                                                            <input type="hidden" name="id" value="22632189187">
+                                                            <a class="button ajax_addtocart btn" href="/products/core-pull-over-hoodie" title="Select options">
+                                                                <span class="fa fa-shopping-cart"></span>
+                                                                <span class="select_options">Select options</span>
+                                                            </a>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <div class="wishlist">
+                                                    <a class="btn btn-outline-inverse btn-wishlist" href="/account/login" title="Add to Wishlist">
+                                                        <i class="fa fa-heart"></i>
+                                                        <span>Add to Wishlist</span>
+                                                    </a>
+                                                </div>
+                                                <div class="view_detail">
+                                                    <a class="btn lnk_view" href="/products/core-pull-over-hoodie" title="View product">
+                                                        <i class="fa fa-eye"></i><span>View product</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="product_block wow fadeIn col-md-4 col-xs-6 col-sp-12" data-wow-delay="800ms" style="visibility: hidden; animation-delay: 800ms; animation-name: none;">
+                                    <div class="product-container text-left product-block">
+                                        <div class="product-image-container image">
+                                            <a class="product_img_link" href="/products/claritas-est-etiam-processus">
+                                                <img class="img-responsive" src="//cdn.shopify.com/s/files/1/1359/9953/products/8-min_large.jpg?v=1467273000" alt="Handmade Wooden">
+                                            </a>
+                                            <span class="new-box">
+                                                <span class="label-new label">New</span>
+                                            </span>
+                                            <span class="sale-box">
+                                                <span class="label-sale label">Sale</span>
+                                            </span>
+                                        </div>
+                                        <div class="product-meta">
+                                            <div class="review">
+                                                <span class="spr-badge" id="spr_badge_7254064259" data-rating="0.0">
+                                                    <span class="spr-starrating spr-badge-starrating"><i class="spr-icon spr-icon-star-empty"></i><i class="spr-icon spr-icon-star-empty"></i><i class="spr-icon spr-icon-star-empty"></i><i class="spr-icon spr-icon-star-empty"></i><i class="spr-icon spr-icon-star-empty"></i></span><span class="spr-badge-caption">No reviews</span>
+                                                </span>
+                                            </div>
+                                            <h5 class="name">
+                                                <a class="product-name" href="/products/claritas-est-etiam-processus" title="Handmade Wooden">Handmade Wooden</a>
+                                            </h5>
+                                            <div class="product-desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat...</div>
+                                            <div class="content_price">
+                                                <span class="old-price product-price"><span class="money" data-currency-usd="$50.00" data-currency="USD">$50.00</span></span>
+                                                <span class="price product-price sale-price">
+                                                    <span class="money" data-currency-usd="$45.00" data-currency="USD">$45.00</span>
+                                                </span>
+                                            </div>
+                                            <div class="functional-buttons clearfix">
+                                                <div class="quickview">
+                                                    <a class="quick-view btn" href="#quick-view-product" data-handle="claritas-est-etiam-processus" title="Quick View">
+                                                        <i class="fa fa-plus"></i>
+                                                        <span>Quick View</span>
+                                                    </a>
+                                                </div>
+                                                <div class="cart">
+                                                    <div class="action">
+                                                        <form action="/cart/add" method="post" enctype="multipart/form-data" class="form-ajaxtocart">
+                                                            <input type="hidden" name="id" value="22632205315">
+                                                            <a class="button ajax_addtocart btn" href="/products/claritas-est-etiam-processus" title="Select options">
+                                                                <span class="fa fa-shopping-cart"></span>
+                                                                <span class="select_options">Select options</span>
+                                                            </a>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <div class="wishlist">
+                                                    <a class="btn btn-outline-inverse btn-wishlist" href="/account/login" title="Add to Wishlist">
+                                                        <i class="fa fa-heart"></i>
+                                                        <span>Add to Wishlist</span>
+                                                    </a>
+                                                </div>
+                                                <div class="view_detail">
+                                                    <a class="btn lnk_view" href="/products/claritas-est-etiam-processus" title="View product">
+                                                        <i class="fa fa-eye"></i><span>View product</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content_sortPagiBar">
+                        <div id="pagination" class="clearfix">
+                            <ul class="pagination">
+                                <li class="pagination_previous disabled">
+                                    <span><i class="fa fa-chevron-left"></i></span>
+                                </li>
+                                <li class="active"><span>1</span></li>
+                                <li>
+                                    <a href="/collections/all?page=2" title="">2</a>
+                                </li>
+                                <li class="pagination_next"><a href="/collections/all?page=2" title="Next »"><i class="fa fa-chevron-right"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

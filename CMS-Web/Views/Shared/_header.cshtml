@@ -1,0 +1,256 @@
+﻿@{
+    var Cate = Session["Catelogies"] as CMS_DTO.CMSSession.CateSession;
+}
+
+<style>
+    .megamenu li a{
+        font-family: sans-serif !important;
+    }
+    #apollo-menu .navbar-nav > li > a{
+        font-weight: 100 !important;
+    }
+</style>
+<section class="header-container">
+    <div id="topbar">
+        <div class="nav">
+            <div class="container">
+                <nav>
+                    <div class="pull-left infotopbar hidden-sp hidden-xs ApRawHtml block">
+                        <div class="contactnav">
+                            <span>Xin chào! Đến với cửa hàng chúng tôi!</span>
+                            <a href="mailto:info@yourdomain.com">
+                                <i class="fa fa-envelope"></i>info@yourdomain.com
+                            </a>
+                        </div>
+                    </div>
+
+                    <script type="text/javascript">
+                        $(document).ready(function () {
+                            if ($(window).width() < 992) {
+                                $(".header_user_info").addClass('popup-over');
+                                $(".header_user_info .links").addClass('dropdown-menu');
+                            }
+                            else {
+                                $(".header_user_info").removeClass('popup-over');
+                                $(".header_user_info .links").removeClass('dropdown-menu');
+                            }
+                            $(window).resize(function () {
+                                if ($(window).width() < 992) {
+                                    $(".header_user_info").addClass('popup-over');
+                                    $(".header_user_info .links").addClass('dropdown-menu');
+                                }
+                                else {
+                                    $(".header_user_info").removeClass('popup-over');
+                                    $(".header_user_info .links").removeClass('dropdown-menu');
+                                }
+                            });
+                        });
+                    </script>
+                    <div class="header_user_info e-scale">
+                        <div data-toggle="dropdown" class="popup-title dropdown-toggle">
+                            <i class="fa fa-user"></i>
+                            <span>Account</span>
+                        </div>
+                        <ul class="links list-unstyled">
+                            <li>
+                                <a id="customer_login_link" href="/account/login" title="Login">
+                                    <i class="fa fa-unlock-alt"></i> Login
+                                </a>
+                            </li>
+                            <li>
+                                <a id="customer_register_link" href="/account/register" title="Register">
+                                    <i class="fa fa-edit"></i> Register
+                                </a>
+                            </li>
+                            <li>
+                                <a class="account" rel="nofollow" href="/account" title="My Account">
+                                    <i class="fa fa-user"></i> Tài khoản
+                                </a>
+                            </li>
+                            <li>
+                                <a id="wishlist-total" title="Wishlist" href="/pages/wishlist">
+                                    <i class="fa fa-list-alt"></i> Ưu thích
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/cart" title="Check Out" style="border-right: none !important;">
+                                    <i class="fa fa-share"></i> Thanh toán
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div id="header-main">
+        <div class="container">
+            <div class="header-wrap">
+                <div class="header-left">
+                    <div id="header_logo">
+                        <h1 class="" itemscope itemtype="http://schema.org/Organization">
+                            <a href="/" itemprop="url">
+                                <img src="//cdn.shopify.com/s/files/1/1359/9953/t/2/assets/logo.png?6710597985434054077" alt="Ap Wooden" itemprop="logo">
+                            </a>
+                        </h1>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div id="cart" class="blockcart_top clearfix">
+                        <div class="media heading">
+                            <a href="/cart" id="CartToggle" title="Shopping cart">
+                                <div class="title-cart">
+                                    <span class="fa fa-shopping-cart "></span>
+                                </div>
+                                <div class="cart-inner media-body">
+                                    <span class="cart-title">Shopping cart</span>
+                                    <span id="CartCount">1</span>
+                                    <span>item - </span>
+                                    <span id="CartCost">
+                                        <span class='money'>$48.00</span>
+                                    </span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <script type="text/javascript">
+                        $(document).ready(function () {
+                            $("#search_block_top").each(function () {
+                                $("#search-icon").click(function () {
+                                    $("#searchbox").toggleClass('show');
+                                    $("#apollo-top-menu").toggleClass('menu-hide');
+                                });
+                            });
+                        });
+                        $(document).on('click', function (event) {
+                            if (!$(event.target).closest('#search-icon, #searchbox').length) {
+                                $('#searchbox').hide().removeClass('show');
+                                $("#apollo-top-menu").removeClass('menu-hide');
+                            }
+                        });
+                        $(document).on('focus', "#search_query_top", function (e) {
+                            $(this).parent().find("#search_button").css("display", "block");
+                        });
+                    </script>
+                    <div id="search_block_top" class="">
+                        <span id="search-icon" class="fa fa-search" title="Search"></span>
+                        <form id="searchbox" class="popup-content" action="/search" method="get">
+                            <input type="hidden" name="type" value="product">
+                            <input id="search_query_top" class="search_query form-control" type="search" name="q" value="" placeholder="Tìm kiếm ..." aria-label="Tìm kiếm ..."
+                                   autocomplete="off" />
+                            <button id="search_button" class="btn btn-sm" type="submit" title="Search">
+                                <span>
+                                    <i class="fa fa-search"></i>
+                                </span>
+                                <span class="fallback-text">Search</span>
+                            </button>
+                        </form>
+                        <div id="ap-ajax-search" class="hidden-sm hidden-xs">
+                            <ul class="list-unstyled aps-results"></ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Top Menu -->
+                <div id="apollo-menu">
+                    <div class="container-menu">
+                        <nav id="cavas_menu" class="apollo-megamenu">
+                            <div class="" role="navigation">
+                                <div class="navbar-header">
+                                    <a class="navbar-toggle btn-menu-canvas" href="#apollo-menucanvas" title="Toggle navigation">
+                                        <span class="sr-only">Toggle navigation</span>
+                                        <span class="fa fa-bars"></span>
+                                    </a>
+                                </div>
+                                <div id="apollo-top-menu" class="collapse navbar-collapse hidden-xs hidden-sm">
+                                    <ul class="nav navbar-nav megamenu">
+                                        <li class="parent active">
+                                            <a class="" href="/" title="Home" target="_self">
+                                                <p> Trang chủ</p>
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a class="" href="/collections/all" title="Shop" target="_self">
+                                                <span class="menu-title">Cửa hàng</span>
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a class="" href="/collections" title="Catalog" target="_self">
+                                                <span class="">Thể loại</span>
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a class="" href="/blogs/news" title="Blog" target="_self">
+                                                <span class="menu-title">Tin tức</span>
+                                            </a>
+                                        </li>
+                                        <li class="parent dropdown">
+                                            <a class="dropdown-toggle has-category" data-toggle="dropdown" href="/pages/about-us" title="Page" target="_self">
+                                                <span class="">Trang</span>
+                                                <b class="caret"></b>
+                                            </a>
+                                            <div class="dropdown-menu level1">
+                                                <div class="dropdown-menu-inner">
+                                                    <div class="mega-col-inner">
+                                                        <ul>
+                                                            <li class="parent dropdown-submenu ">
+                                                                <a class="dropdown-toggle" data-toggle="dropdown" href="/account" title="Account">
+                                                                    <span class="">Account</span>
+                                                                    <b class="caret"></b>
+                                                                </a>
+                                                                <div class="dropdown-menu level2">
+                                                                    <div class="dropdown-menu-inner">
+                                                                        <div class="mega-col-inner">
+                                                                            <ul>
+                                                                                <li class="">
+                                                                                    <a class="" href="/account" title="Your account">
+                                                                                        <span class="">Tài khoản</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                                <li class="">
+                                                                                    <a class="" href="/cart" title="Checkout">
+                                                                                        <span class="">Thanh toán</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                                <li class="">
+                                                                                    <a class="" href="/account/login" title="Login">
+                                                                                        <span class="">Đăng nhập</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                                <li class="">
+                                                                                    <a class="" href="/account/register" title="Register">
+                                                                                        <span class="">Đăgn ký</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="parent dropdown ">
+                                            <a class="" href="/404" title="Theme Features" target="_self">
+                                                <span class="">Vị trí</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        
+    });
+</script>
