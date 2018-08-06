@@ -363,7 +363,7 @@
 
             <!-- Html modal-->
             <div id="AjaxifyModal" class="ajaxcart ajaxcartModal is-visible" style="opacity: 0; margin-left: -450px;" ng-controller="CartCtrl">
-                <button type="button" class="ajaxcartClose" title="Close Cart" style="top: 25px;">Close Cart</button>
+                <button type="button" class="ajaxcartClose" title="Close Cart" style="top: 25px;" ng-click="CloseCart();">Close Cart</button>
                 <div id="AjaxifyCart" class="">
                     <form action="/cart" method="post" novalidate="" class="cart">
                         <h1 class="cartTitle">Shopping Cart</h1>
@@ -1385,5 +1385,14 @@
     var app = angular.module("appWebClock", []);
     app.controller("CartCtrl", ["$scope", function ($scope) {
         $scope.name = "test";
+
+        $scope.AddToCart = function () {
+            $('[id=AjaxifyModal]').css("opacity", "1");
+            $(window).scrollTop(0);
+        }
+
+        $scope.CloseCart = function () {
+            $('[id=AjaxifyModal]').css("opacity", "0");
+        }
     }]);
 </script>
