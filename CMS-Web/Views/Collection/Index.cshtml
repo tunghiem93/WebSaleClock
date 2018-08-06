@@ -14,13 +14,13 @@
                 <div id="center_column" class="center_column col-md-12">
                     <div id="list_collections">
                         @if (Model.ListCate != null && Model.ListCate.Any())
-                        {
-                            var _totalLength = Model.ListCate.Count;
-                            while (_count < _totalLength)
                             {
+                                var _totalLength = Model.ListCate.Count;
+                                while (_count < _totalLength)
+                                {
                                 <div class="row">
-                                    @for (int i = 0; i < Model.ListCate.Count; i++)
-                                    {
+                                    @for (int i = _count; _count < _totalLength; i++)
+                                     {
                                         <div class="block_collection col-xs-12 col-sm-6 col-md-4">
                                             <div class="collection_item">
                                                 <div class="collection-top effect_banner">
@@ -33,7 +33,7 @@
                                                         <a href="/collections/best-seller" title="@Model.ListCate[i].CategoryName">@Html.Raw(Model.ListCate[i].CategoryName)</a>
                                                     </h3>
                                                     <div class="collection_products">@Html.Raw(Model.ListCate[i].NumberOfProduct + " Sản phẩm")</div>
-                                                    <p class="collection_desc">@Html.Raw(string.Format("{0}", (string.IsNullOrEmpty(Model.ListCate[i].Description) || Model.ListCate[i].Description.Length < 70) ? Model.ListCate[i].Description : Model.ListCate[i].Description.Substring(0, 70) + "..."))</p>
+                                                    <p class="collection_desc">@string.Format("{0}", (string.IsNullOrEmpty(Model.ListCate[i].Short_Description) || Model.ListCate[i].Short_Description.Length < 100) ? Model.ListCate[i].Short_Description : Model.ListCate[i].Short_Description.Substring(0, 100) + "...")</p>
                                                     <div class="text-center">
                                                         <a href="/collections/best-seller" title="Trở lại shop" class="btn btn-default btn-outline-inverse">
                                                             Trở lại shop
@@ -42,9 +42,10 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        _count++;
-                                        if (_count % 3 == 0)
+                                        _count = _count + 1;
+                                        if (_count != 0 && _count % 3 == 0)
                                         {
+                                            i = _count;
                                             break;
                                         }
                                     }
