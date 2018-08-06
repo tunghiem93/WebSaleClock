@@ -371,7 +371,7 @@
                             <div class="cart_header_labels clearfix">
                                 <div class="label_item col-xs-12 col-sm-1 col-md-1">
                                     <div class="cart_product first_item">
-                                        Product
+                                        Product 
                                     </div>
                                 </div>
                                 <div class="label_item col-xs-12 col-sm-4 col-md-4">
@@ -400,34 +400,24 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="list_product_cart clearfix" data-id="22632174659">
-
+                            <div class="list_product_cart clearfix" ng-repeat="item in Products">
                                 <div class="cpro_item col-xs-12 col-sm-1 col-md-1">
                                     <div class="cpro_item_inner">
-                                        <a href="/products/navy-military-grandad-tee?variant=22632174659" class="cartImage">
-
-
-                                            <img class="img-responsive" src="//cdn.shopify.com/s/files/1/1359/9953/products/2-min_small.jpg?v=1467274253" alt="Cup Of Coffee">
-
+                                        <a href="javascript:void(0)" class="cartImage">
+                                            <img class="img-responsive" src="{{item.ImageUrl}}" alt="{{item.Name}}">
                                         </a>
                                     </div>
                                 </div>
                                 <div class="cpro_item col-xs-12 col-sm-4 col-md-4">
                                     <div class="cpro_item_inner">
-                                        <a href="/products/navy-military-grandad-tee?variant=22632174659" class="product_name">
-                                            Cup Of Coffee
+                                        <a href="javascript:void(0)" class="product_name">
+                                            {{item.Name}}
                                         </a>
-
-
-                                        <p>Rayban</p>
-
-
                                     </div>
                                 </div>
                                 <div class="cpro_item col-xs-12 col-sm-2 col-md-2">
                                     <div class="cpro_item_inner">
-                                        <span class="price product-price"><span class="money" data-currency-usd="$28.86" data-currency="USD">$28.86</span></span>
+                                        <span class="price product-price"><span class="money" data-currency-usd="{{item.Price}}" data-currency="USD">{{item.Price}}</span></span>
                                     </div>
                                 </div>
                                 <div class="cpro_item text-center col-xs-12 col-sm-2 col-md-2">
@@ -436,7 +426,7 @@
 
                                         <div class="ajaxcartQty">
                                             <button type="button" class="ajaxcartQtyAdjust ajaxcartQtyMinus" data-id="22632174659" data-qty="0">−</button>
-                                            <input type="text" class="ajaxcartQtyNum" value="1" min="0" data-id="22632174659" aria-label="quantity" pattern="[0-9]*">
+                                            <input type="text" class="ajaxcartQtyNum" value="{{item.Qty}}" min="0" data-id="22632174659" aria-label="quantity" pattern="[0-9]*">
                                             <button type="button" class="ajaxcartQtyAdjust ajaxcartQtyPlus" data-id="22632174659" data-qty="11">+</button>
                                         </div>
 
@@ -454,86 +444,6 @@
                                             <small>Remove</small>
                                         </a>
                                     </div>
-                                </div>
-                            </div>
-
-                            <div class="list_product_cart clearfix" data-id="22632170819">
-
-                                <div class="cpro_item col-xs-12 col-sm-1 col-md-1">
-                                    <div class="cpro_item_inner">
-                                        <a href="/products/anton-denim-coupe?variant=22632170819" class="cartImage">
-
-
-                                            <img class="img-responsive" src="//cdn.shopify.com/s/files/1/1359/9953/products/7-min_6863627a-8289-4fce-946e-7da287e258f1_small.jpg?v=1467274477" alt="Clock Wooden - XL / Gray">
-
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="cpro_item col-xs-12 col-sm-4 col-md-4">
-                                    <div class="cpro_item_inner">
-                                        <a href="/products/anton-denim-coupe?variant=22632170819" class="product_name">
-                                            Clock Wooden
-                                        </a>
-
-                                        <small>XL / Gray</small>
-
-
-                                        <p>I love ugly</p>
-
-
-                                    </div>
-                                </div>
-                                <div class="cpro_item col-xs-12 col-sm-2 col-md-2">
-                                    <div class="cpro_item_inner">
-                                        <span class="price product-price"><span class="money" data-currency-usd="$15.50" data-currency="USD">$15.50</span></span>
-                                    </div>
-                                </div>
-                                <div class="cpro_item text-center col-xs-12 col-sm-2 col-md-2">
-                                    <div class="cpro_item_inner">
-
-
-                                        <div class="ajaxcartQty">
-                                            <button type="button" class="ajaxcartQtyAdjust ajaxcartQtyMinus" data-id="22632170819" data-qty="0">−</button>
-                                            <input type="text" class="ajaxcartQtyNum" value="1" min="0" data-id="22632170819" aria-label="quantity" pattern="[0-9]*">
-                                            <button type="button" class="ajaxcartQtyAdjust ajaxcartQtyPlus" data-id="22632170819" data-qty="11">+</button>
-                                        </div>
-
-
-                                    </div>
-                                </div>
-                                <div class="cpro_item col-xs-12 col-sm-2 col-md-2">
-                                    <div class="cpro_item_inner">
-                                        <span class="price product-price"><span class="money" data-currency-usd="$15.50" data-currency="USD">$15.50</span></span>
-                                    </div>
-                                </div>
-                                <div class="cpro_item col-xs-12 col-sm-1 col-md-1">
-                                    <div class="cpro_item_inner">
-                                        <a href="/cart/change?line=2&amp;quantity=0" class="cart__remove ajaxcartRemove" data-id="22632170819">
-                                            <small>Remove</small>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="list_button_cart clearfix">
-                                <div class="note_item col-xs-12 col-sm-6 col-md-6">
-
-                                    <div class="note_cart">
-                                        <label class="control-label" for="CartSpecialInstructions">Special instructions for seller</label>
-                                        <textarea name="note" class="form-control" id="CartSpecialInstructions"></textarea>
-                                    </div>
-
-                                </div>
-                                <div class="note_buton col-xs-12 col-sm-6 col-md-6 text-right">
-                                    <p>
-                                        <span class="cart__subtotal-title">Subtotal</span>
-                                        <span class="h3 cart__subtotal"><span class="money" data-currency-usd="$44.36" data-currency="USD">$44.36</span></span>
-                                    </p>
-                                    <p><em>Shipping &amp; taxes calculated at checkout</em></p>
-                                    <a class="btn con-ajax-cart btn-outline" href="/collections/all" title="Continue shopping">Continue shopping</a>
-                                    <input type="submit" name="update" class="btn btn-outline update-cart" value="Update Cart">
-                                    <input type="submit" name="checkout" class="btn btn-outline" value="Check Out">
-
                                 </div>
                             </div>
                         </div>
@@ -1383,10 +1293,15 @@
     }
 
     var app = angular.module("appWebClock", []);
-    app.controller("CartCtrl", ["$scope", function ($scope) {
-        $scope.name = "test";
-
-        $scope.AddToCart = function () {
+    app.controller("CartCtrl", ["$scope", "$rootScope", function ($scope, $rootScope) {
+       
+        $scope.AddToCart = function () {    
+            var ListProducts = [
+                { "ImageUrl": "//cdn.shopify.com/s/files/1/1359/9953/products/2-min_small.jpg", "Name": "Cup Of Coffee", "Price": "$28.86", "Qty": 1, },
+                { "ImageUrl": "//cdn.shopify.com/s/files/1/1359/9953/products/2-min_small.jpg", "Name": "Cup Of Coffee", "Price": "$28.86", "Qty": 1, }
+            ];
+            $rootScope.Products = ListProducts;
+            console.log(ListProducts);
             $('[id=AjaxifyModal]').css("opacity", "1");
             $(window).scrollTop(0);
         }
