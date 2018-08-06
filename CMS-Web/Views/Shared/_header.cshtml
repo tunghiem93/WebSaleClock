@@ -185,27 +185,27 @@
                                 <div id="apollo-top-menu" class="collapse navbar-collapse hidden-xs hidden-sm">
                                     <ul class="nav navbar-nav megamenu">
                                         <li class="parent active">
-                                            <a class="" href="/" title="Home" target="_self">
+                                            <a class="" href="@Url.Action("Index","Home")" title="Trang chủ" target="_self">
                                                 <p> Trang chủ</p>
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a class="" href="/collections/all" title="Shop" target="_self">
-                                                <span class="menu-title">Cửa hàng</span>
+                                            <a class="" href="@Url.Action("Index","Shop")" title="Shop" target="_self">
+                                                <span class="menu-title">Shop</span>
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a class="" href="/collections" title="Catalog" target="_self">
+                                            <a class="" href="@Url.Action("Index","Category")" title="Thể loại" target="_self">
                                                 <span class="">Thể loại</span>
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a class="" href="/blogs/news" title="Blog" target="_self">
+                                            <a class="" href="@Url.Action("Index","Blog")" title="Tin tức" target="_self">
                                                 <span class="menu-title">Tin tức</span>
                                             </a>
                                         </li>
                                         <li class="parent dropdown">
-                                            <a class="dropdown-toggle has-category" data-toggle="dropdown" href="/pages/about-us" title="Page" target="_self">
+                                            <a class="dropdown-toggle has-category" data-toggle="dropdown" href="@Url.Action("Index","About")" title="Page" target="_self">
                                                 <span class="">Trang</span>
                                                 <b class="caret"></b>
                                             </a>
@@ -214,7 +214,7 @@
                                                     <div class="mega-col-inner">
                                                         <ul>
                                                             <li class="parent dropdown-submenu ">
-                                                                <a class="dropdown-toggle" data-toggle="dropdown" href="/account" title="Account">
+                                                                <a class="dropdown-toggle" data-toggle="dropdown" href="@Url.Action("Index","Home")" title="Tài khoản">
                                                                     <span class="">Account</span>
                                                                     <b class="caret"></b>
                                                                 </a>
@@ -223,22 +223,22 @@
                                                                         <div class="mega-col-inner">
                                                                             <ul>
                                                                                 <li class="">
-                                                                                    <a class="" href="/account" title="Your account">
+                                                                                    <a class="" href="@Url.Action("Index","Home")" title="Tài khoản">
                                                                                         <span class="">Tài khoản</span>
                                                                                     </a>
                                                                                 </li>
                                                                                 <li class="">
-                                                                                    <a class="" href="/cart" title="Checkout">
+                                                                                    <a class="" href="@Url.Action("CheckOut","Shop")" title="Thanh toán">
                                                                                         <span class="">Thanh toán</span>
                                                                                     </a>
                                                                                 </li>
                                                                                 <li class="">
-                                                                                    <a class="" href="/account/login" title="Login">
+                                                                                    <a class="" href="@Url.Action("SignIn","Login")" title="Đăng nhập">
                                                                                         <span class="">Đăng nhập</span>
                                                                                     </a>
                                                                                 </li>
                                                                                 <li class="">
-                                                                                    <a class="" href="/account/register" title="Register">
+                                                                                    <a class="" href="@Url.Action("SignUp","Login")" title="Đăng ký">
                                                                                         <span class="">Đăgn ký</span>
                                                                                     </a>
                                                                                 </li>
@@ -253,7 +253,7 @@
                                             </div>
                                         </li>
                                         <li class="parent dropdown ">
-                                            <a class="" href="/404" title="Theme Features" target="_self">
+                                            <a class="" href="@Url.Action("Index","Location")" title="Vị trí" target="_self">
                                                 <span class="">Vị trí</span>
                                             </a>
                                         </li>
