@@ -79,8 +79,9 @@ namespace CMS_Web.Areas.Admin.Controllers
                 }
 
                 var msg = "";
+                var id = "";
                 model.Password = CommonHelper.Encrypt(model.Password);
-                var result = _factory.InsertOrUpdate(model, ref msg);
+                var result = _factory.InsertOrUpdate(model, ref id, ref msg);
                 if (result)
                 {
                     if (!string.IsNullOrEmpty(model.ImageURL) && model.PictureByte != null)
@@ -148,8 +149,9 @@ namespace CMS_Web.Areas.Admin.Controllers
                 }
 
                 var msg = "";
+                var id = "";
                 model.Password = CommonHelper.Encrypt(model.Password);
-                var result = _factory.InsertOrUpdate(model, ref msg);
+                var result = _factory.InsertOrUpdate(model, ref id, ref msg);
                 if (result)
                 {
                     if (!string.IsNullOrEmpty(model.ImageURL) && model.PictureByte != null)
