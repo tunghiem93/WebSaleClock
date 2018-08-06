@@ -364,7 +364,7 @@
             </div>
 
             <!-- Html modal-->
-            <div id="AjaxifyModal" class="ajaxcart ajaxcartModal is-visible" style="opacity: 0; margin-left: -450px;" ng-controller="CartCtrl">
+            <div id="AjaxifyModal" class="ajaxcart ajaxcartModal is-visible hidden" style="opacity: 1; margin-left: -450px;" ng-controller="CartCtrl">
                 <button type="button" class="ajaxcartClose" title="Close Cart" style="top: 25px;" ng-click="CloseCart();">Close Cart</button>
                 <div id="AjaxifyCart" class="">
                     <form action="/cart" method="post" novalidate="" class="cart">
@@ -526,84 +526,6 @@
             $(addToCart).find("span").text("Unavailable");
           }
         };
-            </script>
-
-
-            <script id="CartTemplate" type="text/template">
-
-                <form action="/cart" method="post" novalidate>
-                    <div class="ajaxcartInner">
-                        {{#items}}
-                        <div class="ajaxcartProduct">
-                            <div class="ajaxcartRow" data-id="{{id}}">
-                                <div class="grid">
-                                    <div class="grid__item large--two-thirds">
-                                        <div class="grid">
-                                            <div class="grid__item one-quarter">
-                                                <a href="{{url}}" class="ajaxcartProductImage"><img src="{{img}}" alt=""></a>
-                                            </div>
-                                            <div class="grid__item three-quarters">
-                                                <a href="{{url}}" class="h4">{{name}}</a>
-                                                <p>{{variation}}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="grid__item large--one-third">
-                                        <div class="grid">
-                                            <div class="grid__item one-third">
-                                                <div class="ajaxcart__qty">
-                                                    <button type="button" class="ajaxcart__qty-adjust ajaxcart__qty--minus" data-id="{{id}}" data-qty="{{itemMinus}}">&minus;</button>
-                                                    <input type="text" class="ajaxcart__qty-num" value="{{itemQty}}" min="0" data-id="{{id}}" aria-label="quantity" pattern="[0-9]*">
-                                                    <button type="button" class="ajaxcart__qty-adjust ajaxcart__qty--plus" data-id="{{id}}" data-qty="{{itemAdd}}">+</button>
-                                                </div>
-                                            </div>
-                                            <div class="grid__item one-third text-center">
-                                                <p>{{price}}</p>
-                                            </div>
-                                            <div class="grid__item one-third text-right">
-                                                <p>
-                                                    <small><a href="/cart/change?id={{id}}&amp;quantity=0" class="ajaxcart__remove" data-id="{{id}}">Remove</a></small>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {{/items}}
-                    </div>
-                    <div class="ajaxcartRow text-right medium-down--text-center">
-                        <span class="h3">Subtotal {{totalPrice}}</span>
-                        <input type="submit" class="{{btnClass}}" name="checkout" value="Check Out">
-                    </div>
-                </form>
-
-            </script>
-            <script id="DrawerTemplate" type="text/template">
-
-                <div id="AjaxifyDrawer" class="ajaxcart ajaxcartDrawer">
-                    <div id="AjaxifyCart" class="container {{wrapperClass}}"></div>
-                </div>
-
-            </script>
-
-            <script id="AjaxifyQty" type="text/template">
-
-                <div class="ajaxcartQty">
-                    <button type="button" class="ajaxcartQtyAdjust ajaxcartQtyMinus" data-id="{{id}}" data-qty="{{itemMinus}}">&minus;</button>
-                    <input type="text" class="ajaxcartQtyNum" value="{{itemQty}}" min="0" data-id="{{id}}" aria-label="quantity" pattern="[0-9]*">
-                    <button type="button" class="ajaxcartQtyAdjust ajaxcartQtyPlus" data-id="{{id}}" data-qty="{{itemAdd}}">+</button>
-                </div>
-
-            </script>
-            <script id="apQty" type="text/template">
-
-                <div class="apQty">
-                    <button type="button" class="apQtyAdjust apQtyAdjustMinus" data-id="{{id}}" data-qty="{{itemMinus}}">&minus;</button>
-                    <input type="text" class="apQtyNum" value="{{itemQty}}" min="1" data-id="{{id}}" aria-label="quantity" pattern="[0-9]*" name="{{inputName}}" id="{{inputId}}">
-                    <button type="button" class="apQtyAdjust apQtyAdjustPlus" data-id="{{id}}" data-qty="{{itemAdd}}">+</button>
-                </div>
-
             </script>
         </section>
 
@@ -1330,6 +1252,7 @@
         }
     });
     app.controller("CartCtrl", ["$scope", "$rootScope", function ($scope, $rootScope) {
+        $rootScope.Products = getListOrder();
         /* add cart */
         $scope.AddToCart = function (ItemId, UnitId, Qty, Price, ImageUrl, Name) {    
             var _Order = {
@@ -1343,12 +1266,12 @@
             CreateOrUpdateOrder(_Order);
             $rootScope.Products = getListOrder();
             $scope.setTotals($rootScope.Products);
-            $('[id=AjaxifyModal]').css("opacity", "1");
+            $('[id=AjaxifyModal]').removeClass("hidden");
             $(window).scrollTop(0);
         }
         /* close modal */
         $scope.CloseCart = function () {
-            $('[id=AjaxifyModal]').css("opacity", "0");
+            $('[id=AjaxifyModal]').addClass("hidden");
         }
 
         /* update qty of order by order id */

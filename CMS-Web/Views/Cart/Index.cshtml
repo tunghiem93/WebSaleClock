@@ -1,0 +1,104 @@
+﻿
+<div id="page" ng-controller="CartCtrl">
+    <section id="page_content" class="">
+        <main class="main-content">
+            <section id="columns" class="columns-container">
+                <div class="container">
+                    <div class="row">
+                        <div id="center_column" class="center_column col-md-12">
+                            <div id="cart-page">
+
+                                <form action="/cart" method="post" novalidate class="cart">
+                                    <h1 class="cartTitle">Shopping Cart</h1>
+                                    <div class="page-content">
+                                        <div class="cart_header_labels clearfix">
+                                            <div class="label_item col-xs-12 col-sm-1 col-md-1">
+                                                <div class="cart_product first_item">
+                                                    Product
+                                                </div>
+                                            </div>
+                                            <div class="label_item col-xs-12 col-sm-4 col-md-4">
+                                                <div class="cart_description item">
+                                                    Description
+                                                </div>
+                                            </div>
+                                            <div class="label_item col-xs-12 col-sm-2 col-md-2">
+                                                <div class="cart_price item">
+                                                    Price
+                                                </div>
+                                            </div>
+                                            <div class="label_item col-xs-12 col-sm-2 col-md-2">
+                                                <div class="cart_quantity item">
+                                                    Quantity
+                                                </div>
+                                            </div>
+                                            <div class="label_item col-xs-12 col-sm-2 col-md-2">
+                                                <div class="cart_total item">
+                                                    Total
+                                                </div>
+                                            </div>
+                                            <div class="label_item col-xs-12 col-sm-1 col-md-1">
+                                                <div class="cart_delete last_item">
+                                                    Remove
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="list_product_cart clearfix" ng-repeat="item in Products">
+                                            <div class="cpro_item col-xs-12 col-sm-1 col-md-1">
+                                                <div class="cpro_item_inner">
+                                                    <a href="/products/printed-chiffon-dress?variant=22632162179" class="cartImage">
+                                                        <img class="img-responsive" src="{{item.ImageUrl}}" alt="{{item.Name}}">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="cpro_item col-xs-12 col-sm-4 col-md-4">
+                                                <div class="cpro_item_inner">
+                                                    <a href="/products/printed-chiffon-dress?variant=22632162179" class="product_name">
+                                                        {{item.Name}}
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="cpro_item col-xs-12 col-sm-2 col-md-2">
+                                                <div class="cpro_item_inner">
+                                                    <span class="price product-price"><span class='money'>{{item.Price |currency :"": 0}} đ</span></span>
+                                                </div>
+                                            </div>
+                                            <div class="cpro_item text-center col-xs-12 col-sm-2 col-md-2">
+                                                <div class="cpro_item_inner">
+                                                    <div class="ajaxcartQty">
+                                                        <button type="button" class="ajaxcartQtyAdjust ajaxcartQtyMinus" ng-click="QtyAdjust($index,0)" data-qty="0">−</button>
+                                                        <input type="text" restrict-to="[0-9]" ng-model="item.Quantity" ng-change="UpdateQtyOrder($index);" min="0" pattern="[0-9]*">
+                                                        <button type="button" class="ajaxcartQtyAdjust ajaxcartQtyPlus" ng-click="QtyAdjust($index,1)" data-qty="11">+</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="cpro_item col-xs-12 col-sm-2 col-md-2">
+                                                <div class="cpro_item_inner">
+                                                    <span class="price product-price"><span class='money'>{{item.Price * item.Quantity | currency : "" : 0}} đ</span></span>
+                                                </div>
+                                            </div>
+                                            <div class="cpro_item col-xs-12 col-sm-1 col-md-1">
+                                                <div class="cpro_item_inner">
+                                                    <a href="javascript:void(0)" class="cart__remove" ng-click="RemoveItemOrder($index)">
+                                                        <small>Remove</small>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                <p class="cart_navigation clearfix">
+                                    <a class="btn btn-outline" href="/collections/all" title="Continue shopping">Continue shopping</a>
+                                </p>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <div id="loading" class="loading_site" style="display: none;"></div>
+    </section>
+</div>
