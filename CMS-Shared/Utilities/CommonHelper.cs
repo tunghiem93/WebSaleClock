@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CMS_DTO.CMSContact;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -66,6 +67,27 @@ namespace CMS_Shared.Utilities
             }
             return listCode;
         }
+
+        public static bool ContactAdmin(CMS_ContactModels _ctInfo)
+        {
+            var ret = false;
+            try
+            {
+                string lamodMail = ConfigurationManager.AppSettings["LamodeMail"];
+
+                /* send mail to lamode */
+                SendContentMail(lamodMail, _ctInfo.GetContactInfo(), _ctInfo.Name, "[Customer Contact]" + _ctInfo.Subject);
+
+                /* send mail to customer */
+                if (!string.IsNullOrEmpty(_ctInfo.Email))
+                    SendContentMail(_ctInfo.Email, _ctInfo.GetContactInfo(), _ctInfo.Name, "[Lamode Home]" + " thanks for contacting us " + _ctInfo.Subject);
+
+                ret = true;
+            }
+            catch (Exception ex) { }
+            return ret;
+        }
+
 
         static string key { get; set; } = "A!9HHhi%XjjYY4YP2@Nob00900X";
         public static string Encrypt(string text)

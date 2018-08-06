@@ -15,9 +15,21 @@ namespace CMS_Web.Controllers
     public class LoginController : Controller
     {
         private CMSCustomersFactory _factory = null;
+        List<string> listPropertyReject = null;
+        public void PropertyReject()
+        {
+            foreach (var item in listPropertyReject)
+            {
+                if (ModelState.ContainsKey(item))
+                    ModelState[item].Errors.Clear();
+            }
+        }
+
         public LoginController()
         {
             _factory = new CMSCustomersFactory();
+            listPropertyReject = new List<string>();
+            listPropertyReject.Add("Address");
         }
         // GET: ClientSite/Login
         public ActionResult SignIn()
@@ -95,6 +107,7 @@ namespace CMS_Web.Controllers
         {
             try
             {
+                PropertyReject();
                 if (!string.IsNullOrEmpty(model.Password) && !string.IsNullOrEmpty(model.ConfirmPassword) && !model.Password.Equals(model.ConfirmPassword))
                     ModelState.AddModelError("ConfirmPassword", "Xác nhận mật khẩu không chính xác !");
 
@@ -103,6 +116,7 @@ namespace CMS_Web.Controllers
                 model.Password = CommonHelper.Encrypt(model.Password);
                 string msg = "";
                 string cusId = "";
+                model.Address = "None";
                 var result = _factory.InsertOrUpdate(model, ref cusId, ref msg);
                 if (result)
                 {
@@ -127,6 +141,30 @@ namespace CMS_Web.Controllers
             catch (Exception ex)
             {
                 NSLog.Logger.Error("SignUp", ex);
+                return new HttpStatusCodeResult(400, ex.Message);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult ForgetPassword(ClientLoginModel model)
+        {
+            try
+            {
+                string msg = "";
+                var result = CommonHelper.ContactAdmin(model.ContactDTO);
+                if (result)
+                {
+                    return RedirectToAction("Index", "Location");
+                }
+                else
+                {
+                    ModelState.AddModelError("ContactDTO.Name", msg);
+                    return View(model);
+                }
+            }
+            catch (Exception ex)
+            {
+                NSLog.Logger.Error("Contact_Email", ex);
                 return new HttpStatusCodeResult(400, ex.Message);
             }
         }

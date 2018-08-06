@@ -18,63 +18,72 @@ namespace CMS_Shared.CMSEmployees
             {
                 using (var trans = cxt.Database.BeginTransaction())
                 {
-                    try
+                    var _isExits = cxt.CMS_Customers.Any(x => x.Email.Equals(model.Employee_Email));
+                    if (_isExits)
                     {
-                        if(string.IsNullOrEmpty(model.Id))
-                        {
-                            var _Id = Guid.NewGuid().ToString();
-                            var e = new CMS_Employee
-                            {
-                                Id = _Id,
-                                BirthDate = model.BirthDate,
-                                CreatedBy = model.CreatedBy,
-                                CreatedDate = DateTime.Now,
-                                Employee_Address = model.Employee_Address,
-                                Employee_Email = model.Employee_Email,
-                                Employee_IDCard = model.Employee_IDCard,
-                                Employee_Phone = model.Employee_Phone,
-                                FirstName = model.FirstName,
-                                IsActive = model.IsActive,
-                                LastName = model.LastName,
-                                Password = model.Password,
-                                UpdatedBy = model.UpdatedBy,
-                                UpdatedDate = DateTime.Now,
-                                ImageURL = model.ImageURL
-                            };
-                            cxt.CMS_Employees.Add(e);
-                        }
-                        else
-                        {
-                            var e = cxt.CMS_Employees.Find(model.Id);
-                            if(e != null)
-                            {
-                                e.BirthDate = model.BirthDate;
-                                e.UpdatedBy = model.UpdatedBy;
-                                e.Employee_Address = model.Employee_Address;
-                                e.Employee_Email = model.Employee_Email;
-                                e.Employee_IDCard = model.Employee_IDCard;
-                                e.Employee_Phone = model.Employee_Phone;
-                                e.FirstName = model.FirstName;
-                                e.LastName = model.LastName;
-                                e.IsActive = model.IsActive;
-                                e.Password = model.Password;
-                                e.UpdatedDate = DateTime.Now;
-                                e.ImageURL = model.ImageURL;
-                            }
-                        }
-                        cxt.SaveChanges();
-                        trans.Commit();
-                    }
-                    catch (Exception ex)
-                    {
-                        msg = "Vui lòng kiểm tra đường truyền";
+                        msg = "Địa chỉ email đã tồn tại";
                         result = false;
-                        trans.Rollback();
                     }
-                    finally
+                    else
                     {
-                        cxt.Dispose();
-                    }
+                        try
+                        {
+                            if (string.IsNullOrEmpty(model.Id))
+                            {
+                                var _Id = Guid.NewGuid().ToString();
+                                var e = new CMS_Employee
+                                {
+                                    Id = _Id,
+                                    BirthDate = model.BirthDate,
+                                    CreatedBy = model.CreatedBy,
+                                    CreatedDate = DateTime.Now,
+                                    Employee_Address = model.Employee_Address,
+                                    Employee_Email = model.Employee_Email,
+                                    Employee_IDCard = model.Employee_IDCard,
+                                    Employee_Phone = model.Employee_Phone,
+                                    FirstName = model.FirstName,
+                                    IsActive = model.IsActive,
+                                    LastName = model.LastName,
+                                    Password = model.Password,
+                                    UpdatedBy = model.UpdatedBy,
+                                    UpdatedDate = DateTime.Now,
+                                    ImageURL = model.ImageURL
+                                };
+                                cxt.CMS_Employees.Add(e);
+                            }
+                            else
+                            {
+                                var e = cxt.CMS_Employees.Find(model.Id);
+                                if (e != null)
+                                {
+                                    e.BirthDate = model.BirthDate;
+                                    e.UpdatedBy = model.UpdatedBy;
+                                    e.Employee_Address = model.Employee_Address;
+                                    e.Employee_Email = model.Employee_Email;
+                                    e.Employee_IDCard = model.Employee_IDCard;
+                                    e.Employee_Phone = model.Employee_Phone;
+                                    e.FirstName = model.FirstName;
+                                    e.LastName = model.LastName;
+                                    e.IsActive = model.IsActive;
+                                    e.Password = model.Password;
+                                    e.UpdatedDate = DateTime.Now;
+                                    e.ImageURL = model.ImageURL;
+                                }
+                            }
+                            cxt.SaveChanges();
+                            trans.Commit();
+                        }
+                        catch (Exception ex)
+                        {
+                            msg = "Vui lòng kiểm tra đường truyền";
+                            result = false;
+                            trans.Rollback();
+                        }
+                        finally
+                        {
+                            cxt.Dispose();
+                        }
+                    }                    
                 }
             }
             return result;

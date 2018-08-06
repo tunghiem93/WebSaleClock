@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CMS_DTO.CMSContact;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -21,9 +22,12 @@ namespace CMS_DTO.CMSCustomer
         public bool IsRemember { get; set; }
         public string DisplayName { get; set; }
         public bool IsAdmin { get; set; }
+        public CMS_ContactModels ContactDTO { get; set; }
+
         public ClientLoginModel()
         {
             IsRemember = true;
+            ContactDTO = new CMS_ContactModels();
         }
     }
 }

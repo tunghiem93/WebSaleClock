@@ -1,8 +1,52 @@
-﻿@model CMS_DTO.CMSCustomer.CustomerModels
+﻿@model CMS_DTO.CMSCustomer.CMS_CustomerModels
 @{
-    Layout = "~/Areas/Clients/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Đăng ký thành viên";
 }
+
+<main class="main-content">
+    <div id="register-page" class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="register-box">
+                    <h1>Tạo tài khoản</h1>
+                    @using (@Html.BeginForm("SignUp", "Login", FormMethod.Post, new { @id = "create_customer", @class = "form-horizontal create-form", @enctype = "multipart/form-data", }))
+                    {
+                        <input type="hidden" name="form_type" value="create_customer"><input type="hidden" name="utf8" value="✓">
+                        <h3 class="page-subheading">Thông tin tài khoản</h3>
+                        <label for="FirstName" class="label-register">Họ</label>
+                        @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", @id = "CustomerFirstName", @placeholder = "*Họ", @autocapitalize = "words", @required = "required" })
+                        @Html.ValidationMessageFor(model => model.FirstName, null, new { @class = "label label-danger", })
+                        <label for="LastName" class="label-register">Tên</label>
+                        @Html.TextBoxFor(model => model.LastName, new { @class = "form-control", @id = "CustomerFirstName", @placeholder = "*Tên", @autocapitalize = "words", @required = "required" })
+                        @Html.ValidationMessageFor(model => model.LastName, null, new { @class = "label label-danger", })
+                        <label for="Email" class="label-register">Email</label>
+                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @id = "CustomerEmail", @placeholder = "*Địa chỉ Email", @type = "email", @required = "required" })
+                        @Html.ValidationMessageFor(model => model.Email, null, new { @class = "label label-danger", })
+                        <label for="Phone" class="label-register">Số điện thoại</label>
+                        @Html.TextBoxFor(model => model.Phone, new { @class = "form-control", @id = "CustomerEmail", @placeholder = "Số điện thoại", })
+                        @Html.ValidationMessageFor(model => model.Phone, null, new { @class = "label label-danger", })
+                        <label for="CreatePassword" class="label-register">Mật khẩu</label>
+                        @Html.PasswordFor(model => model.Password, new { @class = "form-control", @id = "CreatePassword", @placeholder = "*Mật khẩu", @type = "password", @required = "required" })
+                        @Html.ValidationMessageFor(model => model.Password, null, new { @class = "label label-danger", })
+                        <label for="CreatePassword" class="label-register">Xác nhận lại mật khẩu</label>
+                        @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control", @id = "CreatePassword", @placeholder = "*Xác nhân mật khẩu", @type = "password", @required = "required" })
+                        @Html.ValidationMessageFor(model => model.ConfirmPassword, null, new { @class = "label label-danger", })
+                        <p>
+                            <input type="submit" value="Tạo tài khoản" class="btn btn-outline">
+                        </p>
+                        <a class="link-back" href="@Url.Action("Index","Home")">
+                            <span>
+                                <i class="fa fa-long-arrow-left"></i>&nbsp;
+                                Quan lai trang chủ
+                            </span>
+                        </a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
 
 <script type="text/javascript">
     $(document).ready(function () {

@@ -19,73 +19,83 @@ namespace CMS_Shared.CMSCustomers
             {
                 using (var trans = cxt.Database.BeginTransaction())
                 {
-                    try
+                    var _isExits = cxt.CMS_Customers.Any(x => x.Email.Equals(model.Email));
+                    if (_isExits)
                     {
-                        if(string.IsNullOrEmpty(model.ID))
-                        {
-                            Id = Guid.NewGuid().ToString();
-                            var e = new CMS_Customers
-                            {
-                                Id = Id,
-                                Address = model.Address,
-                                BirthDate = model.BirthDate,
-                                City = model.City,
-                                CompanyName = model.CompanyName,
-                                Country = model.Country,
-                                CreatedBy = model.CreatedBy,
-                                CreatedDate = DateTime.Now,
-                                Description = model.Description,
-                                Email = model.Email,
-                                FirstName = model.FirstName,
-                                Gender = model.Gender,
-                                ImageURL = model.ImageURL,
-                                IsActive = model.IsActive,
-                                LastName = model.LastName,
-                                MaritalStatus = model.MaritalStatus,
-                                Password = model.Password,
-                                Phone = model.Phone,
-                                Street = model.Street,
-                                UpdatedBy = model.UpdatedBy,
-                                UpdatedDate = DateTime.Now
-                            };
-                            cxt.CMS_Customers.Add(e);
-                        }
-                        else
-                        {
-                            var e = cxt.CMS_Customers.Find(model.ID);
-                            if(e != null)
-                            {
-                                e.Address = model.Address;
-                                e.BirthDate = model.BirthDate;
-                                e.City = model.City;
-                                e.CompanyName = model.CompanyName;
-                                e.Country = model.Country;
-                                e.UpdatedBy = model.UpdatedBy;
-                                e.FirstName = model.FirstName;
-                                e.Description = model.Description;
-                                e.Email = model.Email;
-                                e.Gender = model.Gender;
-                                e.ImageURL = model.ImageURL;
-                                e.IsActive = model.IsActive;
-                                e.LastName = model.LastName;
-                                e.MaritalStatus = model.MaritalStatus;
-                                e.Password = model.Password;
-                                e.Phone = model.Phone;
-                                e.Street = model.Street;
-                            }
-                        }
-                        cxt.SaveChanges();
-                        trans.Commit();
-                    }
-                    catch(Exception ex) {
+                        msg = "Địa chỉ email đã tồn tại";
                         result = false;
-                        trans.Rollback();
-                        msg = "Lỗi đường truyền mạng";
                     }
-                    finally
+                    else
                     {
-                        cxt.Dispose();
-                    }
+                        try
+                        {
+                            if (string.IsNullOrEmpty(model.ID))
+                            {
+                                Id = Guid.NewGuid().ToString();
+                                var e = new CMS_Customers
+                                {
+                                    Id = Id,
+                                    Address = model.Address,
+                                    BirthDate = model.BirthDate,
+                                    City = model.City,
+                                    CompanyName = model.CompanyName,
+                                    Country = model.Country,
+                                    CreatedBy = model.CreatedBy,
+                                    CreatedDate = DateTime.Now,
+                                    Description = model.Description,
+                                    Email = model.Email,
+                                    FirstName = model.FirstName,
+                                    Gender = model.Gender,
+                                    ImageURL = model.ImageURL,
+                                    IsActive = model.IsActive,
+                                    LastName = model.LastName,
+                                    MaritalStatus = model.MaritalStatus,
+                                    Password = model.Password,
+                                    Phone = model.Phone,
+                                    Street = model.Street,
+                                    UpdatedBy = model.UpdatedBy,
+                                    UpdatedDate = DateTime.Now
+                                };
+                                cxt.CMS_Customers.Add(e);
+                            }
+                            else
+                            {
+                                var e = cxt.CMS_Customers.Find(model.ID);
+                                if (e != null)
+                                {
+                                    e.Address = model.Address;
+                                    e.BirthDate = model.BirthDate;
+                                    e.City = model.City;
+                                    e.CompanyName = model.CompanyName;
+                                    e.Country = model.Country;
+                                    e.UpdatedBy = model.UpdatedBy;
+                                    e.FirstName = model.FirstName;
+                                    e.Description = model.Description;
+                                    e.Email = model.Email;
+                                    e.Gender = model.Gender;
+                                    e.ImageURL = model.ImageURL;
+                                    e.IsActive = model.IsActive;
+                                    e.LastName = model.LastName;
+                                    e.MaritalStatus = model.MaritalStatus;
+                                    e.Password = model.Password;
+                                    e.Phone = model.Phone;
+                                    e.Street = model.Street;
+                                }
+                            }
+                            cxt.SaveChanges();
+                            trans.Commit();
+                        }
+                        catch (Exception ex)
+                        {
+                            result = false;
+                            trans.Rollback();
+                            msg = "Lỗi đường truyền mạng";
+                        }
+                        finally
+                        {
+                            cxt.Dispose();
+                        }
+                    }                    
                 }
             }
             return result;
