@@ -50,7 +50,7 @@ namespace CMS_Web.Controllers
                             x.ImageURL = _Image.ImageURL;
                             if (!string.IsNullOrEmpty(x.ImageURL))
                             {
-                                x.ImageURL = "~/Uploads/Products/" + x.ImageURL;
+                                x.ImageURL = Commons._PublicImages + "Products/" + x.ImageURL;
                             }
                             else
                             {

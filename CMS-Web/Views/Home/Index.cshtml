@@ -203,7 +203,7 @@ $(document).ready(function () {
                                     <div class="product-container text-left product-block">
                                         <div class="product-image-container image">
                                             <a class="product_img_link" href="#">
-                                                <img class="img-responsive" src="@Url.Content(item.ImageURL)" alt="@item.ProductName">
+                                                <img class="img-responsive" src="@item.ImageURL" alt="@item.ProductName">
                                             </a>
                                             <span class="new-box">
                                                 <span class="label-new label">Mới</span>
@@ -247,7 +247,7 @@ $(document).ready(function () {
                                                 </div>
                                                 <div class="cart">
                                                     <div class="action">
-                                                        <a class="button ajax_addtocart btn" href="" ng-click="AddToCart();" title="Thêm giỏ hàng">
+                                                        <a class="button ajax_addtocart btn" href="" ng-click="AddToCart('@item.Id','',1,@item.ProductPrice,'@item.ImageURL','@item.ProductName');" title="Thêm giỏ hàng">
                                                             <span class="fa fa-shopping-cart"></span>
                                                             <span class="select_options">Thêm giỏ hàng</span>
                                                         </a>

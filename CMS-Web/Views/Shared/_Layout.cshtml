@@ -417,7 +417,7 @@
                                 </div>
                                 <div class="cpro_item col-xs-12 col-sm-2 col-md-2">
                                     <div class="cpro_item_inner">
-                                        <span class="price product-price"><span class="money" data-currency-usd="{{item.Price}}" data-currency="USD">{{item.Price}}</span></span>
+                                        <span class="price product-price"><span class="money" data-currency-usd="{{item.Price | currency}}" data-currency="VNĐ">{{item.Price |currency :"": 0}} đ</span></span>
                                     </div>
                                 </div>
                                 <div class="cpro_item text-center col-xs-12 col-sm-2 col-md-2">
@@ -426,7 +426,7 @@
 
                                         <div class="ajaxcartQty">
                                             <button type="button" class="ajaxcartQtyAdjust ajaxcartQtyMinus" data-id="22632174659" data-qty="0">−</button>
-                                            <input type="text" class="ajaxcartQtyNum" value="{{item.Qty}}" min="0" data-id="22632174659" aria-label="quantity" pattern="[0-9]*">
+                                            <input type="text" class="ajaxcartQtyNum" value="{{item.Quantity}}" min="0" data-id="22632174659" aria-label="quantity" pattern="[0-9]*">
                                             <button type="button" class="ajaxcartQtyAdjust ajaxcartQtyPlus" data-id="22632174659" data-qty="11">+</button>
                                         </div>
 
@@ -1248,8 +1248,11 @@
 <script src="@Url.Content("~/Scripts/jquery.ajaxchimp.min.js")"></script>
 <script src="@Url.Content("~/Scripts/plugins.js")"></script>
 <script src="@Url.Content("~/Scripts/main.js")"></script>
+<script src="@Url.Content("~/Scripts/js.cookie.min.js")"></script>
 <script src="@Url.Content("~/Scripts/angular.min.js")"></script>
+<script src="@Url.Content("~/Scripts/InitCookie.js")"></script>
 <script type="text/javascript">
+   
     function SearchKeyWord() {
         var _key = $("#txtsearch").val();
         if (_key.length > 0)
@@ -1295,13 +1298,17 @@
     var app = angular.module("appWebClock", []);
     app.controller("CartCtrl", ["$scope", "$rootScope", function ($scope, $rootScope) {
        
-        $scope.AddToCart = function () {    
-            var ListProducts = [
-                { "ImageUrl": "//cdn.shopify.com/s/files/1/1359/9953/products/2-min_small.jpg", "Name": "Cup Of Coffee", "Price": "$28.86", "Qty": 1, },
-                { "ImageUrl": "//cdn.shopify.com/s/files/1/1359/9953/products/2-min_small.jpg", "Name": "Cup Of Coffee", "Price": "$28.86", "Qty": 1, }
-            ];
-            $rootScope.Products = ListProducts;
-            console.log(ListProducts);
+        $scope.AddToCart = function (ItemId, UnitId, Qty, Price, ImageUrl, Name) {    
+            var _Order = {
+                ItemId: ItemId,
+                UnitId: UnitId,
+                Quantity: Qty,
+                Price: Price,
+                Name: Name,
+                ImageUrl: ImageUrl
+            };
+            CreateOrUpdateOrder(_Order);
+            $rootScope.Products = getListOrder();
             $('[id=AjaxifyModal]').css("opacity", "1");
             $(window).scrollTop(0);
         }
@@ -1310,4 +1317,8 @@
             $('[id=AjaxifyModal]').css("opacity", "0");
         }
     }]);
+
+    $(document).ready(function () {
+        getListOrder();
+    });
 </script>
