@@ -36,6 +36,8 @@ namespace CMS_Shared
         public static string HostImage = ConfigurationManager.AppSettings["HostImage"];
         public static string _PublicImages = string.IsNullOrEmpty(ConfigurationManager.AppSettings["PublicImages"]) ? "" : ConfigurationManager.AppSettings["PublicImages"];
 
+        public const string PasswordChar = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
         #region Enum
         public enum ESizeType
         {

@@ -52,23 +52,42 @@
                             <span>Account</span>
                         </div>
                         <ul class="links list-unstyled">
+                            @{
+                                var user = Session["UserClient"] as CMS_DTO.CMSSession.UserSession;
+                                if (user != null)
+                                {
+                                    <li>
+                                        <a id="customer_login_link" href="javascript:void(0)" title="@user.UserName">
+                                            <i class="fa fa-unlock-alt"></i> @user.UserName
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a id="customer_login_link" href="@Url.Action("Logout","Login")" title="Đăng xuất">
+                                            <i class="fa fa-sign-out"></i> Đăng xuất
+                                        </a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li>
+                                        <a href="@Url.Action("SignIn","Login")">
+                                            <i class="fa fa-sign-in"></i>Đăng nhập
+                                        </a>
+                                    </li>
+                                    <li>
+                                         <a href="@Url.Action("SignUp","Login")">
+                                             <i class="fa fa-registered"></i>Đăng ký
+                                         </a>
+                                    </li>
+                                }
+                            }                            
                             <li>
-                                <a id="customer_login_link" href="/account/login" title="Login">
-                                    <i class="fa fa-unlock-alt"></i> Login
-                                </a>
-                            </li>
-                            <li>
-                                <a id="customer_register_link" href="/account/register" title="Register">
-                                    <i class="fa fa-edit"></i> Register
-                                </a>
-                            </li>
-                            <li>
-                                <a class="account" rel="nofollow" href="/account" title="My Account">
+                                <a class="account" rel="nofollow" href="@Url.Action("SignIn","Login")" title="My Account">
                                     <i class="fa fa-user"></i> Tài khoản
                                 </a>
                             </li>
                             <li>
-                                <a id="wishlist-total" title="Wishlist" href="/pages/wishlist">
+                                <a id="wishlist-total" title="Wishlist" href="javascript:void(0)">
                                     <i class="fa fa-list-alt"></i> Ưu thích
                                 </a>
                             </li>

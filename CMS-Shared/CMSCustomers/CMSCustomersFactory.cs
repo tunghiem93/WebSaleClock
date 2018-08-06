@@ -1,6 +1,7 @@
 ﻿using CMS_DTO.CMSCustomer;
 using CMS_Entity;
 using CMS_Entity.Entity;
+using CMS_Shared.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace CMS_Shared.CMSCustomers
 {
     public class CMSCustomersFactory
     {
-        public bool InsertOrUpdate(CMS_CustomerModels model, ref string msg)
+        public bool InsertOrUpdate(CMS_CustomerModels model, ref string Id, ref string msg)
         {
             var result = true;
             using (var cxt = new CMS_Context())
@@ -22,9 +23,10 @@ namespace CMS_Shared.CMSCustomers
                     {
                         if(string.IsNullOrEmpty(model.ID))
                         {
+                            Id = Guid.NewGuid().ToString();
                             var e = new CMS_Customers
                             {
-                                Id = Guid.NewGuid().ToString(),
+                                Id = Id,
                                 Address = model.Address,
                                 BirthDate = model.BirthDate,
                                 City = model.City,
@@ -191,6 +193,81 @@ namespace CMS_Shared.CMSCustomers
             }
             catch(Exception ex) { }
             return null;
+        }
+
+        public ClientLoginModel Login(ClientLoginModel model)
+        {
+            try
+            {
+                using (var cxt = new CMS_Context())
+                {
+                    var data = cxt.CMS_Customers.Where(x => x.Email.Equals(model.Email) &&
+                                                         x.Password.Equals(model.Password) &&
+                                                         x.IsActive)
+                                              .Select(x => new ClientLoginModel
+                                              {
+                                                  Email = x.Email,
+                                                  DisplayName = x.FirstName + " " + x.LastName,
+                                                  Password = x.Password,
+                                                  IsAdmin = false,
+                                                  FirstName = x.FirstName,
+                                                  LastName = x.LastName,
+                                                  Phone = x.Phone,
+                                                  Id = x.Id
+                                              })
+                                              .FirstOrDefault();
+                    return data;
+                }
+            }
+            catch (Exception ex)
+            {
+                NSLog.Logger.Error("Login", ex);
+            }
+            return null;
+        }
+
+        public bool ForgotPassword(string email, ref string msg)
+        {
+            NSLog.Logger.Info("CustomerForgotPassword", email);
+
+            var result = false;
+            try
+            {
+                using (var cxt = new CMS_Context())
+                {
+                    var cus = cxt.CMS_Customers.Where(o => o.Email.ToLower().Trim() == email.ToLower().Trim() && o.IsActive).FirstOrDefault();
+                    if (cus != null)
+                    {
+                        if (cus.IsActive)
+                        {
+                            string newPass = CommonHelper.GenerateCode(1, new List<string>(), 8).FirstOrDefault();
+
+                            CommonHelper.SendContentMail(email, "New password: " + newPass, "", "Forgot password");
+
+                            cus.Password = CommonHelper.Encrypt(newPass);
+                            cus.UpdatedDate = DateTime.Now;
+
+                            if (cxt.SaveChanges() > 0)
+                                result = true;
+                            else
+                                msg = "Unable to change password.";
+                        }
+                        else
+                            msg = "This customer is inactive. Please contact your administrator for more support.";
+                    }
+                    else
+                        msg = "Email is not exist.";
+
+                    NSLog.Logger.Info("ResponseCustomerForgotPassword", new { result, msg });
+                }
+            }
+            catch (Exception ex)
+            {
+                msg = "System Error.";
+                result = false;
+                NSLog.Logger.Error("ErrorCustomerForgotPassword", ex);
+            }
+            return result;
         }
     }
 }
