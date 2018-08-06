@@ -42,7 +42,7 @@ function getListOrder()
         if (Orders !== undefined && Orders !== null) {
             var _Quantity = 0;
             $.each(Orders, function (index, item) {
-                _Quantity = _Quantity + item.Quantity;
+                _Quantity = parseInt(_Quantity) + parseInt(item.Quantity);
             });
             $('#CartCount').html(_Quantity);
           //  $('.cart-items-count').text(_Quantity);
