@@ -1,0 +1,59 @@
+﻿@model CMS_DTO.CMSProduct.ProductViewModels
+@using CMS_Shared;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Index";
+    var _count = 0;
+}
+
+<main class="main-content">
+    <section id="columns" class="columns-container">
+        <div class="container">
+            <div class="row">
+                <div id="center_column" class="center_column col-md-12">
+                    <div id="list_collections">
+                        @if (Model.ListCate != null && Model.ListCate.Any())
+                        {
+                            var _totalLength = Model.ListCate.Count;
+                            while (_count < _totalLength)
+                            {
+                                <div class="row">
+                                    @for (int i = 0; i < Model.ListCate.Count; i++)
+                                    {
+                                        <div class="block_collection col-xs-12 col-sm-6 col-md-4">
+                                            <div class="collection_item">
+                                                <div class="collection-top effect_banner">
+                                                    <a href="/collections/best-seller" title="Best Seller">
+                                                        <img src="@Model.ListCate[i].ImageURL" alt="@Model.ListCate[i].CategoryName" class="img-responsive">
+                                                    </a>
+                                                </div>
+                                                <div class="collection-meta">
+                                                    <h3 class="h5">
+                                                        <a href="/collections/best-seller" title="@Model.ListCate[i].CategoryName">@Html.Raw(Model.ListCate[i].CategoryName)</a>
+                                                    </h3>
+                                                    <div class="collection_products">@Html.Raw(Model.ListCate[i].NumberOfProduct + " Sản phẩm")</div>
+                                                    <p class="collection_desc">@Html.Raw(string.Format("{0}", (string.IsNullOrEmpty(Model.ListCate[i].Description) || Model.ListCate[i].Description.Length < 70) ? Model.ListCate[i].Description : Model.ListCate[i].Description.Substring(0, 70) + "..."))</p>
+                                                    <div class="text-center">
+                                                        <a href="/collections/best-seller" title="Trở lại shop" class="btn btn-default btn-outline-inverse">
+                                                            Trở lại shop
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        _count++;
+                                        if (_count % 3 == 0)
+                                        {
+                                            break;
+                                        }
+                                    }
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

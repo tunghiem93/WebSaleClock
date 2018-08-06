@@ -35,6 +35,7 @@ namespace CMS_Shared.CMSBrands
                                 {
                                     BrandCode = model.BrandCode,
                                     BrandName = model.BrandName,
+                                    Short_Description = model.Short_Description,
                                     CreatedBy = model.CreatedBy,
                                     CreatedDate = DateTime.Now,
                                     Description = model.Description,
@@ -54,6 +55,7 @@ namespace CMS_Shared.CMSBrands
                                 {
                                     e.BrandCode = model.BrandCode;
                                     e.BrandName = model.BrandName;
+                                    e.Short_Description = model.Short_Description;
                                     e.Description = model.Description;
                                     e.IsActive = model.IsActive;
                                     e.UpdatedBy = model.UpdatedBy;
@@ -106,6 +108,7 @@ namespace CMS_Shared.CMSBrands
                     {
                         BrandCode = x.BrandCode,
                         BrandName = x.BrandName,
+                        Short_Description = x.Short_Description,
                         CreatedBy = x.CreatedBy,
                         CreatedDate = x.CreatedDate,
                         Description = x.Description,
@@ -133,6 +136,7 @@ namespace CMS_Shared.CMSBrands
                     {
                         BrandCode = x.BrandCode,
                         BrandName = x.BrandName,
+                        Short_Description = x.Short_Description,
                         CreatedBy = x.CreatedBy,
                         CreatedDate = x.CreatedDate,
                         Description = x.Description,

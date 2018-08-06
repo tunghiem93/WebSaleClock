@@ -11,6 +11,7 @@ namespace CMS_Entity.Entity
         public string Id { get; set; }
         public string CategoryName { get; set; }
         public string CategoryCode { get; set; }
+        public string Short_Description { get; set; }        
         public string Description { get; set; }
         public string ImageURL { get; set; }
         public string ParentId { get; set; }

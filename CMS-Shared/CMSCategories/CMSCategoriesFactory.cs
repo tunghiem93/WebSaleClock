@@ -35,6 +35,7 @@ namespace CMS_Shared.CMSCategories
                                 {
                                     CategoryCode = model.CategoryCode,
                                     CategoryName = model.CategoryName,
+                                    Short_Description = model.Short_Description,
                                     CreatedBy = model.CreatedBy,
                                     CreatedDate = DateTime.Now,
                                     Description = model.Description,
@@ -55,6 +56,7 @@ namespace CMS_Shared.CMSCategories
                                 {
                                     e.CategoryCode = model.CategoryCode;
                                     e.CategoryName = model.CategoryName;
+                                    e.Short_Description = model.sStatus;
                                     e.Description = model.Description;
                                     e.IsActive = model.IsActive;
                                     e.UpdatedBy = model.UpdatedBy;
@@ -107,6 +109,7 @@ namespace CMS_Shared.CMSCategories
                     {
                         CategoryCode = x.CategoryCode,
                         CategoryName = x.CategoryName,
+                        Short_Description = x.Short_Description,
                         CreatedBy = x.CreatedBy,
                         CreatedDate = x.CreatedDate,
                         Description = x.Description,
@@ -135,6 +138,7 @@ namespace CMS_Shared.CMSCategories
                     {
                         CategoryCode = x.CategoryCode,
                         CategoryName = x.CategoryName,
+                        Short_Description = x.Short_Description,
                         CreatedBy = x.CreatedBy,
                         CreatedDate = x.CreatedDate,
                         Description = x.Description,

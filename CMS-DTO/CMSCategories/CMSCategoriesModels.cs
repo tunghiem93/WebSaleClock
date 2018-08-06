@@ -20,6 +20,7 @@ namespace CMS_DTO.CMSCategories
         [MaxLength(50, ErrorMessage = "Mã thể loại tối đa 50 kí tự")]
         public string CategoryCode { get; set; }
         public bool IsActive { get; set; }
+        public string Short_Description { get; set; }
         [AllowHtml]
         public string Description { get; set; }
         public DateTime CreatedDate { get; set; }

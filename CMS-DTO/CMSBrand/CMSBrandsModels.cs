@@ -20,6 +20,7 @@ namespace CMS_DTO.CMSBrand
         [MaxLength(50, ErrorMessage = "Mã thương hiệu tối đa 50 kí tự")]
         public string BrandCode { get; set; }
         public bool IsActive { get; set; }
+        public string Short_Description { get; set; }
         [AllowHtml]
         public string Description { get; set; }
         public DateTime CreatedDate { get; set; }
