@@ -419,29 +419,50 @@
                                 </div>
                                 <div class="cpro_item col-xs-12 col-sm-2 col-md-2">
                                     <div class="cpro_item_inner">
-                                        <span class="price product-price"><span class="money" data-currency-usd="{{item.Price | currency}}" data-currency="VNĐ">{{item.Price |currency :"": 0}} đ</span></span>
+                                        <span class="price product-price"><span class="money" data-currency-usd="{{item.Price | currency}}" >{{item.Price |currency :"": 0}} đ</span></span>
                                     </div>
                                 </div>
                                 <div class="cpro_item text-center col-xs-12 col-sm-2 col-md-2">
                                     <div class="cpro_item_inner">
                                         <div class="ajaxcartQty">
-                                            <button type="button" class="ajaxcartQtyAdjust ajaxcartQtyMinus" data-id="22632174659" data-qty="0">−</button>
+                                            <button type="button" class="ajaxcartQtyAdjust ajaxcartQtyMinus" ng-click="QtyAdjust($index,0)" data-qty="0">−</button>
                                             <input type="text" restrict-to="[0-9]" ng-model="item.Quantity" ng-change="UpdateQtyOrder($index);" min="0" pattern="[0-9]*">
-                                            <button type="button" class="ajaxcartQtyAdjust ajaxcartQtyPlus" data-id="22632174659" data-qty="11">+</button>
+                                            <button type="button" class="ajaxcartQtyAdjust ajaxcartQtyPlus" ng-click="QtyAdjust($index,1)" data-qty="11">+</button>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="cpro_item col-xs-12 col-sm-2 col-md-2">
                                     <div class="cpro_item_inner">
-                                        <span class="price product-price"><span class="money" data-currency-usd="$28.86" data-currency="USD">$28.86</span></span>
+                                        <span class="price product-price"><span class="money" data-currency-usd="{{item.Price * item.Quatity}}">{{item.Price * item.Quantity | currency : "" : 0}} đ</span></span>
                                     </div>
                                 </div>
                                 <div class="cpro_item col-xs-12 col-sm-1 col-md-1">
                                     <div class="cpro_item_inner">
-                                        <a href="/cart/change?line=1&amp;quantity=0" class="cart__remove ajaxcartRemove" data-id="22632174659">
+                                        <a href="javascript:void(0)" ng-click="RemoveItemOrder($index)" class="cart__remove ajaxcartRemove" data-id="22632174659">
                                             <small>Remove</small>
                                         </a>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="list_button_cart clearfix">
+                                <div class="note_item col-xs-12 col-sm-6 col-md-6">
+
+                                    <div class="note_cart">
+                                        <label class="control-label" for="CartSpecialInstructions">Special instructions for seller</label>
+                                        <textarea name="note" class="form-control" id="CartSpecialInstructions"></textarea>
+                                    </div>
+
+                                </div>
+                                <div class="note_buton col-xs-12 col-sm-6 col-md-6 text-right">
+                                    <p>
+                                        <span class="cart__subtotal-title">Subtotal</span>
+                                        <span class="h3 cart__subtotal"><span class="money" data-currency-usd="{{OrderTotal}}">{{OrderTotal | currency : "" : 0}} đ</span></span>
+                                    </p>
+                                    <p><em>Shipping &amp; taxes calculated at checkout</em></p>
+                                    <a class="btn con-ajax-cart btn-outline" href="/collections/all" title="Continue shopping">Continue shopping</a>
+                                    <input type="submit" name="update" class="btn btn-outline update-cart" value="Update Cart">
+                                    <input type="submit" name="checkout" class="btn btn-outline" value="Check Out">
+
                                 </div>
                             </div>
                         </div>
@@ -1309,7 +1330,7 @@
         }
     });
     app.controller("CartCtrl", ["$scope", "$rootScope", function ($scope, $rootScope) {
-        $scope.onlyNumbers = /^\d+$/;
+        /* add cart */
         $scope.AddToCart = function (ItemId, UnitId, Qty, Price, ImageUrl, Name) {    
             var _Order = {
                 ItemId: ItemId,
@@ -1321,17 +1342,52 @@
             };
             CreateOrUpdateOrder(_Order);
             $rootScope.Products = getListOrder();
+            $scope.setTotals($rootScope.Products);
             $('[id=AjaxifyModal]').css("opacity", "1");
             $(window).scrollTop(0);
         }
-
+        /* close modal */
         $scope.CloseCart = function () {
             $('[id=AjaxifyModal]').css("opacity", "0");
         }
 
+        /* update qty of order by order id */
         $scope.UpdateQtyOrder = function ($index) {
             UpdateQuantity($rootScope.Products[$index].ItemId, $rootScope.Products[$index].Quantity);
-            getListOrder();
+            var Orders = getListOrder();
+            $scope.setTotals(Orders);
+        }
+        /* count total bill of order */
+        $scope.setTotals = function (Orders) {
+            var _OrderTotal = 0;
+            angular.forEach(Orders, function (item, index) {
+                _OrderTotal += item.Quantity * item.Price;
+            });
+            $rootScope.OrderTotal = _OrderTotal;
+        }
+
+        $scope.QtyAdjust = function ($index, type)
+        {
+            if (type == 0)
+            {
+                $rootScope.Products[$index].Quantity -= 1;
+                if (parseInt($rootScope.Products[$index].Quantity) < 1)
+                    $rootScope.Products[$index].Quantity = 1;
+            }
+            else {
+                $rootScope.Products[$index].Quantity += 1;
+            }
+            UpdateQuantity($rootScope.Products[$index].ItemId, $rootScope.Products[$index].Quantity);
+            var Orders = getListOrder();
+            $scope.setTotals(Orders);
+        }
+
+        $scope.RemoveItemOrder = function ($index)
+        {
+            RemoveOrderByItemId($rootScope.Products[$index].ItemId);
+            var Orders = getListOrder();
+            $rootScope.Products = Orders;
+            $scope.setTotals(Orders);
         }
     }]);
 
