@@ -3,7 +3,7 @@
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Chi tiết";
     var _count = 0;
 }
 
@@ -34,7 +34,7 @@
                     <div class="content_scene_cat">
                         <div class="content_scene_cat_bg">
                             <div class="image">
-                                <img class="img-responsive" alt="Featured" src="//cdn.shopify.com/s/files/1/1359/9953/collections/Untitled-7_1024x1024.jpg?v=1468834557">
+                                <img class="img-responsive" alt="Featured" src="@Model.CateModel.ImageURL">
                             </div>
                             <div class="cat_desc">
                                 <div class="rte">
@@ -88,10 +88,10 @@
                                     <div class="row">
                                         @for (int i = _count; _count < _totalLength; i++)
                                         {
-                                            <div class="product_block wow fadeIn col-md-4 col-xs-6 col-sp-12 animated" data-wow-delay="0ms" style="visibility: visible; animation-delay: 0ms; animation-name: fadeIn;">
+                                            <div class="product_block wow fadeIn col-md-4 col-xs-6 col-sp-12 animated" data-wow-delay="@i*100 ms" style="visibility: visible; animation-delay: @i*100 ms; animation-name: fadeIn;">
                                                 <div class="product-container text-left product-block">
                                                     <div class="product-image-container image">
-                                                        <a class="product_img_link" href="#">
+                                                        <a class="product_img_link" href="javascript:void(0)">
                                                             <img class="img-responsive" src="@Model.ListProduct[i].ImageURL" alt="@Model.ListProduct[i].ProductName">
                                                         </a>
                                                         <span class="new-box">
@@ -105,7 +105,7 @@
                                                             </span>
                                                         </div>
                                                         <h5 class="name">
-                                                            <a class="product-name" href="#" title="@Model.ListProduct[i].ProductName">@Html.Raw(string.Format("{0}", Model.ListProduct[i].ProductName.Length > 35 ? Model.ListProduct[i].ProductName.Substring(0, 35) + "..." : Model.ListProduct[i].ProductName))</a>
+                                                            <a class="product-name" href="javascript:void(0)" title="@Model.ListProduct[i].ProductName">@Html.Raw(string.Format("{0}", Model.ListProduct[i].ProductName.Length > 35 ? Model.ListProduct[i].ProductName.Substring(0, 35) + "..." : Model.ListProduct[i].ProductName))</a>
                                                         </h5>
                                                         <div class="product-desc">@Model.ListProduct[i].Short_Description</div>
                                                         <div class="content_price">
@@ -143,16 +143,16 @@
                                                                 </div>
                                                             </div>
                                                             <div class="wishlist">
-                                                                <a class="btn btn-outline-inverse btn-wishlist" href="#" title="Thêm mục ưu thích">
+                                                                <a class="btn btn-outline-inverse btn-wishlist" href="javascript:void(0)" title="Thêm mục ưu thích">
                                                                     <i class="fa fa-heart"></i>
                                                                     <span>Thêm mục ưu thích</span>
                                                                 </a>
                                                             </div>
                                                             @*<div class="view_detail">
-                                                                <a class="btn lnk_view" href="/collections/featured/products/longsleeve-spacedye-nep" title="View product">
-                                                                    <i class="fa fa-eye"></i><span>View product</span>
-                                                                </a>
-                                                            </div>*@
+                                                                    <a class="btn lnk_view" href="/collections/featured/products/longsleeve-spacedye-nep" title="View product">
+                                                                        <i class="fa fa-eye"></i><span>View product</span>
+                                                                    </a>
+                                                                </div>*@
                                                         </div>
                                                     </div>
                                                 </div>
@@ -227,7 +227,7 @@
                                 </ul>
                             </div>
                         </div>
-                        
+
                         <div id="products_sider_block" class="block products_block nopadding ">
                             <h4 class="title_block">
                                 <a href="/collections/best-seller" title="Best Sellers">Sản phẩm mới nhất</a>
@@ -241,7 +241,7 @@
                                             <li class="media clearfix">
                                                 <div class="product-block">
                                                     <div class="product-container media">
-                                                        <a class="products-block-image img pull-left" href="#" title="@item.ProductName">
+                                                        <a class="products-block-image img pull-left" href="javascript:void(0)" title="@item.ProductName">
                                                             <img class="replace-2x img-responsive" src="@item.ImageURL" alt="@item.ProductName">
                                                         </a>
                                                         <div class="media-body">

@@ -24,13 +24,13 @@
                                         <div class="block_collection col-xs-12 col-sm-6 col-md-4">
                                             <div class="collection_item">
                                                 <div class="collection-top effect_banner">
-                                                    <a href="/collections/best-seller" title="Best Seller">
+                                                    <a href="@Url.Action("Detail", "Collection", new { id = Model.ListCate[i].Id })" title="@Model.ListCate[i].CategoryName">
                                                         <img src="@Model.ListCate[i].ImageURL" alt="@Model.ListCate[i].CategoryName" class="img-responsive">
                                                     </a>
                                                 </div>
                                                 <div class="collection-meta">
                                                     <h3 class="h5">
-                                                        <a href="/collections/best-seller" title="@Model.ListCate[i].CategoryName">@Html.Raw(Model.ListCate[i].CategoryName)</a>
+                                                        <a href="@Url.Action("Detail", "Collection", new { id = Model.ListCate[i].Id })" title="@Model.ListCate[i].CategoryName">@Html.Raw(Model.ListCate[i].CategoryName)</a>
                                                     </h3>
                                                     <div class="collection_products">@Html.Raw(Model.ListCate[i].NumberOfProduct + " Sản phẩm")</div>
                                                     <p class="collection_desc">@string.Format("{0}", (string.IsNullOrEmpty(Model.ListCate[i].Short_Description) || Model.ListCate[i].Short_Description.Length < 100) ? Model.ListCate[i].Short_Description : Model.ListCate[i].Short_Description.Substring(0, 100) + "...")</p>

@@ -40,7 +40,7 @@ namespace CMS_Web.Controllers
             return View(model);
         }
         
-        public ActionResult NewsDetail(string id)
+        public ActionResult Detail(string id)
         {
             var model = new CMS_NewsViewModel();
             try
