@@ -16,7 +16,8 @@ namespace CMS_DTO.CMSProduct
         public List<CMS_ProductsModels> ListProductTopSales { get; set; }
         public CMS_CompanyModels Company { get; set; }
         public List<CMS_NewsModels> ListNews { get; set; }
-
+        
+        public CMSCategoriesModels CateModel { get; set; }
         public string CateID { get; set; }
         public List<CMSCategoriesModels> ListCate { get; set; }
         public string BrandID { get; set; }
@@ -29,6 +30,7 @@ namespace CMS_DTO.CMSProduct
         public bool IsOrther { get; set; }
         public ProductViewModels()
         {
+            CateModel = new CMSCategoriesModels();
             ListCate = new List<CMSCategoriesModels>();
             ListBrand = new List<CMSBrandsModels>();
             ListProduct = new List<CMS_ProductsModels>();
