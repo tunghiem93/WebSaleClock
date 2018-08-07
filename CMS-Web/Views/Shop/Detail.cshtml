@@ -303,10 +303,10 @@
                                                                 {
                                                                     <div class="owl-item active first" style="width: 300px;">
                                                                         <div class="item">
-                                                                            <div class="product_block wow fadeIn" data-wow-delay="@i*100 ms" style="visibility: hidden; animation-delay: "0ms; animation-name: none;">
+                                                                            <div class="product_block wow fadeIn" data-wow-delay="@i*100 ms" style="visibility: visible; animation-delay: "0ms; animation-name: none;">
                                                                                 <div class="product-container text-left product-block">
                                                                                     <div class="product-image-container image">
-                                                                                        <a class="product_img_link" href="/collections/best-seller/products/longsleeve-spacedye-nep">
+                                                                                        <a class="product_img_link" href="@Url.Action("Detail", "Shop", new { id = item.Id })">
                                                                                             <img class="img-responsive" src="@item.ImageURL" alt="@item.ProductName">
                                                                                         </a>
                                                                                         <span class="new-box">
@@ -320,17 +320,17 @@
                                                                                         <div class="content_price">
                                                                                             <span class="price product-price ">
                                                                                                 <span class="money">
-                                                                                                    @if (Model.ListProduct[i].ProductExtraPrice > 0 && Model.ListProduct[i].ProductExtraPrice < Model.ListProduct[i].ProductPrice)
+                                                                                                    @if (Model.ListSameProduct[i].ProductExtraPrice > 0 && Model.ListSameProduct[i].ProductExtraPrice < Model.ListSameProduct[i].ProductPrice)
                                                                                                     {
-                                                                                                        <span class="old-price product-price"><span class="money">@Model.ListProduct[i].ProductPrice VNĐ</span></span>
+                                                                                                        <span class="old-price product-price"><span class="money">@Model.ListSameProduct[i].ProductPrice VNĐ</span></span>
                                                                                                         <span class="price product-price sale-price">
-                                                                                                            <span class="money">@Model.ListProduct[i].ProductExtraPrice VNĐ</span>
+                                                                                                            <span class="money">@Model.ListSameProduct[i].ProductExtraPrice VNĐ</span>
                                                                                                         </span>
                                                                                                     }
                                                                                                     else
                                                                                                     {
                                                                                                         <span class="price product-price ">
-                                                                                                            <span class="money">@Model.ListProduct[i].ProductPrice VNĐ</span>
+                                                                                                            <span class="money">@Model.ListSameProduct[i].ProductPrice VNĐ</span>
                                                                                                         </span>
                                                                                                     }
                                                                                                 </span>
@@ -345,14 +345,25 @@
                                                                                             </div>
                                                                                             <div class="cart">
                                                                                                 <div class="action">
-                                                                                                    <a class="button ajax_addtocart btn" href="" ng-click="AddToCart(@Model.ListProduct[i].Id, '', 1, @Model.ListProduct[i].ProductPrice, @Model.ListProduct[i].ImageURL, @Model.ListProduct[i].ProductName);" title="Thêm giỏ hàng">
-                                                                                                        <span class="fa fa-shopping-cart"></span>
-                                                                                                        <span class="select_options">Thêm giỏ hàng</span>
-                                                                                                    </a>
+                                                                                                    @if (Model.ListSameProduct[i].ProductExtraPrice > 0 && Model.ListSameProduct[i].ProductExtraPrice < Model.ListSameProduct[i].ProductPrice)
+                                                                                                    {
+                                                                                                        <a class="button ajax_addtocart btn" href="" ng-click="AddToCart('@Model.ListSameProduct[i].Id', '', 1, @Model.ListSameProduct[i].ProductExtraPrice, '@Model.ListSameProduct[i].ImageURL', '@Model.ListSameProduct[i].ProductName');" title="Thêm giỏ hàng">
+                                                                                                            <span class="fa fa-shopping-cart"></span>
+                                                                                                            <span class="select_options">Thêm giỏ hàng</span>
+                                                                                                        </a>
+                                                                                                    }
+                                                                                                    else
+                                                                                                    {
+                                                                                                        <a class="button ajax_addtocart btn" href="" ng-click="AddToCart('@Model.ListSameProduct[i].Id', '', 1, @Model.ListSameProduct[i].ProductPrice, '@Model.ListSameProduct[i].ImageURL', '@Model.ListSameProduct[i].ProductName');" title="Thêm giỏ hàng">
+                                                                                                            <span class="fa fa-shopping-cart"></span>
+                                                                                                            <span class="select_options">Thêm giỏ hàng</span>
+                                                                                                        </a>
+                                                                                                    }
+
                                                                                                 </div>
                                                                                             </div>
                                                                                             <div class="wishlist">
-                                                                                                <a class="btn btn-outline-inverse btn-wishlist" href="javascript:void(0)" title="Thêm mục ưu thích">
+                                                                                                <a class="btn btn-outline-inverse btn-wishlist" style="cursor:pointer" title="Thêm mục ưu thích">
                                                                                                     <i class="fa fa-heart"></i>
                                                                                                     <span>Thêm mục ưu thích</span>
                                                                                                 </a>
@@ -375,10 +386,10 @@
                                                                     {
                                                                     <div class="owl-item active last" style="width: 300px;">
                                                                         <div class="item">
-                                                                            <div class="product_block wow fadeIn" data-wow-delay="@i*100 ms" style="visibility: hidden; animation-delay: 0ms; animation-name: none;">
+                                                                            <div class="product_block wow fadeIn" data-wow-delay="@i*100 ms" style="visibility: visible; animation-delay: 0ms; animation-name: none;">
                                                                                 <div class="product-container text-left product-block">
                                                                                     <div class="product-image-container image">
-                                                                                        <a class="product_img_link" href="/collections/best-seller/products/longsleeve-spacedye-nep">
+                                                                                        <a class="product_img_link" href="@Url.Action("Detail", "Shop", new { id = item.Id })">
                                                                                             <img class="img-responsive" src="@item.ImageURL" alt="@item.ProductName">
                                                                                         </a>
                                                                                         <span class="new-box">
@@ -392,17 +403,17 @@
                                                                                         <div class="content_price">
                                                                                             <span class="price product-price ">
                                                                                                 <span class="money">
-                                                                                                    @if (Model.ListProduct[i].ProductExtraPrice > 0 && Model.ListProduct[i].ProductExtraPrice < Model.ListProduct[i].ProductPrice)
+                                                                                                    @if (Model.ListSameProduct[i].ProductExtraPrice > 0 && Model.ListSameProduct[i].ProductExtraPrice < Model.ListSameProduct[i].ProductPrice)
                                                                                                     {
-                                                                                                        <span class="old-price product-price"><span class="money">@Model.ListProduct[i].ProductPrice VNĐ</span></span>
+                                                                                                        <span class="old-price product-price"><span class="money">@Model.ListSameProduct[i].ProductPrice VNĐ</span></span>
                                                                                                         <span class="price product-price sale-price">
-                                                                                                            <span class="money">@Model.ListProduct[i].ProductExtraPrice VNĐ</span>
+                                                                                                            <span class="money">@Model.ListSameProduct[i].ProductExtraPrice VNĐ</span>
                                                                                                         </span>
                                                                                                     }
                                                                                                     else
                                                                                                     {
                                                                                                         <span class="price product-price ">
-                                                                                                            <span class="money">@Model.ListProduct[i].ProductPrice VNĐ</span>
+                                                                                                            <span class="money">@Model.ListSameProduct[i].ProductPrice VNĐ</span>
                                                                                                         </span>
                                                                                                     }
                                                                                                 </span>
@@ -417,14 +428,24 @@
                                                                                             </div>
                                                                                             <div class="cart">
                                                                                                 <div class="action">
-                                                                                                    <a class="button ajax_addtocart btn" href="" ng-click="AddToCart(@Model.ListProduct[i].Id, '', 1, @Model.ListProduct[i].ProductPrice, @Model.ListProduct[i].ImageURL, @Model.ListProduct[i].ProductName);" title="Thêm giỏ hàng">
-                                                                                                        <span class="fa fa-shopping-cart"></span>
-                                                                                                        <span class="select_options">Thêm giỏ hàng</span>
-                                                                                                    </a>
+                                                                                                    @if (Model.ListSameProduct[i].ProductExtraPrice > 0 && Model.ListSameProduct[i].ProductExtraPrice < Model.ListSameProduct[i].ProductPrice)
+                                                                                                    {
+                                                                                                        <a class="button ajax_addtocart btn" href="" ng-click="AddToCart('@Model.ListSameProduct[i].Id', '', 1, @Model.ListSameProduct[i].ProductExtraPrice, '@Model.ListSameProduct[i].ImageURL', '@Model.ListSameProduct[i].ProductName');" title="Thêm giỏ hàng">
+                                                                                                            <span class="fa fa-shopping-cart"></span>
+                                                                                                            <span class="select_options">Thêm giỏ hàng</span>
+                                                                                                        </a>
+                                                                                                    }
+                                                                                                    else
+                                                                                                    {
+                                                                                                        <a class="button ajax_addtocart btn" href="" ng-click="AddToCart('@Model.ListSameProduct[i].Id', '', 1, @Model.ListSameProduct[i].ProductPrice, '@Model.ListSameProduct[i].ImageURL', '@Model.ListSameProduct[i].ProductName');" title="Thêm giỏ hàng">
+                                                                                                            <span class="fa fa-shopping-cart"></span>
+                                                                                                            <span class="select_options">Thêm giỏ hàng</span>
+                                                                                                        </a>
+                                                                                                    }
                                                                                                 </div>
                                                                                             </div>
                                                                                             <div class="wishlist">
-                                                                                                <a class="btn btn-outline-inverse btn-wishlist" href="javascript:void(0)" title="Thêm mục ưu thích">
+                                                                                                <a class="btn btn-outline-inverse btn-wishlist" style="cursor:pointer" title="Thêm mục ưu thích">
                                                                                                     <i class="fa fa-heart"></i>
                                                                                                     <span>Thêm mục ưu thích</span>
                                                                                                 </a>
@@ -445,10 +466,10 @@
                                                                     {
                                                                     <div class="owl-item active" style="width: 300px;">
                                                                         <div class="item">
-                                                                            <div class="product_block wow fadeIn" data-wow-delay="@i*100 ms" style="visibility: hidden; animation-delay: 0ms; animation-name: none;">
+                                                                            <div class="product_block wow fadeIn" data-wow-delay="@i*100 ms" style="visibility: visible; animation-delay: 0ms; animation-name: none;">
                                                                                 <div class="product-container text-left product-block">
                                                                                     <div class="product-image-container image">
-                                                                                        <a class="product_img_link" href="/collections/best-seller/products/longsleeve-spacedye-nep">
+                                                                                        <a class="product_img_link" href="@Url.Action("Detail","Shop",new { id=item.Id})">
                                                                                             <img class="img-responsive" src="@item.ImageURL" alt="@item.ProductName">
                                                                                         </a>
                                                                                         <span class="new-box">
@@ -462,17 +483,17 @@
                                                                                         <div class="content_price">
                                                                                             <span class="price product-price ">
                                                                                                 <span class="money">
-                                                                                                    @if (Model.ListProduct[i].ProductExtraPrice > 0 && Model.ListProduct[i].ProductExtraPrice < Model.ListProduct[i].ProductPrice)
+                                                                                                    @if (Model.ListSameProduct[i].ProductExtraPrice > 0 && Model.ListSameProduct[i].ProductExtraPrice < Model.ListSameProduct[i].ProductPrice)
                                                                                                     {
-                                                                                                        <span class="old-price product-price"><span class="money">@Model.ListProduct[i].ProductPrice VNĐ</span></span>
+                                                                                                        <span class="old-price product-price"><span class="money">@Model.ListSameProduct[i].ProductPrice VNĐ</span></span>
                                                                                                         <span class="price product-price sale-price">
-                                                                                                            <span class="money">@Model.ListProduct[i].ProductExtraPrice VNĐ</span>
+                                                                                                            <span class="money">@Model.ListSameProduct[i].ProductExtraPrice VNĐ</span>
                                                                                                         </span>
                                                                                                     }
                                                                                                     else
                                                                                                     {
                                                                                                         <span class="price product-price ">
-                                                                                                            <span class="money">@Model.ListProduct[i].ProductPrice VNĐ</span>
+                                                                                                            <span class="money">@Model.ListSameProduct[i].ProductPrice VNĐ</span>
                                                                                                         </span>
                                                                                                     }
                                                                                                 </span>
@@ -487,14 +508,24 @@
                                                                                             </div>
                                                                                             <div class="cart">
                                                                                                 <div class="action">
-                                                                                                    <a class="button ajax_addtocart btn" href="" ng-click="AddToCart(@Model.ListProduct[i].Id, '', 1, @Model.ListProduct[i].ProductPrice, @Model.ListProduct[i].ImageURL, @Model.ListProduct[i].ProductName);" title="Thêm giỏ hàng">
-                                                                                                        <span class="fa fa-shopping-cart"></span>
-                                                                                                        <span class="select_options">Thêm giỏ hàng</span>
-                                                                                                    </a>
+                                                                                                    @if (Model.ListSameProduct[i].ProductExtraPrice > 0 && Model.ListSameProduct[i].ProductExtraPrice < Model.ListSameProduct[i].ProductPrice)
+                                                                                                    {
+                                                                                                        <a class="button ajax_addtocart btn" href="" ng-click="AddToCart('@Model.ListSameProduct[i].Id', '', 1, @Model.ListSameProduct[i].ProductExtraPrice, '@Model.ListSameProduct[i].ImageURL', '@Model.ListSameProduct[i].ProductName');" title="Thêm giỏ hàng">
+                                                                                                            <span class="fa fa-shopping-cart"></span>
+                                                                                                            <span class="select_options">Thêm giỏ hàng</span>
+                                                                                                        </a>
+                                                                                                    }
+                                                                                                    else
+                                                                                                    {
+                                                                                                        <a class="button ajax_addtocart btn" href="" ng-click="AddToCart('@Model.ListSameProduct[i].Id', '', 1, @Model.ListSameProduct[i].ProductPrice, '@Model.ListSameProduct[i].ImageURL', '@Model.ListSameProduct[i].ProductName');" title="Thêm giỏ hàng">
+                                                                                                            <span class="fa fa-shopping-cart"></span>
+                                                                                                            <span class="select_options">Thêm giỏ hàng</span>
+                                                                                                        </a>
+                                                                                                    }
                                                                                                 </div>
                                                                                             </div>
                                                                                             <div class="wishlist">
-                                                                                                <a class="btn btn-outline-inverse btn-wishlist" href="javascript:void(0)" title="Thêm mục ưu thích">
+                                                                                                <a class="btn btn-outline-inverse btn-wishlist" style="cursor:pointer" title="Thêm mục ưu thích">
                                                                                                     <i class="fa fa-heart"></i>
                                                                                                     <span>Thêm mục ưu thích</span>
                                                                                                 </a>

@@ -65,5 +65,54 @@ namespace CMS_Web.Controllers
                 return new HttpStatusCodeResult(400, ex.Message);
             }
         }
+
+        public ActionResult Detail(string id)
+        {
+            ProductViewModels model = new ProductViewModels();
+            try
+            {
+                if (string.IsNullOrEmpty(id))
+                    return RedirectToAction("Index", "Home");
+                /* get list product */
+                var data = _fac.GetList();
+                model.ProductModel = data.Where(o => o.Id.Equals(id)).FirstOrDefault();
+                if(model.ProductModel != null)
+                {
+                    model.ProductModel.ListImages = _fac.GetListImageOfProduct(id);
+                    if(model.ProductModel.ListImages != null && model.ProductModel.ListImages.Any())
+                    {
+                        model.ProductModel.ListImages.ForEach(o =>
+                        {
+                            if (!string.IsNullOrEmpty(o.ImageURL))
+                                o.ImageURL = Commons._PublicImages + "Products/" + o.ImageURL;
+                            else
+                                o.ImageURL = "";
+                        });
+                        model.ProductModel.ImageURL = model.ProductModel.ListImages.Select(o => o.ImageURL).FirstOrDefault();
+                    }
+
+
+                    /* get product sample */
+                    model.ListSameProduct = data.Where(o => o.CategoryId.Equals(model.ProductModel.CategoryId)).OrderBy(o => o.CreatedDate).ToList();
+                    if(model.ListSameProduct != null && model.ListSameProduct.Any())
+                    {
+                        var dataImg = _fac.GetListImage();
+                        model.ListSameProduct.ForEach(o =>
+                        {
+                            o.ImageURL = dataImg.Where(z => z.ProductId.Equals(o.Id)).Select(z => z.ImageURL).FirstOrDefault();
+                            if (!string.IsNullOrEmpty(o.ImageURL))
+                                o.ImageURL = Commons._PublicImages + "Products/" + o.ImageURL;
+                        });
+                    }
+                }
+
+
+            }
+            catch(Exception ex)
+            {
+                NSLog.Logger.Error("Shop_Detail : ", ex);
+            }
+            return View(model);
+        }
     }
 }
