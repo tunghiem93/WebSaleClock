@@ -16,6 +16,8 @@ namespace CMS_DTO.CMSOrder
         public string CreatedUser { get; set; }
         public string ModifiedUser { get; set; }
         public bool IsError { get; set; }
+        public string OrderNo { get; set; }
+        public DateTime OrderDate { get; set; }
         public CMS_CheckOutModels()
         {
             ListItem = new List<CMS_ItemModels>();
@@ -26,6 +28,7 @@ namespace CMS_DTO.CMSOrder
     public class CMS_CustomerAnonymousModels
     {
         public string Id { get; set; }
+        public string Name { get { return this.FirstName + " " + this.LastName; } }
         public string FirstName { get; set; }
         [Required(ErrorMessage = "Làm ơn nhập tên!")]
         public string LastName { get; set; }
