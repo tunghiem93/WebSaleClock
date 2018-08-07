@@ -35,8 +35,7 @@ namespace CMS_DTO.CMSProduct
         public bool IsActive { get; set; }
         [AllowHtml]
         public string Description { get; set; }
-
-        public string CategoryName { get; set; }
+        
         public string sStatus { get; set; }
 
         public HttpPostedFileBase[] PictureUpload { get; set; }
