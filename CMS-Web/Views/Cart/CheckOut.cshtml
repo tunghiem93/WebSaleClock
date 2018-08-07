@@ -14,10 +14,20 @@
 </head>
 <body>
     <div class="content" data-content>
+        @if (Model.IsError)
+        {
+            <div class="">
+                <div class="alert alert-danger fade in text-center">
+                    <i class="fa-fw fa fa-remove"></i>
+                    <strong>Error! </strong>
+                    <span>Đơn hàng của bạn giao dịch không thành công, vui lòng thử lại</span>
+                </div>
+            </div>
+        }
+
         <div class="wrap">
             <div class="main" role="main">
                 <div class="main__header">
-
                     <a class="logo logo--left" href="@Url.Action("Index","Home")">
                         <span class="logo__text heading-1">
                             Ap Wooden

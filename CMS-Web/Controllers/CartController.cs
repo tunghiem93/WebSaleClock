@@ -123,6 +123,10 @@ namespace CMS_Web.Controllers
                         model.IsError = true;
                     }
                 }
+                else
+                {
+                    model.IsError = true;
+                }
             }
             catch (Exception ex)
             {
