@@ -47,14 +47,14 @@
                                         <div class="list_product_cart clearfix" ng-repeat="item in Products">
                                             <div class="cpro_item col-xs-12 col-sm-1 col-md-1">
                                                 <div class="cpro_item_inner">
-                                                    <a href="/products/printed-chiffon-dress?variant=22632162179" class="cartImage">
+                                                    <a href="/Shop/Detail/{{item.ItemId}}" class="cartImage">
                                                         <img class="img-responsive" src="{{item.ImageUrl}}" alt="{{item.Name}}">
                                                     </a>
                                                 </div>
                                             </div>
                                             <div class="cpro_item col-xs-12 col-sm-4 col-md-4">
                                                 <div class="cpro_item_inner">
-                                                    <a href="/products/printed-chiffon-dress?variant=22632162179" class="product_name">
+                                                    <a href="/Shop/Detail/{{item.ItemId}}" class="product_name">
                                                         {{item.Name}}
                                                     </a>
                                                 </div>
@@ -80,7 +80,7 @@
                                             </div>
                                             <div class="cpro_item col-xs-12 col-sm-1 col-md-1">
                                                 <div class="cpro_item_inner">
-                                                    <a href="javascript:void(0)" class="cart__remove" ng-click="RemoveItemOrder($index)">
+                                                    <a style="cursor:pointer" class="cart__remove" ng-click="RemoveItemOrder($index)">
                                                         <small>Xóa</small>
                                                     </a>
                                                 </div>

@@ -7,7 +7,7 @@
     var _count = 0;
 }
 
-<main class="main-content">
+<main class="main-content" ng-controller="CartCtrl">
     <section id="breadcrumbs">
         <div class="container">
             <nav aria-label="breadcrumbs" class="breadcrumbs">
@@ -136,10 +136,21 @@
                                                             </div>
                                                             <div class="cart">
                                                                 <div class="action">
-                                                                    <a class="button ajax_addtocart btn" href="" ng-click="AddToCart(@Model.ListProduct[i].Id, '', 1, @Model.ListProduct[i].ProductPrice, @Model.ListProduct[i].ImageURL, @Model.ListProduct[i].ProductName);" title="Thêm giỏ hàng">
+                                                                   @if (Model.ListProduct[i].ProductExtraPrice > 0 && Model.ListProduct[i].ProductExtraPrice < Model.ListProduct[i].ProductPrice)
+                                                                   {
+                                                                    <a class="button ajax_addtocart btn" href="" ng-click="AddToCart('@Model.ListProduct[i].Id', '', 1, @Model.ListProduct[i].ProductExtraPrice, '@Model.ListProduct[i].ImageURL', '@Model.ListProduct[i].ProductName');" title="Thêm giỏ hàng">
                                                                         <span class="fa fa-shopping-cart"></span>
                                                                         <span class="select_options">Thêm giỏ hàng</span>
                                                                     </a>
+                                                                   }
+                                                                   else
+                                                                   {
+                                                                    <a class="button ajax_addtocart btn" href="" ng-click="AddToCart('@Model.ListProduct[i].Id', '', 1, @Model.ListProduct[i].ProductPrice, '@Model.ListProduct[i].ImageURL', '@Model.ListProduct[i].ProductName');" title="Thêm giỏ hàng">
+                                                                        <span class="fa fa-shopping-cart"></span>
+                                                                        <span class="select_options">Thêm giỏ hàng</span>
+                                                                    </a>
+                                                                   }
+
                                                                 </div>
                                                             </div>
                                                             <div class="wishlist">
@@ -177,9 +188,9 @@
                                 </li>
                                 <li class="active"><span>1</span></li>
                                 <li>
-                                    <a href="/collections/featured?page=2" title="">2</a>
+                                    <a href="#" title="">2</a>
                                 </li>
-                                <li class="pagination_next"><a href="/collections/featured?page=2" title="Trang tiếp »"><i class="fa fa-chevron-right"></i></a></li>
+                                <li class="pagination_next"><a href="#" title="Trang tiếp »"><i class="fa fa-chevron-right"></i></a></li>
                             </ul>
                         </div>
                     </div>
@@ -195,7 +206,7 @@
                                         foreach (var item in Model.ListCate)
                                         {
                                             <li>
-                                                <a href="/collections/best-seller" title="@item.CategoryName">
+                                                <a href="@Url.Action("Detail","Collection",new { id=item.Id})" title="@item.CategoryName">
                                                     @string.Format("{0}", item.CategoryName.Length > 30 ? item.CategoryName.Substring(0, 30) + "..." : item.CategoryName)
                                                     <span id="" class="apolloQty pull-right">@item.NumberOfProduct</span>
                                                 </a>
@@ -217,7 +228,7 @@
                                         foreach (var item in Model.ListBrand)
                                         {
                                             <li data-group="BRANDS">
-                                                <a href="/collections/best-seller" title="@item.BrandName">
+                                                <a style="cursor:pointer" title="@item.BrandName">
                                                     @string.Format("{0}", item.BrandName.Length > 30 ? item.BrandName.Substring(0, 30) + "..." : item.BrandName)
                                                     <span id="" class="apolloQty pull-right">@item.NumberOfProduct</span>
                                                 </a>
@@ -230,7 +241,7 @@
 
                         <div id="products_sider_block" class="block products_block nopadding ">
                             <h4 class="title_block">
-                                <a href="/collections/best-seller" title="Best Sellers">Sản phẩm mới nhất</a>
+                                <a title="Best Sellers">Sản phẩm mới nhất</a>
                             </h4>
                             <div class="block_content products-block" style="">
                                 <ul class="products products-block list-unstyled">
@@ -247,7 +258,7 @@
                                                         <div class="media-body">
                                                             <div class="product-content">
                                                                 <h5 class="name media-heading">
-                                                                    <a class="product-name" href="/products/anton-denim-coupe" title="Clock Wooden">@string.Format("{0}", item.ProductName.Length > 20 ? item.ProductName.Substring(0, 20) + "..." : item.ProductName)</a>
+                                                                    <a class="product-name" href="@Url.Action("Detail","Shop",new { id=item.Id})" title="Clock Wooden">@string.Format("{0}", item.ProductName.Length > 20 ? item.ProductName.Substring(0, 20) + "..." : item.ProductName)</a>
                                                                 </h5>
                                                                 <div class="content_price price">
                                                                     <span class="price product-price">
