@@ -12,12 +12,28 @@
     <section id="slideshow" class="clearfix">
         <div class="slider-container ">
             <div id="sliderlayer" class="apollo_slides clearfix">
-                <a href="/collections/all" class="slide-link">
-                    <img class="img-responsive" alt="wooden clock" src="//cdn.shopify.com/s/files/1/1359/9953/t/2/assets/slideshow_image_1.jpg?6710597985434054077"
-                            title="#htmlcaption1" />
-                </a>
-                <img class="img-responsive" alt="Wood cup of tea" src="//cdn.shopify.com/s/files/1/1359/9953/t/2/assets/slideshow_image_2.jpg?6710597985434054077"
-                        title="#htmlcaption2" />
+                @if (_ListSlider != null && _ListSlider.Any())
+                {
+                    var _Index = 0;
+                    foreach (var item in _ListSlider)
+                    {
+                        if (_Index == 0)
+                        {
+                            <a href="" class="slide-link">
+                                <img class="img-responsive" alt="wooden clock" src="@Url.Content(item.ImageUrl)"
+                                     title="#htmlcaption1" />
+                            </a>
+                        }
+                        else
+                        {
+                            <img class="img-responsive" alt="Wood cup of tea" src="@Url.Content(item.ImageUrl)"
+                                 title="#htmlcaption2" />
+                        }
+                        _Index++;
+                    }
+                }
+
+
             </div>
             <div id="htmlcaption1" class="apollo-html-caption">
                 <div class="caption-fullwidth container">
@@ -29,7 +45,7 @@
                                 Claritas processus dynamicus sequitur mutationem consuetudium lectorum. Mirum est notare quam littera
                                 gothica, quam putamus parum claram anteposuerit decima
                             </p>
-                            <a class="btn btn-slide" href="javascript:void(0)" title="Shop Now">Shop Now</a>
+                            <a class="btn btn-slide" href="" title="Shop Now">Shop Now</a>
 
                         </div>
                     </div>
@@ -45,7 +61,7 @@
                                 Claritas processus dynamicus sequitur mutationem consuetudium lectorum. Mirum est notare quam littera
                                 gothica, quam putamus parum claram anteposuerit decima
                             </p>
-                            <a class="btn btn-slide" href="javascript:void(0)" title="Shop now">Shop now</a>
+                            <a class="btn btn-slide" href="" title="Shop now">Shop now</a>
                         </div>
                     </div>
                 </div>
@@ -86,7 +102,7 @@
                                         foreach (var item in Model.ListCate)
                                         {
                                             <li>
-                                                <a href="/collections/best-seller" title="@item.CategoryName">
+                                                <a href="@Url.Action("Detail","Collection",new { id=item.Id})" title="@item.CategoryName">
                                                     @string.Format("{0}", item.CategoryName.Length > 30 ? item.CategoryName.Substring(0, 30) + "..." : item.CategoryName)
                                                     <span id="" class="apolloQty pull-right">@item.NumberOfProduct</span>
                                                 </a>
@@ -107,7 +123,7 @@
                                         foreach (var item in Model.ListBrand)
                                         {
                                             <li data-group="BRANDS">
-                                                <a href="/collections/best-seller" title="@item.BrandName">
+                                                <a title="@item.BrandName" style="cursor:pointer">
                                                     @string.Format("{0}", item.BrandName.Length > 30 ? item.BrandName.Substring(0, 30) + "..." : item.BrandName)
                                                     <span id="" class="apolloQty pull-right">@item.NumberOfProduct</span>
                                                 </a>
@@ -119,7 +135,7 @@
                         </div>
                         <div id="products_sider_block" class="block products_block nopadding ">
                             <h4 class="title_block">
-                                <a href="/collections/best-seller" title="Best Sellers">Sản phẩm mới nhất</a>
+                                <a title="Best Sellers">Sản phẩm mới nhất</a>
                             </h4>
                             <div class="block_content products-block" style="">
                                 <ul class="products products-block list-unstyled">
@@ -136,7 +152,7 @@
                                                         <div class="media-body">
                                                             <div class="product-content">
                                                                 <h5 class="name media-heading">
-                                                                    <a class="product-name" href="/products/anton-denim-coupe" title="Clock Wooden">@string.Format("{0}", item.ProductName.Length > 20 ? item.ProductName.Substring(0, 20) + "..." : item.ProductName)</a>
+                                                                    <a class="product-name" href="@Url.Action("Detail", "Shop",new { id= item.Id})" title="Clock Wooden">@string.Format("{0}", item.ProductName.Length > 20 ? item.ProductName.Substring(0, 20) + "..." : item.ProductName)</a>
                                                                 </h5>
                                                                 <div class="content_price price">
                                                                     <span class="price product-price">
@@ -202,7 +218,7 @@
                                     <div class="row">
                                         @for (int i = _count; _count < _totalLength; i++)
                                         {
-                                            <div class="product_block wow fadeIn col-md-4 col-xs-6 col-sp-12 animated" data-wow-delay="@i*100 ms" style="visibility: hidden; animation-delay: 0ms; animation-name: none;">
+                                            <div class="product_block wow fadeIn col-md-4 col-xs-6 col-sp-12 animated" data-wow-delay="@i*100 ms" style="visibility: visible; animation-delay: 0ms; animation-name: none;">
                                                 <div class="product-container text-left product-block">
                                                     <div class="product-image-container image">
                                                         <a class="product_img_link" href="#">
@@ -257,7 +273,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="wishlist">
-                                                                <a class="btn btn-outline-inverse btn-wishlist" href="/account/login" title="Thêm mục ưu thích">
+                                                                <a class="btn btn-outline-inverse btn-wishlist" style="cursor:pointer" title="Thêm mục ưu thích">
                                                                     <i class="fa fa-heart"></i>
                                                                     <span>Thêm mục ưu thích</span>
                                                                 </a>
@@ -292,9 +308,9 @@
                                 </li>
                                 <li class="active"><span>1</span></li>
                                 <li>
-                                    <a href="/collections/all?page=2" title="">2</a>
+                                    <a href="#" title="">2</a>
                                 </li>
-                                <li class="pagination_next"><a href="/collections/all?page=2" title="Next »"><i class="fa fa-chevron-right"></i></a></li>
+                                <li class="pagination_next"><a href="#" title="Next »"><i class="fa fa-chevron-right"></i></a></li>
                             </ul>
                         </div>
                     </div>
