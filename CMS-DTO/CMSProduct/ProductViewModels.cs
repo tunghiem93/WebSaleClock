@@ -12,8 +12,10 @@ namespace CMS_DTO.CMSProduct
 {
     public class ProductViewModels
     {
+        public CMS_ProductsModels ProductModel { get; set; }
         public List<CMS_ProductsModels> ListProduct { get; set; }
         public List<CMS_ProductsModels> ListProductTopSales { get; set; }
+        public List<CMS_ProductsModels> ListSameProduct { get; set; }
         public CMS_CompanyModels Company { get; set; }
         public List<CMS_NewsModels> ListNews { get; set; }
         
@@ -30,11 +32,13 @@ namespace CMS_DTO.CMSProduct
         public bool IsOrther { get; set; }
         public ProductViewModels()
         {
+            ProductModel = new CMS_ProductsModels();
             CateModel = new CMSCategoriesModels();
             ListCate = new List<CMSCategoriesModels>();
             ListBrand = new List<CMSBrandsModels>();
             ListProduct = new List<CMS_ProductsModels>();
             ListProductTopSales = new List<CMS_ProductsModels>();
+            ListSameProduct = new List<CMS_ProductsModels>();
             Company = new CMS_CompanyModels();
             ListNews = new List<CMS_NewsModels>();
         }

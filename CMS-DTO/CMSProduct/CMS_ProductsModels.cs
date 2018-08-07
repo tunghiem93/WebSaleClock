@@ -25,7 +25,9 @@ namespace CMS_DTO.CMSProduct
         public decimal ProductExtraPrice { get; set; }
         [Required(ErrorMessage ="Vui lòng chọn thể loại")]
         public string CategoryId { get; set; }
+        public string CategoryName { get; set; }
         public string BrandId { get; set; }
+        public string BrandName { get; set; }
         public string CreatedBy { get; set; }
         public string UpdatedBy { get; set; }
         public DateTime CreatedDate { get; set; }

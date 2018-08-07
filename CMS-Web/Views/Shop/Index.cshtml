@@ -1,9 +1,11 @@
-﻿@model CMS_DTO.CMSProduct.ProductViewModels
-@using CMS_Shared;
-
-@{
+﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = "Chi tiết";
+    ViewBag.Title = "Shop";
+}
+@model CMS_DTO.CMSProduct.ProductViewModels
+@using CMS_Shared;
+@{
+    var _ListSlider = Session["SliderSession"] as List<CMS_DTO.CMSSession.SliderSession>;
     var _count = 0;
 }
 
@@ -11,16 +13,16 @@
     <section id="breadcrumbs">
         <div class="container">
             <nav aria-label="breadcrumbs" class="breadcrumbs">
-                <h3 class="titile-collecitions">Bộ sưu tập</h3>
+                <h3 class="titile-collecitions">Sản phẩm</h3>
                 <ol class="breadcrumb">
                     <li>
-                        <a href="@Url.Action("Index","Home")" title="Trở lại trang chủ">
+                        <a href="/" title="Trở lại trang chủ">
                             <span>Trang chủ</span>
                         </a>
                         <meta itemprop="position" content="1">
                     </li>
                     <li class="active">
-                        <span><span>Bộ sưu tập</span></span>
+                        <span><span>Của hàng</span></span>
                         <meta itemprop="position" content="2">
                     </li>
                 </ol>
@@ -30,162 +32,8 @@
     <section id="columns" class="columns-container">
         <div class="container">
             <div class="row">
-                <div id="center_column" class="center_column col-xs-12 col-sm-8 col-md-9">
-                    <div class="content_scene_cat">
-                        <div class="content_scene_cat_bg">
-                            <div class="image">
-                                <img class="img-responsive" alt="Featured" src="@Model.CateModel.ImageURL">
-                            </div>
-                            <div class="cat_desc">
-                                <div class="rte">
-                                    <meta charset="utf-8"><meta charset="utf-8"><span><span>@Html.Raw(Model.CateModel.CategoryName)</span>.</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <h1 class="page-heading product-listing cat-name">Bộ sưu tập</h1>
-                    <div class="category-heading clearfix">
-                        <div class="sortPagiBar clearfix row">
-                            <div class="col-md-6 col-sm-6 col-xs-4">
-                                <div class="collection-view">
-                                    <button type="button" title="Grid view" class="change-view change-view--active" data-view="grid">
-                                        <span class="icon-fallback-text">
-                                            <span class="fa fa-th-large" aria-hidden="true"></span>
-                                            <span class="fallback-text">Danh sách</span>
-                                        </span>
-                                    </button>
-                                    <button type="button" title="List view" class="change-view" data-view="list">
-                                        <span class="icon-fallback-text">
-                                            <span class="fa fa-list-ul" aria-hidden="true"></span>
-                                            <span class="fallback-text">Sản phẩm</span>
-                                        </span>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-sm-6 col-xs-8">
-                                <div class="form-horizontal">
-                                    <label for="">Sắp xếp</label>
-                                    @Html.DropDownListFor(model => model.RangeType,
-                                    new SelectList(ViewBag.Range, "Value", "Text", Model.RangeType), null,
-                                    new
-                                    {
-                                        @class = "",
-                                        @id = "SortBy",
-                                        @style = ""
-                                    })
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="product_list" class="product_list grid">
-                        @if (Model.ListProduct != null && Model.ListProduct.Any())
-                        {
-                            var _totalLength = Model.ListProduct.Count;
-                            while (_count < _totalLength)
-                            {
-                                <div class="product-items">
-                                    <div class="row">
-                                        @for (int i = _count; _count < _totalLength; i++)
-                                        {
-                                            <div class="product_block wow fadeIn col-md-4 col-xs-6 col-sp-12 animated" data-wow-delay="@i*100 ms" style="visibility: visible; animation-delay: @i*100 ms; animation-name: fadeIn;">
-                                                <div class="product-container text-left product-block">
-                                                    <div class="product-image-container image">
-                                                        <a class="product_img_link" href="javascript:void(0)">
-                                                            <img class="img-responsive" src="@Model.ListProduct[i].ImageURL" alt="@Model.ListProduct[i].ProductName">
-                                                        </a>
-                                                        <span class="new-box">
-                                                            <span class="label-new label">Mới</span>
-                                                        </span>
-                                                    </div>
-                                                    <div class="product-meta">
-                                                        <div class="review">
-                                                            <span class="spr-badge" id="spr_badge_7254049923" data-rating="4.0">
-                                                                <span class="spr-starrating spr-badge-starrating"><i class="spr-icon spr-icon-star"></i><i class="spr-icon spr-icon-star"></i><i class="spr-icon spr-icon-star"></i><i class="spr-icon spr-icon-star"></i><i class="spr-icon spr-icon-star-empty"></i></span><span class="spr-badge-caption">1 review</span>
-                                                            </span>
-                                                        </div>
-                                                        <h5 class="name">
-                                                            <a class="product-name" href="javascript:void(0)" title="@Model.ListProduct[i].ProductName">@Html.Raw(string.Format("{0}", Model.ListProduct[i].ProductName.Length > 35 ? Model.ListProduct[i].ProductName.Substring(0, 35) + "..." : Model.ListProduct[i].ProductName))</a>
-                                                        </h5>
-                                                        <div class="product-desc">@Model.ListProduct[i].Short_Description</div>
-                                                        <div class="content_price">
-                                                            <span class="price product-price ">
-                                                                <span class="money">
-                                                                    @if (Model.ListProduct[i].ProductExtraPrice > 0 && Model.ListProduct[i].ProductExtraPrice < Model.ListProduct[i].ProductPrice)
-                                                                    {
-                                                                        <span class="old-price product-price"><span class="money">@Model.ListProduct[i].ProductPrice VNĐ</span></span>
-                                                                        <span class="price product-price sale-price">
-                                                                            <span class="money">@Model.ListProduct[i].ProductExtraPrice VNĐ</span>
-                                                                        </span>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <span class="price product-price ">
-                                                                            <span class="money">@Model.ListProduct[i].ProductPrice VNĐ</span>
-                                                                        </span>
-                                                                    }
-                                                                </span>
-                                                            </span>
-                                                        </div>
-                                                        <div class="functional-buttons clearfix">
-                                                            <div class="quickview">
-                                                                <a class="quick-view btn" href="#quick-view-product" title="Xem nhanh">
-                                                                    <i class="fa fa-plus"></i>
-                                                                    <span>Xem nhanh</span>
-                                                                </a>
-                                                            </div>
-                                                            <div class="cart">
-                                                                <div class="action">
-                                                                    <a class="button ajax_addtocart btn" href="" ng-click="AddToCart(@Model.ListProduct[i].Id, '', 1, @Model.ListProduct[i].ProductPrice, @Model.ListProduct[i].ImageURL, @Model.ListProduct[i].ProductName);" title="Thêm giỏ hàng">
-                                                                        <span class="fa fa-shopping-cart"></span>
-                                                                        <span class="select_options">Thêm giỏ hàng</span>
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="wishlist">
-                                                                <a class="btn btn-outline-inverse btn-wishlist" href="javascript:void(0)" title="Thêm mục ưu thích">
-                                                                    <i class="fa fa-heart"></i>
-                                                                    <span>Thêm mục ưu thích</span>
-                                                                </a>
-                                                            </div>
-                                                            @*<div class="view_detail">
-                                                                    <a class="btn lnk_view" href="/collections/featured/products/longsleeve-spacedye-nep" title="View product">
-                                                                        <i class="fa fa-eye"></i><span>View product</span>
-                                                                    </a>
-                                                                </div>*@
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            _count = _count + 1;
-                                            if (_count != 0 && _count % 3 == 0)
-                                            {
-                                                i = _count;
-                                                break;
-                                            }
-                                        }
-                                    </div>
-                                </div>
-                            }
-                        }
-                    </div>
-                    <div class="content_sortPagiBar">
-                        <div id="pagination" class="clearfix">
-                            <ul class="pagination">
-                                <li class="pagination_previous disabled">
-                                    <span><i class="fa fa-chevron-left"></i></span>
-                                </li>
-                                <li class="active"><span>1</span></li>
-                                <li>
-                                    <a href="/collections/featured?page=2" title="">2</a>
-                                </li>
-                                <li class="pagination_next"><a href="/collections/featured?page=2" title="Trang tiếp »"><i class="fa fa-chevron-right"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
                 <aside>
-                    <div id="right_column" class="right_column sidebar col-xs-12 col-sm-4 col-md-3">
+                    <div id="left_column" class="left_column sidebar col-xs-12 col-sm-4 col-md-3">
                         <div id="categories_block" class="block sidebarCategories ">
                             <h4 class="title_block">Bộ sưu tập</h4>
                             <div class="block_content" style="">
@@ -241,7 +89,7 @@
                                             <li class="media clearfix">
                                                 <div class="product-block">
                                                     <div class="product-container media">
-                                                        <a class="products-block-image img pull-left" href="javascript:void(0)" title="@item.ProductName">
+                                                        <a class="products-block-image img pull-left" href="#" title="@item.ProductName">
                                                             <img class="replace-2x img-responsive" src="@item.ImageURL" alt="@item.ProductName">
                                                         </a>
                                                         <div class="media-body">
@@ -266,7 +114,160 @@
                         </div>
                     </div>
                 </aside>
+
+                <div id="center_column" class="center_column col-xs-12 col-sm-8 col-md-9">
+                    <div class="content_scene_cat">
+                        <div class="content_scene_cat_bg">
+                            <div class="image">
+                                <img src="@Url.Content("~/Images/list_collection_default.png")" alt="Sản phẩm" class="img-responsive">
+                            </div>
+                        </div>
+                    </div>
+                    <h1 class="page-heading product-listing cat-name">Sản phẩm</h1>
+                    <div class="category-heading clearfix">
+                        <div class="sortPagiBar clearfix row">
+                            <div class="col-md-6 col-sm-6 col-xs-4">
+                                <div class="collection-view">
+                                    <button type="button" title="Grid view" class="change-view change-view--active" data-view="grid">
+                                        <span class="icon-fallback-text">
+                                            <span class="fa fa-th-large" aria-hidden="true"></span>
+                                            <span class="fallback-text">Danh sách</span>
+                                        </span>
+                                    </button>
+                                    <button type="button" title="List view" class="change-view" data-view="list">
+                                        <span class="icon-fallback-text">
+                                            <span class="fa fa-list-ul" aria-hidden="true"></span>
+                                            <span class="fallback-text">Sản phẩm</span>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-8">
+                                <div class="form-horizontal">
+                                    <label for="">Sắp xếp</label>
+                                    @Html.DropDownListFor(model => model.RangeType,
+                                    new SelectList(ViewBag.Range, "Value", "Text", Model.RangeType), null,
+                                    new
+                                    {
+                                        @class = "",
+                                        @id = "SortBy",
+                                        @style = ""
+                                    })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="product_list" class="product_list grid">
+                        @if (Model.ListProduct != null && Model.ListProduct.Any())
+                        {
+                            var _totalLength = Model.ListProduct.Count;
+                            while (_count < _totalLength)
+                            {
+                                <div class="product-items">
+                                    <div class="row">
+                                        @for (int i = _count; _count < _totalLength; i++)
+                                        {
+                                            <div class="product_block wow fadeIn col-md-4 col-xs-6 col-sp-12 animated" data-wow-delay="@i*100 ms" style="visibility: hidden; animation-delay: @i*100 ms; animation-name: none;">
+                                                <div class="product-container text-left product-block">
+                                                    <div class="product-image-container image">
+                                                        <a class="product_img_link" href="#">
+                                                            <img class="img-responsive" src="@Model.ListProduct[i].ImageURL" alt="@Model.ListProduct[i].ProductName">
+                                                        </a>
+                                                        <span class="new-box">
+                                                            <span class="label-new label">Mới</span>
+                                                        </span>
+                                                    </div>
+                                                    <div class="product-meta">
+                                                        <div class="review">
+                                                            <span class="spr-badge" id="spr_badge_7254049923">
+                                                                <span class="spr-starrating spr-badge-starrating"><i class="spr-icon spr-icon-star"></i><i class="spr-icon spr-icon-star"></i><i class="spr-icon spr-icon-star"></i><i class="spr-icon spr-icon-star"></i><i class="spr-icon spr-icon-star-empty"></i></span><span class="spr-badge-caption"></span>
+                                                            </span>
+                                                        </div>
+                                                        <h5 class="name">
+                                                            <a class="product-name" href="#" title="@Model.ListProduct[i].ProductName">@Html.Raw(string.Format("{0}", Model.ListProduct[i].ProductName.Length > 35 ? Model.ListProduct[i].ProductName.Substring(0, 35) + "..." : Model.ListProduct[i].ProductName))</a>
+                                                        </h5>
+                                                        <div class="product-desc">@Model.ListProduct[i].Short_Description</div>
+                                                        <div class="content_price">
+                                                            <span class="price product-price ">
+                                                                <span class="money">
+                                                                    @if (Model.ListProduct[i].ProductExtraPrice > 0 && Model.ListProduct[i].ProductExtraPrice < Model.ListProduct[i].ProductPrice)
+                                                                    {
+                                                                        <span class="old-price product-price"><span class="money">@Model.ListProduct[i].ProductPrice VNĐ</span></span>
+                                                                        <span class="price product-price sale-price">
+                                                                            <span class="money">@Model.ListProduct[i].ProductExtraPrice VNĐ</span>
+                                                                        </span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span class="price product-price ">
+                                                                            <span class="money">@Model.ListProduct[i].ProductPrice VNĐ</span>
+                                                                        </span>
+                                                                    }
+                                                                </span>
+                                                            </span>
+                                                        </div>
+                                                        <div class="functional-buttons clearfix">
+                                                            <div class="quickview">
+                                                                <a class="quick-view btn" href="#" data-handle="longsleeve-spacedye-nep" title="Xem nhanh">
+                                                                    <i class="fa fa-plus"></i>
+                                                                    <span>Xem nhanh</span>
+                                                                </a>
+                                                            </div>
+                                                            <div class="cart">
+                                                                <div class="action">
+                                                                    <a class="button ajax_addtocart btn" href="" ng-click="AddToCart(@Model.ListProduct[i].Id, '', 1, @Model.ListProduct[i].ProductPrice, @Model.ListProduct[i].ImageURL, @Model.ListProduct[i].ProductName);" title="Thêm giỏ hàng">
+                                                                        <span class="fa fa-shopping-cart"></span>
+                                                                        <span class="select_options">Thêm giỏ hàng</span>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="wishlist">
+                                                                <a class="btn btn-outline-inverse btn-wishlist" href="/account/login" title="Thêm mục ưu thích">
+                                                                    <i class="fa fa-heart"></i>
+                                                                    <span>Thêm mục ưu thích</span>
+                                                                </a>
+
+                                                            </div>
+                                                            @*<div class="view_detail">
+                                                <a class="btn lnk_view" href="/products/longsleeve-spacedye-nep" title="View product">
+                                                    <i class="fa fa-eye"></i><span>View product</span>
+                                                </a>
+                                            </div>*@
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            _count = _count + 1;
+                                            if (_count != 0 && _count % 3 == 0)
+                                            {
+                                                i = _count;
+                                                break;
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+
+                    <div class="content_sortPagiBar">
+                        <div id="pagination" class="clearfix">
+                            <ul class="pagination">
+                                <li class="pagination_previous disabled">
+                                    <span><i class="fa fa-chevron-left"></i></span>
+                                </li>
+                                <li class="active"><span>1</span></li>
+                                <li>
+                                    <a href="/collections/all?page=2" title="">2</a>
+                                </li>
+                                <li class="pagination_next"><a href="/collections/all?page=2" title="Next »"><i class="fa fa-chevron-right"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 </main>
+

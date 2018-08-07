@@ -1,0 +1,554 @@
+﻿@model CMS_DTO.CMSProduct.ProductViewModels
+@using CMS_Shared;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Chi tiết";
+    var _count = 0;
+}
+
+<main class="main-content">
+    <section id="breadcrumbs">
+        <div class="container">
+            <nav aria-label="breadcrumbs" class="breadcrumbs">
+                <h3 class="titile-collecitions">Bộ sưu tập</h3>
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="@Url.Action("Index","Home")" title="Trở lại trang chủ">
+                            <span>Trang chủ</span>
+                        </a>
+                        <meta itemprop="position" content="1">
+                    </li>
+                    <li class="active">
+                        <span><span>Chi tiết</span></span>
+                        <meta itemprop="position" content="2">
+                    </li>
+                </ol>
+            </nav>
+        </div>
+    </section>
+
+    <section id="columns" class="columns-container product">
+        <div class="container">
+            <div class="row">
+                <div id="center_column" class="center_column col-sm-12 col-md-12">
+                    @if (Model.ProductModel != null)
+                    {
+                        var item = Model.ProductModel;
+                        <div itemscope="" itemtype="@item.ProductName">
+                            <div class="primary_block">
+                                <div class="row">
+                                    <div class="product-left-column col-xs-12 col-sm-12 col-md-5">
+                                        <div id="image-block" class="clearfix">
+                                            @*<span id="view_full_size">
+                                                <div style="height:470px;width:470px;" class="zoomWrapper">
+                                                <div style="height:470px;width:470px;" class="zoomWrapper">
+                                                    <img id="proimage" class="img-responsive" itemprop="image" src="//cdn.shopify.com/s/files/1/1359/9953/products/1-min_0f4a65ea-d62e-4ed3-a0cb-87847ba0e690_large.jpg?v=1467274007" alt="Clock handmade" data-zoom-image="//cdn.shopify.com/s/files/1/1359/9953/products/1-min_0f4a65ea-d62e-4ed3-a0cb-87847ba0e690_1024x1024.jpg?v=1467274007" style="position: absolute; width: 470px; height: 470px;">
+                                                    </div>
+                                                    </div>
+                                                <div style="background: url(&quot;//cdn.shopify.com/s/files/1/1359/9953/t/2/assets/loading.gif?6880591645775336984&quot;) center center no-repeat; z-index: 2000; position: absolute; display: none;">
+                                                    </div>
+                                                <div style="background: url('//cdn.shopify.com/s/files/1/1359/9953/t/2/assets/loading.gif?6880591645775336984') no-repeat center;height:undefinedpx;width:undefinedpx;z-index: 2000;position: absolute; background-position: center center;">
+                                                    </div>
+                                                <div style="background: url('//cdn.shopify.com/s/files/1/1359/9953/t/2/assets/loading.gif?6880591645775336984') no-repeat center;height:undefinedpx;width:undefinedpx;z-index: 2000;position: absolute; background-position: center center;">
+
+                                                </div>
+                                            </span>*@
+                                        </div>
+                                        <div id="views_block" class="clearfix ">
+                                            <div id="thumbs_list">
+                                                <div class="owl-thumblist">
+                                                    <div class="owl-carousel owl-theme" style="opacity: 1; display: block;">
+                                                        <div class="owl-wrapper-outer">
+                                                            <div class="owl-wrapper" style="width: 630px; left: 0px; display: block;">
+                                                                <div class="owl-item" style="width: 105px;">
+                                                                    <div id="thumbnail_1" class="thumb_item ">
+                                                                        <a href="javascript:void(0)" class="active">
+                                                                            <img class="img-responsive" id="thumb_1" src="@item.ImageURL" alt="@item.ProductName" itemprop="image">
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="owl-item" style="width: 105px;">
+                                                                    <div id="thumbnail_2" class="thumb_item ">
+                                                                        <a href="javascript:void(0)">
+                                                                            <img class="img-responsive" id="thumb_2" src="@item.ImageURL" alt="@item.ProductName" itemprop="image">
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="owl-item" style="width: 105px;">
+                                                                    <div id="thumbnail_3" class="thumb_item last">
+                                                                        <a href="javascript:void(0)" >
+                                                                            <img class="img-responsive" id="thumb_3" src="@item.ImageURL" alt="@item.ProductName" itemprop="image">
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="owl-controls clickable" style="display: none;"><div class="owl-pagination"><div class="owl-page"><span class=""></span></div></div><div class="owl-buttons"><div class="owl-prev">prev</div><div class="owl-next">next</div></div></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="product-center-column col-xs-12 col-sm-12 col-md-7">
+                                        <h1 itemprop="name">@item.ProductName</h1>
+                                        <div class="socialsharing_product no-print">
+                                            <ul class="social-sharing list-unstyled">
+                                                <li>
+                                                    <a class="btn social-sharing btn-twitter" href="javascript:void(0);" data-type="twitter">
+                                                        <i class="fa fa-twitter"></i> Tweet
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="btn social-sharing btn-facebook" href="javascript:void(0);" data-type="facebook">
+                                                        <i class="fa fa-facebook"></i> Facebook
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="btn social-sharing btn-google-plus" href="javascript:void(0);" data-type="google-plus">
+                                                        <i class="fa fa-google-plus"></i> Google+
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="btn social-sharing btn-linkedin" href="javascript:void(0);" data-type="linkedin">
+                                                        <i class="fa fa-linkedin"></i> Linkedin
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="btn social-sharing btn-pinterest" href="javascript:void(0);" data-type="pinterest">
+                                                        <i class="fa fa-pinterest-p"></i> Pinterest
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <script type="text/javascript">
+                                            $(document).ready(function () {
+                                                $('.btn.social-sharing').on('click', function () {
+                                                    type = $(this).attr('data-type');
+                                                    if (type.length) {
+                                                        switch (type) {
+                                                            case 'twitter':
+                                                                window.open('https://twitter.com/intent/tweet?text=Clock%20handmade http%3A%2F%2Fap-wooden.myshopify.com/products/longsleeve-spacedye-nep', 'sharertwt', 'toolbar=0,status=0,width=640,height=445');
+                                                                break;
+                                                            case 'facebook':
+                                                                window.open('http://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fap-wooden.myshopify.com/products/longsleeve-spacedye-nep', 'sharer', 'toolbar=0,status=0,width=660,height=445');
+                                                                break;
+                                                            case 'google-plus':
+                                                                window.open('https://plus.google.com/share?url=//ap-wooden.myshopify.com/products/longsleeve-spacedye-nep', 'sharer', 'toolbar=0,status=0,width=660,height=445');
+                                                                break;
+                                                            case 'linkedin':
+                                                                window.open('http://www.linkedin.com/shareArticle?mini=true&amp;url=//ap-wooden.myshopify.com/products/longsleeve-spacedye-nep&amp;title=Clock%20handmade&amp;source=http&#58;&#47;&#47;ap-wooden.myshopify.com/products/longsleeve-spacedye-nep', 'sharerpinterest', 'toolbar=0,status=0,width=660,height=445');
+                                                                break;
+                                                            case 'pinterest':
+                                                                window.open('http://pinterest.com/pin/create/button/?url=//ap-wooden.myshopify.com/products/longsleeve-spacedye-nep&amp;media=//cdn.shopify.com/s/files/1/1359/9953/products/1-min_0f4a65ea-d62e-4ed3-a0cb-87847ba0e690_large.jpg?v=1467274007', 'sharerpinterest', 'toolbar=0,status=0,width=660,height=445');
+                                                                break;
+                                                        }
+                                                    }
+                                                });
+                                            });
+                                        </script>
+
+                                        <div class="line-product-name"></div>
+                                        @*<div class="review">
+                                            <span class="spr-badge" id="spr_badge_7254049923" data-rating="4.0">
+                                                <span class="spr-starrating spr-badge-starrating"><i class="spr-icon spr-icon-star"></i><i class="spr-icon spr-icon-star"></i><i class="spr-icon spr-icon-star"></i><i class="spr-icon spr-icon-star"></i><i class="spr-icon spr-icon-star-empty"></i></span><span class="spr-badge-caption">1 review</span>
+                                            </span>
+
+                                        </div>*@
+                                        <div class="price price-detail clearfix">
+                                            <span id="ProductPrice" class="h4" itemprop="price">
+                                                <span class="money">
+                                                    @if (item.ProductExtraPrice > 0 && item.ProductExtraPrice < item.ProductPrice)
+                                                    {
+                                                        <span class="old-price product-price"><span class="money">@item.ProductPrice VNĐ</span></span>
+                                                        <span class="price product-price sale-price">
+                                                            <span class="money">@item.ProductExtraPrice VNĐ</span>
+                                                        </span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="price product-price ">
+                                                            <span class="money">@item.ProductPrice VNĐ</span>
+                                                        </span>
+                                                    }
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="product-right-column col-xs-12 col-sm-12 col-md-7">
+                                        <div>
+                                            <div class="condition-product">
+                                                <h5 class="brand" itemprop="brand"><span>Nhà cung cấp: </span><a href="javascript:void(0);" title="@item.BrandName">@item.BrandName</a></h5>
+                                                <div class="availability "> 
+                                                    <p class="available instock">
+                                                        @if (item.TypeState == (byte)Commons.EStateType.Avalable)
+                                                        {
+                                                            <span>Còn hàng</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>Hết hàng</span>
+                                                        }
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            <div class="product-description rte" itemprop="description">
+                                                @string.Format("{0}", string.IsNullOrEmpty(item.Short_Description) ? item.Short_Description : "")
+                                            </div>
+                                            <form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm" class="form-ajaxtocart">
+                                                <div class="line-product-top"></div>
+                                                <div class="quantity_wanted_p">
+                                                    <label for="Quantity" class="quantity-selector">Quantity</label>
+                                                    <div class="apQty">
+                                                        <button type="button" class="apQtyAdjust apQtyAdjustMinus" data-id="" data-qty="0">−</button>
+                                                        <input type="text" class="apQtyNum" value="1" min="1" data-id="" aria-label="quantity" pattern="[0-9]*" name="quantity" id="Quantity">
+                                                        <button type="button" class="apQtyAdjust apQtyAdjustPlus" data-id="" data-qty="11">+</button>
+                                                    </div>
+                                                </div>
+                                                <div class="proVariants clearfix">                                                    
+                                                    <div class="swatch clearfix" data-option-index="0">
+                                                        <div class="header">Size</div>
+                                                        <div data-value="XS" class="swatch-element xs available">
+                                                            <input id="swatch-0-xs" type="radio" name="option-0" value="XS">
+                                                            <label for="swatch-0-xs">XS</label>
+                                                        </div>
+                                                        <div data-value="XL" class="swatch-element xl available">
+                                                            <input id="swatch-0-xl" type="radio" name="option-0" value="S">
+                                                            <label for="swatch-0-xl">S</label>
+                                                        </div>
+                                                        <div data-value="XL" class="swatch-element xl available">
+                                                            <input id="swatch-0-xl" type="radio" name="option-0" value="M">
+                                                            <label for="swatch-0-xl">M</label>
+                                                        </div>
+                                                        <div data-value="XL" class="swatch-element xl available">
+                                                            <input id="swatch-0-xl" type="radio" name="option-0" value="L">
+                                                            <label for="swatch-0-xl">L</label>
+                                                        </div>
+                                                        <div data-value="XL" class="swatch-element xl available">
+                                                            <input id="swatch-0-xl" type="radio" name="option-0" value="XL">
+                                                            <label for="swatch-0-xl">XL</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="line-product"></div>
+                                                <div class="total-price">
+                                                    <label>Subtotal: </label>
+                                                    <span>$15.00</span>
+                                                </div>
+                                                <button type="submit" name="add" id="AddToCart" class="btn add_to_cart_detail ajax_addtocart">
+                                                    <i class="fa fa-shopping-cart"></i>
+                                                    <span id="AddToCartText">Thêm vào giỏ hàng</span>
+                                                </button>
+                                            </form>
+                                        </div>
+                                        <div class="wishlist">
+                                            <a class="btn btn-outline-inverse btn-wishlist" href="#" title="Mục ưu thích">
+                                                <i class="fa fa-heart"></i>
+                                                <span>Thêm vào mục ưu thích</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="more_info_block">
+                                <ul class="nav nav-tabs tab-info page-product-heading">
+                                    <li class="active">
+                                        <a href="#idTab1" data-toggle="tab">Mổ tả</a>
+                                    </li>
+                                    <li>
+                                        <a href="#idTab2" data-toggle="tab">Thông tin</a>
+                                    </li>
+                                    <li>
+                                        <a href="#idTab4" data-toggle="tab">Nhận xét</a>
+                                    </li>
+
+                                </ul>
+                                <div class="tab-content">
+                                    <section id="idTab1" class="tab-pane page-product-box active">
+                                        <div class="rte">
+                                           @Html.Raw(item.Description)
+                                        </div>
+                                    </section>
+                                    <section id="idTab2" class="tab-pane page-product-box">
+                                        @Html.Raw(item.Information)
+                                    </section>
+                                    <section id="idTab4" class="tab-pane page-product-box">
+                                        <div></div>
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+
+                    <div class="row">
+                        <div class="productpage col-xs-12 col-sm-12 col-md-12">
+                            <div class="product_related ">
+                                <div id="productrelated" class="products_block exclusive block">
+                                    <h4 class="title_block text-center">
+                                        Sản phẩm tương tự<span>Chọn sản phẩm chúng tôi. </span>
+                                    </h4>
+                                    <div class="block_content">
+                                        <div class="row">
+                                            <div class="owl-carousel slide owl-theme owl-loaded" style="opacity: 1; display: block;">
+                                                <div class="owl-wrapper-outer">
+                                                    <div class="owl-wrapper" style="width: 5400px; left: 0px; display: block;">
+                                                        @if (Model.ListSameProduct != null && Model.ListSameProduct.Any())
+                                                        {
+                                                            for (int i = 0; i < Model.ListSameProduct.Count; i++)
+                                                            {
+                                                                var item = Model.ListSameProduct[i];
+                                                                if (i == 0)
+                                                                {
+                                                                    <div class="owl-item active first" style="width: 300px;">
+                                                                        <div class="item">
+                                                                            <div class="product_block wow fadeIn" data-wow-delay="@i*100 ms" style="visibility: hidden; animation-delay: "0ms; animation-name: none;">
+                                                                                <div class="product-container text-left product-block">
+                                                                                    <div class="product-image-container image">
+                                                                                        <a class="product_img_link" href="/collections/best-seller/products/longsleeve-spacedye-nep">
+                                                                                            <img class="img-responsive" src="@item.ImageURL" alt="@item.ProductName">
+                                                                                        </a>
+                                                                                        <span class="new-box">
+                                                                                            <span class="label-new label">Mới</span>
+                                                                                        </span>
+                                                                                    </div>
+                                                                                    <div class="product-meta">                                                                                        
+                                                                                        <h5 class="name">
+                                                                                            <a class="product-name" href="@Url.Action("Detail", "Shop", new { id = item.Id })" title="@item.ProductName">@item.ProductName</a>
+                                                                                        </h5>
+                                                                                        <div class="content_price">
+                                                                                            <span class="price product-price ">
+                                                                                                <span class="money">
+                                                                                                    @if (Model.ListProduct[i].ProductExtraPrice > 0 && Model.ListProduct[i].ProductExtraPrice < Model.ListProduct[i].ProductPrice)
+                                                                                                    {
+                                                                                                        <span class="old-price product-price"><span class="money">@Model.ListProduct[i].ProductPrice VNĐ</span></span>
+                                                                                                        <span class="price product-price sale-price">
+                                                                                                            <span class="money">@Model.ListProduct[i].ProductExtraPrice VNĐ</span>
+                                                                                                        </span>
+                                                                                                    }
+                                                                                                    else
+                                                                                                    {
+                                                                                                        <span class="price product-price ">
+                                                                                                            <span class="money">@Model.ListProduct[i].ProductPrice VNĐ</span>
+                                                                                                        </span>
+                                                                                                    }
+                                                                                                </span>
+                                                                                            </span>
+                                                                                        </div>
+                                                                                        <div class="functional-buttons clearfix">
+                                                                                            <div class="quickview">
+                                                                                                <a class="quick-view btn" href="#quick-view-product" data-handle="longsleeve-spacedye-nep" title="Quick View">
+                                                                                                    <i class="fa fa-plus"></i>
+                                                                                                    <span>Xem nhanh</span>
+                                                                                                </a>
+                                                                                            </div>
+                                                                                            <div class="cart">
+                                                                                                <div class="action">
+                                                                                                    <a class="button ajax_addtocart btn" href="" ng-click="AddToCart(@Model.ListProduct[i].Id, '', 1, @Model.ListProduct[i].ProductPrice, @Model.ListProduct[i].ImageURL, @Model.ListProduct[i].ProductName);" title="Thêm giỏ hàng">
+                                                                                                        <span class="fa fa-shopping-cart"></span>
+                                                                                                        <span class="select_options">Thêm giỏ hàng</span>
+                                                                                                    </a>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="wishlist">
+                                                                                                <a class="btn btn-outline-inverse btn-wishlist" href="javascript:void(0)" title="Thêm mục ưu thích">
+                                                                                                    <i class="fa fa-heart"></i>
+                                                                                                    <span>Thêm mục ưu thích</span>
+                                                                                                </a>
+                                                                                            </div>
+                                                                                            @*<div class="view_detail">
+                                                                                                <a class="btn lnk_view" href="/collections/best-seller/products/longsleeve-spacedye-nep" title="View product">
+                                                                                                    <i class="fa fa-eye"></i><span>View product</span>
+                                                                                                </a>
+                                                                                            </div>*@
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                }
+                                                                else
+                                                                {
+                                                                    if (i == 3)
+                                                                    {
+                                                                    <div class="owl-item active last" style="width: 300px;">
+                                                                        <div class="item">
+                                                                            <div class="product_block wow fadeIn" data-wow-delay="@i*100 ms" style="visibility: hidden; animation-delay: " 0ms; animation-name: none;">
+                                                                                <div class="product-container text-left product-block">
+                                                                                    <div class="product-image-container image">
+                                                                                        <a class="product_img_link" href="/collections/best-seller/products/longsleeve-spacedye-nep">
+                                                                                            <img class="img-responsive" src="@item.ImageURL" alt="@item.ProductName">
+                                                                                        </a>
+                                                                                        <span class="new-box">
+                                                                                            <span class="label-new label">Mới</span>
+                                                                                        </span>
+                                                                                    </div>
+                                                                                    <div class="product-meta">
+                                                                                        <h5 class="name">
+                                                                                            <a class="product-name" href="@Url.Action("Detail", "Shop", new { id = item.Id })" title="@item.ProductName">@item.ProductName</a>
+                                                                                        </h5>
+                                                                                        <div class="content_price">
+                                                                                            <span class="price product-price ">
+                                                                                                <span class="money">
+                                                                                                    @if (Model.ListProduct[i].ProductExtraPrice > 0 && Model.ListProduct[i].ProductExtraPrice < Model.ListProduct[i].ProductPrice)
+                                                                                                    {
+                                                                                                        <span class="old-price product-price"><span class="money">@Model.ListProduct[i].ProductPrice VNĐ</span></span>
+                                                                                                        <span class="price product-price sale-price">
+                                                                                                            <span class="money">@Model.ListProduct[i].ProductExtraPrice VNĐ</span>
+                                                                                                        </span>
+                                                                                                    }
+                                                                                                    else
+                                                                                                    {
+                                                                                                        <span class="price product-price ">
+                                                                                                            <span class="money">@Model.ListProduct[i].ProductPrice VNĐ</span>
+                                                                                                        </span>
+                                                                                                    }
+                                                                                                </span>
+                                                                                            </span>
+                                                                                        </div>
+                                                                                        <div class="functional-buttons clearfix">
+                                                                                            <div class="quickview">
+                                                                                                <a class="quick-view btn" href="#quick-view-product" data-handle="longsleeve-spacedye-nep" title="Quick View">
+                                                                                                    <i class="fa fa-plus"></i>
+                                                                                                    <span>Xem nhanh</span>
+                                                                                                </a>
+                                                                                            </div>
+                                                                                            <div class="cart">
+                                                                                                <div class="action">
+                                                                                                    <a class="button ajax_addtocart btn" href="" ng-click="AddToCart(@Model.ListProduct[i].Id, '', 1, @Model.ListProduct[i].ProductPrice, @Model.ListProduct[i].ImageURL, @Model.ListProduct[i].ProductName);" title="Thêm giỏ hàng">
+                                                                                                        <span class="fa fa-shopping-cart"></span>
+                                                                                                        <span class="select_options">Thêm giỏ hàng</span>
+                                                                                                    </a>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="wishlist">
+                                                                                                <a class="btn btn-outline-inverse btn-wishlist" href="javascript:void(0)" title="Thêm mục ưu thích">
+                                                                                                    <i class="fa fa-heart"></i>
+                                                                                                    <span>Thêm mục ưu thích</span>
+                                                                                                </a>
+                                                                                            </div>
+                                                                                            @*<div class="view_detail">
+                                <a class="btn lnk_view" href="/collections/best-seller/products/longsleeve-spacedye-nep" title="View product">
+                                    <i class="fa fa-eye"></i><span>View product</span>
+                                </a>
+                            </div>*@
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                    <div class="owl-item active" style="width: 300px;">
+                                                                        <div class="item">
+                                                                            <div class="product_block wow fadeIn" data-wow-delay="@i*100 ms" style="visibility: hidden; animation-delay: " 0ms; animation-name: none;">
+                                                                                <div class="product-container text-left product-block">
+                                                                                    <div class="product-image-container image">
+                                                                                        <a class="product_img_link" href="/collections/best-seller/products/longsleeve-spacedye-nep">
+                                                                                            <img class="img-responsive" src="@item.ImageURL" alt="@item.ProductName">
+                                                                                        </a>
+                                                                                        <span class="new-box">
+                                                                                            <span class="label-new label">Mới</span>
+                                                                                        </span>
+                                                                                    </div>
+                                                                                    <div class="product-meta">
+                                                                                        <h5 class="name">
+                                                                                            <a class="product-name" href="@Url.Action("Detail", "Shop", new { id = item.Id })" title="@item.ProductName">@item.ProductName</a>
+                                                                                        </h5>
+                                                                                        <div class="content_price">
+                                                                                            <span class="price product-price ">
+                                                                                                <span class="money">
+                                                                                                    @if (Model.ListProduct[i].ProductExtraPrice > 0 && Model.ListProduct[i].ProductExtraPrice < Model.ListProduct[i].ProductPrice)
+                                                                                                    {
+                                                                                                        <span class="old-price product-price"><span class="money">@Model.ListProduct[i].ProductPrice VNĐ</span></span>
+                                                                                                        <span class="price product-price sale-price">
+                                                                                                            <span class="money">@Model.ListProduct[i].ProductExtraPrice VNĐ</span>
+                                                                                                        </span>
+                                                                                                    }
+                                                                                                    else
+                                                                                                    {
+                                                                                                        <span class="price product-price ">
+                                                                                                            <span class="money">@Model.ListProduct[i].ProductPrice VNĐ</span>
+                                                                                                        </span>
+                                                                                                    }
+                                                                                                </span>
+                                                                                            </span>
+                                                                                        </div>
+                                                                                        <div class="functional-buttons clearfix">
+                                                                                            <div class="quickview">
+                                                                                                <a class="quick-view btn" href="#quick-view-product" data-handle="longsleeve-spacedye-nep" title="Quick View">
+                                                                                                    <i class="fa fa-plus"></i>
+                                                                                                    <span>Xem nhanh</span>
+                                                                                                </a>
+                                                                                            </div>
+                                                                                            <div class="cart">
+                                                                                                <div class="action">
+                                                                                                    <a class="button ajax_addtocart btn" href="" ng-click="AddToCart(@Model.ListProduct[i].Id, '', 1, @Model.ListProduct[i].ProductPrice, @Model.ListProduct[i].ImageURL, @Model.ListProduct[i].ProductName);" title="Thêm giỏ hàng">
+                                                                                                        <span class="fa fa-shopping-cart"></span>
+                                                                                                        <span class="select_options">Thêm giỏ hàng</span>
+                                                                                                    </a>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="wishlist">
+                                                                                                <a class="btn btn-outline-inverse btn-wishlist" href="javascript:void(0)" title="Thêm mục ưu thích">
+                                                                                                    <i class="fa fa-heart"></i>
+                                                                                                    <span>Thêm mục ưu thích</span>
+                                                                                                </a>
+                                                                                            </div>
+                                                                                            @*<div class="view_detail">
+                                <a class="btn lnk_view" href="/collections/best-seller/products/longsleeve-spacedye-nep" title="View product">
+                                    <i class="fa fa-eye"></i><span>View product</span>
+                                </a>
+                            </div>*@
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    </div>
+                                                </div>
+                                                <div class="owl-controls clickable"><div class="owl-pagination"><div class="owl-page active"><span class=""></span></div><div class="owl-page"><span class=""></span></div><div class="owl-page"><span class=""></span></div></div><div class="owl-buttons"><div class="owl-prev">Prev</div><div class="owl-next">Next</div></div></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <script type="text/javascript">
+                                    $(document).ready(function () {
+                                        $('#productrelated .owl-carousel').each(function () {
+                                            $(this).owlCarousel({
+                                                items: 4,
+                                                lazyLoad: true,
+                                                navigation: true,
+                                                addClassActive: true,
+                                                afterInit: OwlLoaded,
+                                                afterAction: SetOwlCarouselFirstLast,
+
+                                                navigationText: ["Prev", "Next"]
+                                            });
+                                        });
+                                        function SetOwlCarouselFirstLast(el) {
+                                            el.find(".owl-item").removeClass("first");
+                                            el.find(".owl-item.active").first().addClass("first");
+
+                                            el.find(".owl-item").removeClass("last");
+                                            el.find(".owl-item.active").last().addClass("last");
+                                        };
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
