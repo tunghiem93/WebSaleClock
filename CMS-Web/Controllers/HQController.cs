@@ -1,5 +1,6 @@
 ﻿using CMS_DTO.CMSSession;
 using CMS_Shared;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -37,6 +38,18 @@ namespace CMS_Web.Controllers
                 new SelectListItem() { Text = "Giá cao nhất", Value = Commons.ERangeType.Hightest.ToString("d") },
             };
             return _lstRange;
+        }
+
+        public List<OrderCookie> GetListOrderCookie()
+        {
+            if (Request.Cookies["cms-order"] != null)
+            {
+                var _Orders = Request.Cookies["cms-order"].Value;
+                var strOrder = Server.UrlDecode(_Orders);
+                var ListOrder = JsonConvert.DeserializeObject<List<OrderCookie>>(strOrder);
+                return ListOrder;
+            }
+            return null;
         }
     }
 }
