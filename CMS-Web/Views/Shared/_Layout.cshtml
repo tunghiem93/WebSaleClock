@@ -373,32 +373,32 @@
                             <div class="cart_header_labels clearfix">
                                 <div class="label_item col-xs-12 col-sm-1 col-md-1">
                                     <div class="cart_product first_item">
-                                        Product 
+                                        Sản phẩm 
                                     </div>
                                 </div>
                                 <div class="label_item col-xs-12 col-sm-4 col-md-4">
                                     <div class="cart_description item">
-                                        Description
+                                        Mô tả
                                     </div>
                                 </div>
                                 <div class="label_item col-xs-12 col-sm-2 col-md-2">
                                     <div class="cart_price item">
-                                        Price
+                                        Giá
                                     </div>
                                 </div>
                                 <div class="label_item col-xs-12 col-sm-2 col-md-2">
                                     <div class="cart_quantity item">
-                                        Quantity
+                                        Số lượng
                                     </div>
                                 </div>
                                 <div class="label_item col-xs-12 col-sm-2 col-md-2">
                                     <div class="cart_total item">
-                                        Total
+                                        Thành tiền
                                     </div>
                                 </div>
                                 <div class="label_item col-xs-12 col-sm-1 col-md-1">
                                     <div class="cart_delete last_item">
-                                        Remove
+                                        Xóa
                                     </div>
                                 </div>
                             </div>
@@ -439,7 +439,7 @@
                                 <div class="cpro_item col-xs-12 col-sm-1 col-md-1">
                                     <div class="cpro_item_inner">
                                         <a href="javascript:void(0)" ng-click="RemoveItemOrder($index)" class="cart__remove ajaxcartRemove" data-id="22632174659">
-                                            <small>Remove</small>
+                                            <small>Xóa</small>
                                         </a>
                                     </div>
                                 </div>
@@ -459,11 +459,9 @@
                                         <span class="h3 cart__subtotal"><span class="money" data-currency-usd="{{OrderTotal}}">{{OrderTotal | currency : "" : 0}} đ</span></span>
                                     </p>
                                     <p><em>Shipping &amp; taxes calculated at checkout</em></p>
-                                    <a class="btn con-ajax-cart btn-outline" href="/collections/all" title="Continue shopping">Tiếp tục mua hàng</a>
+                                    <a class="btn con-ajax-cart btn-outline" href="@Url.Action("Index","Shop")" title="Tiếp tục mua hàng">Tiếp tục mua hàng</a>
                                     <a class="btn btn-outline update-cart" href="@Url.Action("Index","Cart")">Giỏ hàng</a>
                                     <a class="btn btn-outline" href="@Url.Action("CheckOut","Cart")">Thanh toán</a>
-                                    @*<input type="submit" name="update" class="btn btn-outline update-cart" value="Update Cart">*@
-                                   @* <input type="submit" name="checkout" class="btn btn-outline" value="Check Out">*@
 
                                 </div>
                             </div>
