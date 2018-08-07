@@ -13,5 +13,10 @@ namespace CMS_Web.Controllers
         {
             return View();
         }
+
+        public ActionResult CheckOut()
+        {
+            return View();
+        }
     }
 }
