@@ -46,6 +46,7 @@ namespace CMS_Web.Controllers
                         {
                             var item = _Orders.FirstOrDefault(z => z.ItemId.Equals(o.ProductID));
                             o.Quantity = item.Quantity;
+                            o.ImageUrl = item.ImageUrl;
                             o.TotalPrice = Convert.ToDouble(o.Price * item.Quantity);
                         });
                         model.ListItem = data;

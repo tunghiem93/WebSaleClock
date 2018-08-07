@@ -459,9 +459,11 @@
                                         <span class="h3 cart__subtotal"><span class="money" data-currency-usd="{{OrderTotal}}">{{OrderTotal | currency : "" : 0}} đ</span></span>
                                     </p>
                                     <p><em>Shipping &amp; taxes calculated at checkout</em></p>
-                                    <a class="btn con-ajax-cart btn-outline" href="/collections/all" title="Continue shopping">Continue shopping</a>
-                                    <input type="submit" name="update" class="btn btn-outline update-cart" value="Update Cart">
-                                    <input type="submit" name="checkout" class="btn btn-outline" value="Check Out">
+                                    <a class="btn con-ajax-cart btn-outline" href="/collections/all" title="Continue shopping">Tiếp tục mua hàng</a>
+                                    <a class="btn btn-outline update-cart" href="@Url.Action("Index","Cart")">Giỏ hàng</a>
+                                    <a class="btn btn-outline" href="@Url.Action("CheckOut","Cart")">Thanh toán</a>
+                                    @*<input type="submit" name="update" class="btn btn-outline update-cart" value="Update Cart">*@
+                                   @* <input type="submit" name="checkout" class="btn btn-outline" value="Check Out">*@
 
                                 </div>
                             </div>
