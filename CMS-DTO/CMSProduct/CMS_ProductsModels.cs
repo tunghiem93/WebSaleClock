@@ -52,6 +52,8 @@ namespace CMS_DTO.CMSProduct
         public CMS_ProductsModels()
         {
             IsActive = true;
+            ProductPrice = 0;
+            ProductExtraPrice = 0;
             ListImages = new List<CMS_ImagesModels>();
         }
     }

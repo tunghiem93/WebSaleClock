@@ -27,6 +27,7 @@ namespace CMS_Shared.CMSNews
                             {
                                 Id = _Id,
                                 Title = model.Title,
+                                Publisher = model.Publisher,
                                 Short_Description = model.Short_Description,
                                 ImageURL = model.ImageURL,
                                 CreatedBy = model.CreatedBy,
@@ -44,6 +45,7 @@ namespace CMS_Shared.CMSNews
                             if (e != null)
                             {
                                 e.Title = model.Title;
+                                e.Publisher = model.Publisher;
                                 e.Short_Description = model.Short_Description;
                                 e.ImageURL = model.ImageURL;
                                 e.Description = model.Description;
@@ -125,6 +127,7 @@ namespace CMS_Shared.CMSNews
                             UpdatedBy = e.UpdatedBy,
                             UpdatedDate = e.UpdatedDate,
                             Title = e.Title,
+                            Publisher = e.Publisher,
                             Short_Description = e.Short_Description,
                             ImageURL = e.ImageURL
                         };
@@ -147,6 +150,7 @@ namespace CMS_Shared.CMSNews
                                                {
                                                    Id = x.Id,
                                                    Title = x.Title,
+                                                   Publisher = x.Publisher,
                                                    Short_Description = x.Short_Description,
                                                    ImageURL = x.ImageURL,
                                                    CreatedBy = x.CreatedBy,

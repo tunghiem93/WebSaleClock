@@ -21,6 +21,7 @@ namespace CMS_DTO.CMSNews
         [Required(ErrorMessage = "Vui lòng nhập mô tả bài viết")]
         [MaxLength(500, ErrorMessage = "Mô tả bài viết tối đa 500 kí tự")]
         public string Short_Description { get; set; }
+        public string Publisher { get; set; }
         [AllowHtml]
         public string Description { get; set; }
         public bool IsActive { get; set; }
@@ -40,6 +41,7 @@ namespace CMS_DTO.CMSNews
     {
         public List<CMS_NewsModels> ListNews { get; set; }
         public List<CMS_NewsModels> ListNewsNew { get; set; }
+        public List<CMS_NewsModels> ListNewsOld { get; set; }
         public CMS_NewsModels CMS_News { get; set; }
         public List<CMSCategoriesModels> ListCate { get; set; }
         public List<CMS_ProductsModels> ListProduct { get; set; }
@@ -47,6 +49,7 @@ namespace CMS_DTO.CMSNews
         {
             ListNews = new List<CMS_NewsModels>();
             ListNewsNew = new List<CMS_NewsModels>();
+            ListNewsOld = new List<CMS_NewsModels>();
             CMS_News = new CMS_NewsModels();
             ListCate = new List<CMSCategoriesModels>();
             ListProduct = new List<CMS_ProductsModels>();

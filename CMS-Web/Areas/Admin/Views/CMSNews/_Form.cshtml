@@ -50,6 +50,14 @@
         </div>
 
         <div class="form-group">
+            <label class="control-label col-md-2 col-sm-2 col-xs-12 fontLighter">Tác giả</label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                @Html.TextBoxFor(model => model.Publisher, new { @class = "form-control", @placeholder = "Tác giả", @autocomplete = "off" })
+                @Html.ValidationMessageFor(model => model.Publisher, null, new { @class = "label label-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
             <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">Mô tả ngắn</label>
             <div class="col-md-6 col-sm-6 col-xs-12">
                 @Html.TextAreaFor(model => model.Short_Description, new { @class = "form-control", @placeholder = "Mô tả ngắn", @autocomplete = "off" })

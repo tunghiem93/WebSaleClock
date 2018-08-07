@@ -39,6 +39,7 @@ namespace CMS_Shared.CMSProducts
                                 Vendor = model.Vendor,
                                 Information = model.Information,
                                 ProductPrice = model.ProductPrice,
+                                ProductExtraPrice = model.ProductExtraPrice,
                                 UpdatedBy = model.UpdatedBy,
                                 UpdatedDate = DateTime.Now,
                                 IsActive  = model.IsActive
@@ -72,6 +73,7 @@ namespace CMS_Shared.CMSProducts
                                 e.ProductName = model.ProductName;
                                 e.ProductCode = model.ProductCode;
                                 e.ProductPrice = model.ProductPrice;
+                                e.ProductExtraPrice = model.ProductExtraPrice;
                                 e.Short_Description = model.Short_Description;
                                 e.Description = model.Description;
                                 e.Vendor = model.Vendor;
@@ -187,6 +189,7 @@ namespace CMS_Shared.CMSProducts
                             ProductCode = e.p.ProductCode,
                             ProductName = e.p.ProductName,
                             ProductPrice = e.p.ProductPrice,
+                            ProductExtraPrice = e.p.ProductExtraPrice,
                             Vendor = e.p.Vendor,
                             Information = e.p.Information,
                             TypeState = e.p.TypeState,
@@ -225,6 +228,7 @@ namespace CMS_Shared.CMSProducts
                                                    ProductCode = x.p.ProductCode,
                                                    ProductName = x.p.ProductName,
                                                    ProductPrice = x.p.ProductPrice,
+                                                   ProductExtraPrice = x.p.ProductExtraPrice,
                                                    Vendor = x.p.Vendor,
                                                    Information = x.p.Information,
                                                    TypeSize = x.p.TypeSize,

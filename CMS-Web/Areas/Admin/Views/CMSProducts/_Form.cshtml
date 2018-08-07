@@ -137,6 +137,14 @@
         </div>
 
         <div class="form-group">
+            <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">Giá Sale</label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                @Html.TextBoxFor(model => model.ProductExtraPrice, new { @class = "form-control keyMoney", @placeholder = "Giá Sale", @autocomplete = "off" })
+                @Html.ValidationMessageFor(model => model.ProductExtraPrice, null, new { @class = "label label-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
             <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">Nhà cung cấp</label>
             <div class="col-md-6 col-sm-6 col-xs-12">
                 @Html.TextBoxFor(model => model.Vendor, new { @class = "form-control", @placeholder = "Nhà cung cấp", @autocomplete = "off" })
@@ -209,7 +217,7 @@
         });
         $("#SizeDdl").select2({
             placeholder: "Vui lòng chọn Size",
-            //allowClear: true
+            allowClear: true
         });
         $("#StateDdl").select2({
             placeholder: "Vui lòng chọn tình trạng",

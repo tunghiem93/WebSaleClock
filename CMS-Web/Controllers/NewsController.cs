@@ -35,7 +35,8 @@ namespace CMS_Web.Controllers
                 });
 
                 model.ListNews = data;
-                model.ListNewsNew = data.OrderByDescending(x => x.CreatedDate).Skip(0).Take(5).ToList();
+                model.ListNewsNew = data.OrderBy(x => x.CreatedDate).ToList();
+                model.ListNewsOld = data.OrderByDescending(x => x.CreatedDate).Skip(0).Take(5).ToList();
             }
             return View(model);
         }
@@ -47,7 +48,7 @@ namespace CMS_Web.Controllers
             {
                 if(string.IsNullOrEmpty(id))
                 {
-                    return RedirectToAction("Index", "NotFound", new { area = "Clients" });
+                    return RedirectToAction("Index", "NotFound");
                 }
                 else
                 {
@@ -61,59 +62,12 @@ namespace CMS_Web.Controllers
                     }
 
                     model.CMS_News = data;
-                    model.ListNewsNew = _fac.GetList().OrderByDescending(x => x.CreatedDate).Skip(0).Take(2).ToList();
-                    if (model.ListNewsNew != null && model.ListNewsNew.Any())
-                    {
-                        model.ListNewsNew.ForEach(x =>
-                        {
-                            if (!string.IsNullOrEmpty(x.ImageURL))
-                            {
-                                x.ImageURL = Commons.HostImage + "News/" + x.ImageURL;
-                            }
-                            else
-                            {
-                                x.ImageURL = Commons.Image770_395;
-                            }
-                        });
-                    }
-                    //For categories
-                    var dataCate = _facCate.GetList().OrderByDescending(x => x.CreatedDate).Skip(0).Take(5).ToList();
-                    if (dataCate != null)
-                    {
-                        dataCate.ForEach(x =>
-                        {
-                            if (!string.IsNullOrEmpty(x.ImageURL))
-                            {
-                                x.ImageURL = Commons.HostImage + "News/" + x.ImageURL;
-                            }
-                            else
-                            {
-                                x.ImageURL = Commons.Image770_395;
-                            }
-                        });
-                    }
-                    //For Product
-                    var dataPro = _facPro.GetList().OrderByDescending(x => x.CreatedDate).Skip(0).Take(5).ToList();
-                    if (dataPro != null)
-                    {
-                        dataPro.ForEach(x =>
-                        {
-                            if (!string.IsNullOrEmpty(x.ImageURL))
-                            {
-                                x.ImageURL = Commons.HostImage + "News/" + x.ImageURL;
-                            }
-                            else
-                            {
-                                x.ImageURL = Commons.Image770_395;
-                            }
-                        });
-                    }
-
+                    model.ListNewsOld = _fac.GetList().OrderByDescending(x => x.CreatedDate).Skip(0).Take(5).ToList();                   
                 }
             }
             catch(Exception ex)
             {
-                return RedirectToAction("Index", "NotFound", new { area = "Clients" });
+                return RedirectToAction("Index", "NotFound");
             }
             return View(model);
         }

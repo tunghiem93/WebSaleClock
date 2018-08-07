@@ -17,6 +17,7 @@ namespace CMS_Entity.Mapping
             this.Property(x => x.ProductCode).HasMaxLength(50).HasColumnType("varchar").IsRequired();
             this.Property(x => x.ProductName).HasMaxLength(250).HasColumnType("nvarchar").IsRequired();
             this.Property(x => x.ProductPrice).HasColumnType("decimal").IsOptional();
+            this.Property(x => x.ProductExtraPrice).HasColumnType("decimal").IsOptional();
             this.Property(x => x.Vendor).HasMaxLength(1000).HasColumnType("nvarchar").IsOptional();
             this.Property(x => x.Short_Description).HasMaxLength(1000).HasColumnType("nvarchar").IsOptional();
             this.Property(x => x.Information).HasMaxLength(1000).HasColumnType("nvarchar").IsOptional();
