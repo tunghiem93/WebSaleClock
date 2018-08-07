@@ -37,7 +37,6 @@ namespace CMS_Web.Controllers
                     var data = _fac.GetList().Where(o => ItemIds.Contains(o.Id))
                                              .Select(o => new CMS_ItemModels
                                              {
-                                                 Price = o.ProductPrice,
                                                  ProductID = o.Id,
                                                  ProductName = o.ProductName,
                                              }).ToList();
@@ -48,6 +47,7 @@ namespace CMS_Web.Controllers
                             var item = _Orders.FirstOrDefault(z => z.ItemId.Equals(o.ProductID));
                             o.Quantity = item.Quantity;
                             o.ImageUrl = item.ImageUrl;
+                            o.Price = item.Price;
                             o.TotalPrice = Convert.ToDouble(o.Price * item.Quantity);
                         });
                         model.ListItem = data;
@@ -88,7 +88,6 @@ namespace CMS_Web.Controllers
                     var data = _fac.GetList().Where(o => ItemIds.Contains(o.Id))
                                              .Select(o => new CMS_ItemModels
                                              {
-                                                 Price = o.ProductPrice,
                                                  ProductID = o.Id,
                                                  ProductName = o.ProductName,
                                              }).ToList();
@@ -99,6 +98,7 @@ namespace CMS_Web.Controllers
                             var item = _Orders.FirstOrDefault(z => z.ItemId.Equals(o.ProductID));
                             o.Quantity = item.Quantity;
                             o.ImageUrl = item.ImageUrl;
+                            o.Price = item.Price;
                             o.TotalPrice = Convert.ToDouble(o.Price * item.Quantity);
                         });
                         model.ListItem = data;
