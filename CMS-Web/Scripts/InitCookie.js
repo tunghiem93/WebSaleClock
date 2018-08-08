@@ -90,3 +90,10 @@ function RemoveOrderByItemId(itemId)
         } 
     }
 }
+
+function RegexEmail(Email) {
+    var pattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i;
+    if (!pattern.test(Email))
+        return false;
+    return true;
+}
