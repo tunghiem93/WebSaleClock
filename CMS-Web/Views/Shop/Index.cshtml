@@ -99,7 +99,7 @@
                                                                 </h5>
                                                                 <div class="content_price price">
                                                                     <span class="price product-price">
-                                                                        <span class="money">@item.ProductPrice VNĐ</span>
+                                                                        <span class="money">@item.ProductPrice.ToString("#,00") VNĐ</span>
                                                                     </span>
                                                                 </div>
                                                             </div>
@@ -164,25 +164,28 @@
 
                     <div class="content_sortPagiBar">
                         <div id="pagination" class="clearfix">
-                            <ul class="pagination">
-                                <li class="pagination_previous disabled" onclick="PrevPage();">
-                                    <span><i class="fa fa-chevron-left"></i></span>
-                                </li>
-                                @for (var i = 1; i <= Model.TotalPage; i++)
-                                {
+                            @if (Model.TotalPage > 0)
+                            {
+                                <ul class="pagination">
+                                    <li class="pagination_previous disabled" onclick="PrevPage();">
+                                        <span><i class="fa fa-chevron-left"></i></span>
+                                    </li>
+                                    @for (var i = 1; i <= Model.TotalPage; i++)
+                                    {
 
-                                    if (i == 1)
-                                    {
-                                        @*<li class="active"><span>1</span></li>*@
-                                        <li class="active" id="page_@i" data-page="@i" onclick="ChoosePage(@i,this)"><a style="cursor:pointer;" title="">@i</a></li>
+                                        if (i == 1)
+                                        {
+                                            @*<li class="active"><span>1</span></li>*@
+                                            <li class="active" id="page_@i" data-page="@i" onclick="ChoosePage(@i,this)"><a style="cursor:pointer;" title="">@i</a></li>
+                                        }
+                                        else
+                                        {
+                                            <li onclick="ChoosePage(@i,this)" id="page_@i" data-page="@i"><a style="cursor:pointer;" title="">@i</a></li>
+                                        }
                                     }
-                                    else
-                                    {
-                                        <li onclick="ChoosePage(@i,this)" id="page_@i" data-page="@i"><a style="cursor:pointer;" title="">@i</a></li>
-                                    }
-                                }
-                                <li class="pagination_next" onclick="NextPage()"><span><i class="fa fa-chevron-right"></i></span></li>
-                            </ul>
+                                    <li class="pagination_next" onclick="NextPage()"><span><i class="fa fa-chevron-right"></i></span></li>
+                                </ul>
+                            }
                         </div>
                     </div>
                 </div>
@@ -196,90 +199,90 @@
     {
         $("[id=pagination]").find("li").removeClass("active");
         $(that).addClass("active");
-        if (pageIndex != 1)
-        {
+                                        if (pageIndex != 1)
+                                        {
             $(".pagination_previous").removeClass("disabled");
-        }
-        else {
+                                        }
+                                        else {
             $(".pagination_previous").addClass("disabled");
-        }
+                                        }
 
-        if (pageIndex == '@Model.TotalPage')
+                                        if (pageIndex == '@Model.TotalPage')
             $(".pagination_next").addClass("disabled");
         else
             $(".pagination_next").removeClass("disabled");
 
-        LoadDataPagging(pageIndex);
-    }
+                                        LoadDataPagging(pageIndex);
+                                    }
 
-    function PrevPage() {
-        var pageIndex = 1;
+                                    function PrevPage() {
+                                        var pageIndex = 1;
         $("#pagination li").each(function (index) {
-            if ($(this).hasClass("active"))
+                                            if ($(this).hasClass("active"))
             {
-                var PageIndex = parseInt($(this).attr("data-page"));
+                                        var PageIndex = parseInt($(this).attr("data-page"));
                 $("[id=pagination]").find("li").removeClass("active");
-                if (PageIndex > 1)
-                {
-                    pageIndex = PageIndex - 1;
+                                        if (PageIndex > 1)
+                                        {
+                                            pageIndex = PageIndex - 1;
                     $('[id=page_' + (PageIndex - 1) + ']').addClass("active");
-                }
-                else
+                                        }
+                                        else
                     $('[id=page_1]').addClass("active");
-                if ((PageIndex - 1) == 1)
-                {
+                                        if ((PageIndex - 1) == 1)
+                                        {
                     $(".pagination_previous").addClass("disabled");
-                }
+                                        }
 
-                return false;
-            }
-        });
+                                        return false;
+                                    }
+                                });
         LoadDataPagging(pageIndex);
-    }
+                            }
 
-    function NextPage() {
+                            function NextPage() {
         $(".pagination_previous").removeClass("disabled");
-        var totalPage = '@Model.TotalPage';
-        var pageIndex = '@Model.TotalPage';
+                                var totalPage = '@Model.TotalPage';
+                                var pageIndex = '@Model.TotalPage';
         $("#pagination li").each(function (index) {
-            if ($(this).hasClass("active")) {
-                var PageIndex = parseInt($(this).attr("data-page"));
+                                    if ($(this).hasClass("active")) {
+                                        var PageIndex = parseInt($(this).attr("data-page"));
                 $("[id=pagination]").find("li").removeClass("active");
-                if (PageIndex > totalPage) {
+                                        if (PageIndex > totalPage) {
                     $('[id=page_' + totalPage + ']').addClass("active");
-                }
-                else {
-                    pageIndex = parseInt(PageIndex) + 1;
+                                        }
+                                        else {
+                                            pageIndex = parseInt(PageIndex) + 1;
                     $('[id=page_' + pageIndex + ']').addClass("active");
-                }
+                                        }
 
-                if ((PageIndex + 1) == '@Model.TotalPage') {
+                                        if ((PageIndex + 1) == '@Model.TotalPage') {
                     $(".pagination_next").addClass("disabled");
-                }
-                return false;
-            }
-        });
-        LoadDataPagging(pageIndex);
-    }
+                                        }
+                                        return false;
+                                    }
+                                });
+                                LoadDataPagging(pageIndex);
+                            }
 
-    function LoadDataPagging(pageIndex)
-    {
+                            function LoadDataPagging(pageIndex)
+                            {
          $.ajax({
-                url: "@Url.Action("LoadDataPagging", "Shop")",
+                                    url: "@Url.Action("LoadDataPagging", "Shop")",
                 type: "GET",
                 data: { pageIndex: pageIndex },
                 dataType: 'html',
                 beforeSend: function () {
-                  //  $('.se-pre-con').show();
-                },
+                                        //  $('.se-pre-con').show();
+                                    },
                 success: function (data) {
                     $('[id=product_list]').html(data);
-                },
+                                    },
                 complete: function () {
-                  //  $('.se-pre-con').hide();
-                },
+                                        //  $('.se-pre-con').hide();
+                                    },
                 error: function (jqXHR, textStatus, errorThrown) {
-                }
-            });
-    }
+                                    }
+                                });
+                            }
 </script>
