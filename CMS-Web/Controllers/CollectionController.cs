@@ -59,7 +59,7 @@ namespace CMS_Web.Controllers
                 //Category
                 model.ListBrand = _facBrand.GetList().OrderByDescending(x => x.CreatedDate).Skip(0).Take(5).ToList();
                 //Product
-                model.ListProduct = _fac.GetList().OrderByDescending(x => x.CreatedDate).ToList();
+                model.ListProduct = _fac.GetListProductCate(id).OrderByDescending(x => x.CreatedDate).ToList();
                 var dataImage = _fac.GetListImage();
                 if (model.ListProduct != null && model.ListProduct.Any())
                 {

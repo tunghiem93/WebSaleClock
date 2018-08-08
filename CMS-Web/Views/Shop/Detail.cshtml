@@ -196,31 +196,31 @@
                                                         <button type="button" class="apQtyAdjust apQtyAdjustPlus" data-id="" data-qty="11" ng-click="QtyAdjustNoOrder(1)">+</button>
                                                     </div>
                                                 </div>
-                                                <div class="proVariants clearfix">
+                                                @*<div class="proVariants clearfix">
                                                     <div class="swatch clearfix" data-option-index="0">
                                                         <div class="header">Size</div>
                                                         <div data-value="XS" class="swatch-element xs available">
-                                                            <input id="swatch-0-xs" type="radio" name="option-0" value="XS">
-                                                            <label for="swatch-0-xs">XS</label>
+                                                            @Html.CheckBoxFor(model =>model.IsXS, new { @class = "sizeChecked"})
+                                                            <label class="clsSize" for="IsXS">XS</label>
+                                                        </div>
+                                                        <div data-value="XL" class="swatch-element s available">
+                                                            @Html.CheckBoxFor(model => model.IsS, new { @class = "sizeChecked" })
+                                                            <label class="clsSize" for="IsS">S</label>
+                                                        </div>
+                                                        <div data-value="XL" class="swatch-element m available">
+                                                            @Html.CheckBoxFor(model => model.IsM, new { @class = "sizeChecked" })
+                                                            <label class="clsSize" for="IsM">M</label>
+                                                        </div>
+                                                        <div data-value="XL" class="swatch-element l available">
+                                                            @Html.CheckBoxFor(model => model.IsL, new { @class = "sizeChecked" })
+                                                            <label class="clsSize" for="IsL">L</label>
                                                         </div>
                                                         <div data-value="XL" class="swatch-element xl available">
-                                                            <input id="swatch-0-xl" type="radio" name="option-0" value="S">
-                                                            <label for="swatch-0-xl">S</label>
-                                                        </div>
-                                                        <div data-value="XL" class="swatch-element xl available">
-                                                            <input id="swatch-0-xl" type="radio" name="option-0" value="M">
-                                                            <label for="swatch-0-xl">M</label>
-                                                        </div>
-                                                        <div data-value="XL" class="swatch-element xl available">
-                                                            <input id="swatch-0-xl" type="radio" name="option-0" value="L">
-                                                            <label for="swatch-0-xl">L</label>
-                                                        </div>
-                                                        <div data-value="XL" class="swatch-element xl available">
-                                                            <input id="swatch-0-xl" type="radio" name="option-0" value="XL">
-                                                            <label for="swatch-0-xl">XL</label>
+                                                            @Html.CheckBoxFor(model => model.IsXL, new { @class = "sizeChecked" })
+                                                            <label class="clsSize" for="IsXL">XL</label>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div>*@
                                                 <div class="line-product"></div>
                                                 <div class="total-price">
                                                     <label>Subtotal: </label>
@@ -563,14 +563,12 @@
                                                 addClassActive: true,
                                                 afterInit: OwlLoaded,
                                                 afterAction: SetOwlCarouselFirstLast,
-
                                                 navigationText: ["Prev", "Next"]
                                             });
                                         });
                                         function SetOwlCarouselFirstLast(el) {
                                             el.find(".owl-item").removeClass("first");
                                             el.find(".owl-item.active").first().addClass("first");
-
                                             el.find(".owl-item").removeClass("last");
                                             el.find(".owl-item.active").last().addClass("last");
                                         };
@@ -584,3 +582,15 @@
         </div>
     </section>
 </main>
+
+<script>    
+    $(".clsSize").click(function (e) {
+        debugger;
+        $(".clsSize").prop("checked", false);
+        $('.clsSize').css("background-color", "#fff"); 
+        $(this).addClass("bgcolorSize");
+        $(this).prop("checked", true);
+        $('.bgcolorSize').css("background-color", "#72c13d"); 
+        $(this).removeClass("bgcolorSize");
+    });
+</script>
