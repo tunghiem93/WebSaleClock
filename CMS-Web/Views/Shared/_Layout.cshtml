@@ -260,7 +260,7 @@
                                     <div class="cpro_item_inner">
                                         <div class="ajaxcartQty">
                                             <button type="button" class="ajaxcartQtyAdjust ajaxcartQtyMinus" ng-click="QtyAdjust($index,0)" data-qty="0">−</button>
-                                            <input type="text" restrict-to="[0-9]" ng-model="item.Quantity" ng-change="UpdateQtyOrder($index);" min="0" pattern="[0-9]*">
+                                            <input type="text" restrict-to="[0-9]" ng-model="item.Quantity" ng-blur="ngBlurModal($index);" ng-change="UpdateQtyOrder($index);" min="0" pattern="[0-9]*">
                                             <button type="button" class="ajaxcartQtyAdjust ajaxcartQtyPlus" ng-click="QtyAdjust($index,1)" data-qty="11">+</button>
                                         </div>
                                     </div>
@@ -1096,6 +1096,39 @@
             UpdateQuantity($rootScope.Products[$index].ItemId, $rootScope.Products[$index].Quantity);
             var Orders = getListOrder();
             $scope.setTotals(Orders);
+        }
+
+        $scope.QtyAdjustNoOrder = function (type)
+        {
+            if (type == 0) {
+
+                $scope.Qty = $scope.Qty - 1;
+                if (parseInt($scope.Qty) < 1)
+                    $scope.Qty = 1;
+            }
+            else {
+                $scope.Qty = $scope.Qty + 1;
+            }
+        }
+
+        $scope.ngChangeQty = function () {
+            if (parseInt($scope.Qty) < 1)
+                $scope.Qty = 1;
+        }
+
+        $scope.ngBlur = function () {
+            if ($scope.Qty.length == 0)
+                $scope.Qty = 1;
+        }
+        $scope.ngBlurModal = function ($index) {
+            if ($rootScope.Products[$index].Quantity.length == 0)
+            {
+                $rootScope.Products[$index].Quantity = 1;
+                UpdateQuantity($rootScope.Products[$index].ItemId, $rootScope.Products[$index].Quantity);
+                var Orders = getListOrder();
+                $scope.setTotals(Orders);
+            }
+           
         }
 
         $scope.RemoveItemOrder = function ($index)
