@@ -244,6 +244,44 @@ namespace CMS_Shared.CMSProducts
             return null;
         }
 
+        public List<CMS_ProductsModels> GetListProductCate(string cateID)
+        {
+            try
+            {
+                using (var cxt = new CMS_Context())
+                {
+                    var data = cxt.CMS_Products.Join(cxt.CMS_Categories,
+                                                    p => p.CategoryId,
+                                                    c => c.Id,
+                                                    (p, c) => new { p, CategoryName = c.CategoryName })
+                                               .Select(x => new CMS_ProductsModels
+                                               {
+                                                   Id = x.p.Id,
+                                                   CategoryId = x.p.CategoryId,
+                                                   CreatedBy = x.p.CreatedBy,
+                                                   CreatedDate = x.p.CreatedDate,
+                                                   Short_Description = x.p.Short_Description,
+                                                   Description = x.p.Description,
+                                                   IsActive = x.p.IsActive,
+                                                   ProductCode = x.p.ProductCode,
+                                                   ProductName = x.p.ProductName,
+                                                   ProductPrice = x.p.ProductPrice,
+                                                   ProductExtraPrice = x.p.ProductExtraPrice,
+                                                   Vendor = x.p.Vendor,
+                                                   Information = x.p.Information,
+                                                   TypeSize = x.p.TypeSize,
+                                                   TypeState = x.p.TypeState,
+                                                   UpdatedBy = x.p.UpdatedBy,
+                                                   UpdatedDate = x.p.UpdatedDate,
+                                                   CategoryName = x.CategoryName
+                                               }).Where(w=>w.CategoryId.Equals(cateID)).ToList();
+                    return data;
+                }
+            }
+            catch (Exception) { }
+            return null;
+        }
+
         public List<CMS_ImagesModels> GetListImage()
         {
             try

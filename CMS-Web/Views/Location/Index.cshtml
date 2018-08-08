@@ -1,11 +1,12 @@
-﻿
+﻿@model CMS_DTO.CMSCompany.CMS_CompanyModels
+@using CMS_Shared;
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Vị trí";
 }
 <style>
-    .main-content{
-        display: block; 
+    .main-content {
+        display: block;
         width: 80%;
         margin: auto !important;
     }
@@ -20,10 +21,16 @@
     </div>
     <div class="clsInfor">
         <h4>Liên hệ</h4>
-        <p>Phòng 2626, VP6 Linh đàm, Phường Thịnh Liệt, Hoàng Mai, Hà Nội</p>
-        <p>Địa chỉ website: kidswatch.com</p>
-        <p><i class="icofont icofont-ui-head-phone"></i> Sđt: 84+ 971 603 603</p>
-        <p><i class="icofont icofont-email"></i> Email: Gbcablevn@gmail.com</p>
+        <p>@Model.Address</p>
+        <p>Địa chỉ website: @Model.Name</p>
+        <p><i class="icofont icofont-ui-head-phone"></i> Sđt: @Model.Phone</p>
+        <p><i class="icofont icofont-email"></i> Email: @Model.Email</p>
+        <p>Giờ mở cửa: @Model.Businesshour </p>
+        <p>Link Facebook: <a href="javascript:void(0)">@Model.LinkFB</a></p>
+        <p>Link Twitter : <a href="javascript:void(0)">@Model.LinkTwiter </a></p>
+        <p>Link Instagram : <a href="javascript:void(0)">@Model.LinkInstagram</a></p>
+        <p>Link Blog : <a href="javascript:void(0)">@Model.LinkBlog</a></p>
+        <p>Mô tả : @Model.Description</p>
     </div>
 </div>
 
