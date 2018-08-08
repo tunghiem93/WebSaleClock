@@ -111,43 +111,47 @@ namespace CMS_Web.Controllers
 
         public ActionResult Search()
         {
-            var Key = Request.QueryString["search"];
-            if (string.IsNullOrEmpty(Key))
-                Key = "";
-            var model = new ProductViewModels();
-
-            var data = _fac.GetList()
-                                    .Where(x => CommonHelper.RemoveUnicode(x.ProductName.ToLower()).Contains(CommonHelper.RemoveUnicode(Key.ToLower())))
-                                    .OrderByDescending(x => x.CreatedDate)
-                                                   .ToList();
-
-            if (data != null && data.Any())
+            try
             {
+                var Key = Request.QueryString["search"];
+                if (string.IsNullOrEmpty(Key))
+                    Key = "";
+                ProductViewModels model = new ProductViewModels();
+                //Category
+                model.ListCate = _facCate.GetList().OrderByDescending(x => x.CreatedDate).Skip(0).Take(10).ToList();
+                //Category
+                model.ListBrand = _facBrand.GetList().OrderByDescending(x => x.CreatedDate).Skip(0).Take(5).ToList();
+                //For product
+                model.ListProduct = _fac.GetList().OrderByDescending(x => x.CreatedDate).ToList();                
                 var dataImage = _fac.GetListImage();
-                data.ForEach(x =>
+                if (model.ListProduct != null && model.ListProduct.Any())
                 {
-                    var _Image = dataImage.FirstOrDefault(y => y.ProductId.Equals(x.Id));
-                    if (_Image != null)
+                    model.ListProduct.ForEach(x =>
                     {
-                        if (!string.IsNullOrEmpty(_Image.ImageURL))
-                            x.ImageURL = Commons.HostImage + "Products/" + _Image.ImageURL;
-                    }
-                });
-                model.Key = Key;
-                model.ListProduct = data.OrderByDescending(x => x.CreatedDate).Skip(0).Take(12).ToList();
-                model.TotalProduct = data.Count;
-                var pageIndex = 0;
-                if (data.Count % 12 == 0)
-                    pageIndex = data.Count / 12;
-                else
-                    pageIndex = Convert.ToInt16(data.Count / 12) + 1;
-
-                if (pageIndex > 1)
-                    model.TotalPage = 2;
-                else
-                    model.IsAddMore = true;
+                        var _Image = dataImage.FirstOrDefault(z => z.ProductId.Equals(x.Id));
+                        if (_Image != null)
+                        {
+                            x.ImageURL = _Image.ImageURL;
+                            if (!string.IsNullOrEmpty(x.ImageURL))
+                            {
+                                x.ImageURL = Commons._PublicImages + "Products/" + x.ImageURL;
+                            }
+                            else
+                            {
+                                x.ImageURL = "";
+                            }
+                        }
+                    });
+                    model.ListProductTopSales = model.ListProduct.Skip(0).Take(5).ToList();
+                    model.ListProduct = model.ListProduct.Where(x => CommonHelper.RemoveUnicode(x.ProductName.ToLower()).Contains(CommonHelper.RemoveUnicode(Key.ToLower())))
+                                            .OrderByDescending(x => x.CreatedDate).Skip(0).Take(12).ToList();
+                }
+                return View(model);
             }
-            return View(model);
+            catch (Exception)
+            {
+                return RedirectToAction("Index");
+            }            
         }
 
         public ActionResult Detail(string id)
