@@ -20,17 +20,19 @@
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3725.6280595098387!2d105.83108891535834!3d20.96744669524351!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ac555927a9bb%3A0xbdfe41608e605ec8!2sVP6+Linh+Dam!5e0!3m2!1svi!2s!4v1524556514841" style="border: 0; width: 100%; height: 500px; " frameborder="0" allowfullscreen></iframe>
     </div>
     <div class="clsInfor">
-        <h4>Liên hệ</h4>
-        <p>@Model.Address</p>
-        <p>Địa chỉ website: @Model.Name</p>
-        <p><i class="icofont icofont-ui-head-phone"></i> Sđt: @Model.Phone</p>
-        <p><i class="icofont icofont-email"></i> Email: @Model.Email</p>
-        <p>Giờ mở cửa: @Model.Businesshour </p>
-        <p>Link Facebook: <a href="javascript:void(0)">@Model.LinkFB</a></p>
-        <p>Link Twitter : <a href="javascript:void(0)">@Model.LinkTwiter </a></p>
-        <p>Link Instagram : <a href="javascript:void(0)">@Model.LinkInstagram</a></p>
-        <p>Link Blog : <a href="javascript:void(0)">@Model.LinkBlog</a></p>
-        <p>Mô tả : @Model.Description</p>
+        <div class="form-group">
+            <div class="">
+                <h4><strong>Liên hệ</strong> </h4>
+                <p>@Model.Address </p>
+                <p><strong>Địa chỉ website</strong>: @Model.Name</p>
+                <p><i class="icofont icofont-ui-head-phone"></i><strong>Sđt</strong>: @Model.Phone</p>
+                <p><i class="icofont icofont-email"></i><strong>Email</strong>: @Model.Email</p>
+                <p><strong>Giờ mở cửa</strong>: @Model.Businesshour </p>
+            </div>
+        </div>
+        <div>
+            <p>Mô tả : @Model.Description</p>
+        </div> 
     </div>
 </div>
 
