@@ -38,11 +38,26 @@
                     <div id="idRecoverPasswordForm" style="display: none;">
                         <h2>Cập nhập mật khẩu</h2>
                         <p>Chúng tôi sẽ gửi thông tin xuống địa chỉ Email bạn cung cấp.</p>
-                        @using (@Html.BeginForm("ForgetPassword", "Login", FormMethod.Post, new { @class = "form-horizontal create-form", @enctype = "multipart/form-data", @style = "margin-top:5%" }))
+                        <input type="hidden" name="form_type" value="recover_customer_password"><input type="hidden" name="utf8" value="✓">
+                        <label for="RecoverEmail" class="label-login">Địa chỉ Email</label>
+                        @*@Html.TextBoxFor(model => model.Email, new { @class = "form-control", @id = "RecoverEmail", @placeholder = "*Địa chỉ Email", @type = "email", @required = "required" })*@
+                        <input type="email" class="form-control" id="RecoverEmail" placeholder = "*Địa chỉ Email" required />
+                        <label class="label label-danger" id="lblError"></label>
+                        <p>
+                            <input type="button" onclick="ResetPassword();" class="btn btn-outline" value="Submit">
+                        </p>
+                        <button type="button" id="idHideRecoverPasswordLink" class="text-link btn btn-outline-inverse">
+                            <span>
+                                <i class="fa fa-long-arrow-left"></i>&nbsp;
+                                Quay lại đăng nhập
+                            </span>
+                        </button>
+                        @*@using (@Html.BeginForm("ForgetPassword", "Login", FormMethod.Post, new { @class = "form-horizontal create-form", @enctype = "multipart/form-data", @style = "margin-top:5%" }))
                         {
                             <input type="hidden" name="form_type" value="recover_customer_password"><input type="hidden" name="utf8" value="✓">
                             <label for="RecoverEmail" class="label-login">Địa chỉ Email</label>
                             @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @id = "RecoverEmail", @placeholder = "*Địa chỉ Email", @type = "email", @required = "required" })
+
                             <p>
                                 <input type="submit" class="btn btn-outline" value="Submit">
                             </p>
@@ -52,7 +67,7 @@
                                     Quay lại đăng nhập
                                 </span>
                             </button>
-                        }
+                        }*@
                     </div>
                 </div>
             </div>
@@ -75,7 +90,6 @@
         </div>
     </div>
 </main>
-
 <script type="text/javascript">
 
     $('#idRecoverPassword').click(function () {
@@ -88,6 +102,39 @@
         $('#idRecoverPasswordForm').hide();
         $('#idCustomerLoginForm').show();
     });
+
+    function ResetPassword() {
+        var Email = $('[id=RecoverEmail]').val();
+        if (Email.length == 0)
+        {
+            $('[id=lblError]').text("Vui lòng nhập địa chỉ E-mail");
+        }
+        else {
+            var result = RegexEmail(Email);
+            if (!result)
+                $('[id=lblError]').text("Địa chỉ E-mail không đúng");
+            else
+                $('[id=lblError]').text("");
+
+            $.ajax({
+                url: "@Url.Action("ForgetPassword", "Login")",
+                type: "GET",
+                data: { Email: Email },
+                dataType: 'json',
+                beforeSend: function () {
+                  //  $('.se-pre-con').show();
+                },
+                success: function (data) {
+                    $('[id=lblError]').text(data.message);
+                },
+                complete: function () {
+                  //  $('.se-pre-con').hide();
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                }
+            });
+        }
+    }
 </script>
 
 

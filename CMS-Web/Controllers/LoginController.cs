@@ -145,6 +145,28 @@ namespace CMS_Web.Controllers
             }
         }
 
+        [HttpGet]
+        public JsonResult ForgetPassword(string Email)
+        {
+            var msg = "";
+            try
+            {
+                var result = _factory.ForgotPassword(Email, ref msg);
+                if (result)
+                    msg = "Mật khẩu của bạn đã được cấp mới . Vui lòng kiểm tra E-mail.";
+                
+            }
+            catch(Exception ex)
+            {
+                NSLog.Logger.Error("ForgetPassword:", ex);
+            }
+            var obj = new
+            {
+                message = msg
+            };
+            return Json(obj,JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         public ActionResult ForgetPassword(ClientLoginModel model)
         {

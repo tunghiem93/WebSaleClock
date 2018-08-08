@@ -266,7 +266,7 @@ namespace CMS_Shared.CMSCustomers
                             msg = "This customer is inactive. Please contact your administrator for more support.";
                     }
                     else
-                        msg = "Email is not exist.";
+                        msg = "Email của bạn không tồn tại.";
 
                     NSLog.Logger.Info("ResponseCustomerForgotPassword", new { result, msg });
                 }
