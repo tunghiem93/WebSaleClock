@@ -8,6 +8,7 @@
 <html class="no-js" ng-app="appWebClock">
 <head>
     <meta charset="utf-8">
+    <meta property="fb:app_id" content="280737696064014" />
     <link rel="alternate" hreflang="x-default" href="ap-wooden.myshopify.com" />
     <link rel="shortcut icon" href="@Url.Content("~/favicon.png")" type="image/png" />
     <title>
@@ -25,7 +26,7 @@
     <script src="@Url.Content("~/Scripts/api.jquery-0ea851da22ae87c0290f4eeb24bc8b513ca182f3eb721d147c009ae0f5ce14f9.js")"></script>
     <script src="@Url.Content("~/Scripts/option_selection-ea4f4a242e299f2227b2b8038152223f741e90780c0c766883939e8902542bda.js")"></script>
     @*<script src="//cdn.shopify.com/s/files/1/1359/9953/t/2/assets/global.js?6710597985434054077" type="text/javascript"></script>
-    <script src="//cdn.shopify.com/s/files/1/1359/9953/t/2/assets/load-page-product.js?6710597985434054077" type="text/javascript"></script>*@
+        <script src="//cdn.shopify.com/s/files/1/1359/9953/t/2/assets/load-page-product.js?6710597985434054077" type="text/javascript"></script>*@
 
     <!-- Theme css ================================================================ -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" />
@@ -51,6 +52,7 @@
         .shopify-payment-button__button--hidden {
             visibility: hidden;
         }
+
         .shopify-payment-button__button {
             border-radius: 4px;
             border: none;
@@ -65,17 +67,21 @@
             width: 100%;
             transition: background 0.2s ease-in-out;
         }
-        .shopify-payment-button__button[disabled] {
-            opacity: 0.6;
-            cursor: default;
-        }
+
+            .shopify-payment-button__button[disabled] {
+                opacity: 0.6;
+                cursor: default;
+            }
+
         .shopify-payment-button__button--unbranded {
             background-color: #1990c6;
             padding: 1em 2em;
         }
-        .shopify-payment-button__button--unbranded:hover:not([disabled]) {
-            background-color: #136f99;
-        }
+
+            .shopify-payment-button__button--unbranded:hover:not([disabled]) {
+                background-color: #136f99;
+            }
+
         .shopify-payment-button__more-options {
             background: transparent;
             border: 0 none;
@@ -86,14 +92,16 @@
             text-align: center;
             width: 100%;
         }
-        .shopify-payment-button__more-options:hover:not([disabled]) {
-            text-decoration: underline;
-        }
 
-        .shopify-payment-button__more-options[disabled] {
-            opacity: 0.6;
-            cursor: default;
-        }
+            .shopify-payment-button__more-options:hover:not([disabled]) {
+                text-decoration: underline;
+            }
+
+            .shopify-payment-button__more-options[disabled] {
+                opacity: 0.6;
+                cursor: default;
+            }
+
         .shopify-payment-button__button--branded {
             display: flex;
             flex-direction: column;
@@ -101,23 +109,35 @@
             position: relative;
             z-index: 1;
         }
-        .shopify-payment-button__button--branded .shopify-cleanslate {
-            flex: 1 !important;
-            display: flex !important;
-            flex-direction: column !important;
-        }
+
+            .shopify-payment-button__button--branded .shopify-cleanslate {
+                flex: 1 !important;
+                display: flex !important;
+                flex-direction: column !important;
+            }
+
         .clsrightlayout {
             padding-right: 15px !important;
         }
     </style>
     <script src="@Url.Content("~/Scripts/express_buttons-41600a5bb7521174470a9e4f0f1dc2c1ff7d4ddf16f7a2f2452ef1d42740ada7.js")"></script>
     <script src="@Url.Content("~/Scripts/features-35fa919124302b0d097cdba90a4cba671b688a3c3c61403c926ff7818bbb918f.js")"></script>
-   
-    <link href="@Url.Content("~/Content/ap_multilang.css")" rel="stylesheet" />   
+
+    <link href="@Url.Content("~/Content/ap_multilang.css")" rel="stylesheet" />
     <script src="@Url.Content("~/Scripts/ap_multilang.js")"></script>
 </head>
 
 <body id="ap-wooden" class="template-index  header-default layout-default">
+    <div id="fb-root"></div>
+    <script>
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = 'https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v3.1&appId=280730746065454&autoLogAppEvents=1';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
     <div id="page">
         <section id="page_content" class="">
             <!-- Header Area Start -->
@@ -434,7 +454,7 @@
             });
         });
     </script>
-    
+
     <script src="@Url.Content("~/Scripts/plugin.js")"></script>
     <script src="@Url.Content("~/Scripts/jquery.currencies.min.js")"></script>
 
