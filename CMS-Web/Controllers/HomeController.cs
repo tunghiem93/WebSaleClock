@@ -20,6 +20,7 @@ namespace CMS_Web.Controllers
         private CMSProductFactory _fac;
         private CMSCategoriesFactory _facCate;
         private CMSBrandsFactory _facBrand;
+        private int PageSize = 2;
         public HomeController()
         {
             _fac = new CMSProductFactory();
@@ -40,12 +41,12 @@ namespace CMS_Web.Controllers
                 //Product
                 model.ListProduct = _fac.GetList().OrderByDescending(x => x.CreatedDate).ToList();
                 var dataImage = _fac.GetListImage();
-                if(model.ListProduct != null && model.ListProduct.Any())
+                if (model.ListProduct != null && model.ListProduct.Any())
                 {
                     model.ListProduct.ForEach(x =>
                     {
                         var _Image = dataImage.FirstOrDefault(z => z.ProductId.Equals(x.Id));
-                        if(_Image != null)
+                        if (_Image != null)
                         {
                             x.ImageURL = _Image.ImageURL;
                             if (!string.IsNullOrEmpty(x.ImageURL))
@@ -58,14 +59,21 @@ namespace CMS_Web.Controllers
                             }
                         }
                     });
-                    model.ListProduct = model.ListProduct.Skip(0).Take(12).ToList();
+
+                    var TotalProduct = model.ListProduct.Count;
+                    if (TotalProduct % PageSize == 0)
+                        model.TotalPage = TotalProduct / PageSize;
+                    else
+                        model.TotalPage = Convert.ToInt32(TotalProduct / PageSize) + 1;
+
+                    model.ListProduct = model.ListProduct.Skip(0).Take(PageSize).ToList();
                     model.ListProductTopSales = model.ListProduct.Skip(0).Take(5).ToList();
                 }
                 return View(model);
             }
             catch (Exception ex)
             {
-               // NSLog.Logger.Error("Index: ", ex);
+                // NSLog.Logger.Error("Index: ", ex);
                 return new HttpStatusCodeResult(400, ex.Message);
             }
         }
@@ -263,6 +271,42 @@ namespace CMS_Web.Controllers
                     model.IsAddMore = true;
                 }
 
+            }
+            return PartialView("_ListItem", model);
+        }
+
+        public ActionResult LoadDataPagging(int pageIndex)
+        {
+            ProductViewModels model = new ProductViewModels();
+            try
+            {
+                //Product
+                model.ListProduct = _fac.GetList().OrderByDescending(x => x.CreatedDate).ToList();
+                var dataImage = _fac.GetListImage();
+                if (model.ListProduct != null && model.ListProduct.Any())
+                {
+                    model.ListProduct.ForEach(x =>
+                    {
+                        var _Image = dataImage.FirstOrDefault(z => z.ProductId.Equals(x.Id));
+                        if (_Image != null)
+                        {
+                            x.ImageURL = _Image.ImageURL;
+                            if (!string.IsNullOrEmpty(x.ImageURL))
+                            {
+                                x.ImageURL = Commons._PublicImages + "Products/" + x.ImageURL;
+                            }
+                            else
+                            {
+                                x.ImageURL = "";
+                            }
+                        }
+                    });
+                    model.ListProduct = model.ListProduct.Skip((pageIndex - 1) * PageSize).Take(PageSize).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                NSLog.Logger.Error("LoadDataPagging :", ex);
             }
             return PartialView("_ListItem", model);
         }
