@@ -150,15 +150,15 @@
                                                 <span class="money">
                                                     @if (item.ProductExtraPrice > 0 && item.ProductExtraPrice < item.ProductPrice)
                                                     {
-                                                        <span class="old-price product-price"><span class="money">@item.ProductPrice VNĐ</span></span>
+                                                        <span class="old-price product-price"><span class="money">@item.ProductPrice.ToString("#,00") VNĐ</span></span>
                                                         <span class="price product-price sale-price">
-                                                            <span class="money">@item.ProductExtraPrice VNĐ</span>
+                                                            <span class="money">@item.ProductExtraPrice.ToString("#,00") VNĐ</span>
                                                         </span>
                                                     }
                                                     else
                                                     {
                                                         <span class="price product-price ">
-                                                            <span class="money">@item.ProductPrice VNĐ</span>
+                                                            <span class="money">@item.ProductPrice.ToString("#,00") VNĐ</span>
                                                         </span>
                                                     }
                                                 </span>
@@ -323,15 +323,15 @@
                                                                                                 <span class="money">
                                                                                                     @if (Model.ListSameProduct[i].ProductExtraPrice > 0 && Model.ListSameProduct[i].ProductExtraPrice < Model.ListSameProduct[i].ProductPrice)
                                                                                                     {
-                                                                                                        <span class="old-price product-price"><span class="money">@Model.ListSameProduct[i].ProductPrice VNĐ</span></span>
+                                                                                                        <span class="old-price product-price"><span class="money">@Model.ListSameProduct[i].ProductPrice.ToString("#,00") VNĐ</span></span>
                                                                                                         <span class="price product-price sale-price">
-                                                                                                            <span class="money">@Model.ListSameProduct[i].ProductExtraPrice VNĐ</span>
+                                                                                                            <span class="money">@Model.ListSameProduct[i].ProductExtraPrice.ToString("#,00") VNĐ</span>
                                                                                                         </span>
                                                                                                     }
                                                                                                     else
                                                                                                     {
                                                                                                         <span class="price product-price ">
-                                                                                                            <span class="money">@Model.ListSameProduct[i].ProductPrice VNĐ</span>
+                                                                                                            <span class="money">@Model.ListSameProduct[i].ProductPrice.ToString("#,00") VNĐ</span>
                                                                                                         </span>
                                                                                                     }
                                                                                                 </span>
@@ -406,15 +406,15 @@
                                                                                                     <span class="money">
                                                                                                         @if (Model.ListSameProduct[i].ProductExtraPrice > 0 && Model.ListSameProduct[i].ProductExtraPrice < Model.ListSameProduct[i].ProductPrice)
                                                                                                         {
-                                                                                                            <span class="old-price product-price"><span class="money">@Model.ListSameProduct[i].ProductPrice VNĐ</span></span>
+                                                                                                            <span class="old-price product-price"><span class="money">@Model.ListSameProduct[i].ProductPrice.ToString("#,00") VNĐ</span></span>
                                                                                                             <span class="price product-price sale-price">
-                                                                                                                <span class="money">@Model.ListSameProduct[i].ProductExtraPrice VNĐ</span>
+                                                                                                                <span class="money">@Model.ListSameProduct[i].ProductExtraPrice.ToString("#,00") VNĐ</span>
                                                                                                             </span>
                                                                                                         }
                                                                                                         else
                                                                                                         {
                                                                                                             <span class="price product-price ">
-                                                                                                                <span class="money">@Model.ListSameProduct[i].ProductPrice VNĐ</span>
+                                                                                                                <span class="money">@Model.ListSameProduct[i].ProductPrice.ToString("#,00") VNĐ</span>
                                                                                                             </span>
                                                                                                         }
                                                                                                     </span>
@@ -486,15 +486,15 @@
                                                                                                     <span class="money">
                                                                                                         @if (Model.ListSameProduct[i].ProductExtraPrice > 0 && Model.ListSameProduct[i].ProductExtraPrice < Model.ListSameProduct[i].ProductPrice)
                                                                                                         {
-                                                                                                            <span class="old-price product-price"><span class="money">@Model.ListSameProduct[i].ProductPrice VNĐ</span></span>
+                                                                                                            <span class="old-price product-price"><span class="money">@Model.ListSameProduct[i].ProductPrice.ToString("#,00") VNĐ</span></span>
                                                                                                             <span class="price product-price sale-price">
-                                                                                                                <span class="money">@Model.ListSameProduct[i].ProductExtraPrice VNĐ</span>
+                                                                                                                <span class="money">@Model.ListSameProduct[i].ProductExtraPrice.ToString("#,00") VNĐ</span>
                                                                                                             </span>
                                                                                                         }
                                                                                                         else
                                                                                                         {
                                                                                                             <span class="price product-price ">
-                                                                                                                <span class="money">@Model.ListSameProduct[i].ProductPrice VNĐ</span>
+                                                                                                                <span class="money">@Model.ListSameProduct[i].ProductPrice.ToString("#,00") VNĐ</span>
                                                                                                             </span>
                                                                                                         }
                                                                                                     </span>
