@@ -89,7 +89,7 @@
                                             <li class="media clearfix">
                                                 <div class="product-block">
                                                     <div class="product-container media">
-                                                        <a class="products-block-image img pull-left" href="#" title="@item.ProductName">
+                                                        <a class="products-block-image img pull-left" href="@Url.Action("Detail","Shop",new { id=item.Id})" title="@item.ProductName">
                                                             <img class="replace-2x img-responsive" src="@item.ImageURL" alt="@item.ProductName">
                                                         </a>
                                                         <div class="media-body">
@@ -171,7 +171,7 @@
                                             <div class="product_block wow fadeIn col-md-4 col-xs-6 col-sp-12 animated" data-wow-delay="0ms" style="visibility: visible; animation-delay: 0ms; animation-name: none;">
                                                 <div class="product-container text-left product-block">
                                                     <div class="product-image-container image">
-                                                        <a class="product_img_link" href="#">
+                                                        <a class="product_img_link" href="@Url.Action("Detail","Shop",new { id=Model.ListProduct[i].Id})">
                                                             <img class="img-responsive" src="@Model.ListProduct[i].ImageURL" alt="@Model.ListProduct[i].ProductName">
                                                         </a>
                                                         <span class="new-box">
@@ -185,7 +185,7 @@
                                                             </span>
                                                         </div>
                                                         <h5 class="name">
-                                                            <a class="product-name" href="#" title="@Model.ListProduct[i].ProductName">@Html.Raw(string.Format("{0}", Model.ListProduct[i].ProductName.Length > 35 ? Model.ListProduct[i].ProductName.Substring(0, 35) + "..." : Model.ListProduct[i].ProductName))</a>
+                                                            <a class="product-name" href="@Url.Action("Detail","Shop",new { id=Model.ListProduct[i].Id})" title="@Model.ListProduct[i].ProductName">@Html.Raw(string.Format("{0}", Model.ListProduct[i].ProductName.Length > 35 ? Model.ListProduct[i].ProductName.Substring(0, 35) + "..." : Model.ListProduct[i].ProductName))</a>
                                                         </h5>
                                                         <div class="product-desc">@Model.ListProduct[i].Short_Description</div>
                                                         <div class="content_price">
@@ -209,7 +209,7 @@
                                                         </div>
                                                         <div class="functional-buttons clearfix">
                                                             <div class="quickview">
-                                                                <a class="quick-view btn" href="#" data-handle="longsleeve-spacedye-nep" title="Xem nhanh">
+                                                                <a class="quick-view btn" href="@Url.Action("Detail","Shop",new { id=Model.ListProduct[i].Id})" data-handle="longsleeve-spacedye-nep" title="Xem nhanh">
                                                                     <i class="fa fa-plus"></i>
                                                                     <span>Xem nhanh</span>
                                                                 </a>
