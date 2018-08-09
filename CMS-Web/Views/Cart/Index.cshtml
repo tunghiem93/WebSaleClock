@@ -43,12 +43,11 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div class="list_product_cart clearfix" ng-repeat="item in Products">
                                             <div class="cpro_item col-xs-12 col-sm-1 col-md-1">
                                                 <div class="cpro_item_inner">
                                                     <a href="/Shop/Detail/{{item.ItemId}}" class="cartImage">
-                                                        <img class="img-responsive" src="{{item.ImageUrl}}" alt="{{item.Name}}">
+                                                        <img class="img-responsive" ng-src="{{item.ImageUrl}}" alt="{{item.Name}}">
                                                     </a>
                                                 </div>
                                             </div>
@@ -86,6 +85,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        
                                     </div>
                                 </form>
                                 <p class="cart_navigation clearfix">
