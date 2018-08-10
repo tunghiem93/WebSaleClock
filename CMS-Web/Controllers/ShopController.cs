@@ -79,6 +79,11 @@ namespace CMS_Web.Controllers
             {
                 if (string.IsNullOrEmpty(id))
                     return RedirectToAction("Index", "Home");
+
+                //Category
+                model.ListCate = _facCate.GetList().OrderByDescending(x => x.CreatedDate).Skip(0).Take(10).ToList();
+                //Brand
+                model.ListBrand = _facBrand.GetList().OrderByDescending(x => x.CreatedDate).Skip(0).Take(5).ToList();
                 /* get list product */
                 var data = _fac.GetList();
                 model.ProductModel = data.Where(o => o.Id.Equals(id)).FirstOrDefault();
@@ -104,6 +109,18 @@ namespace CMS_Web.Controllers
                     {
                         var dataImg = _fac.GetListImage();
                         model.ListSameProduct.ForEach(o =>
+                        {
+                            o.ImageURL = dataImg.Where(z => z.ProductId.Equals(o.Id)).Select(z => z.ImageURL).FirstOrDefault();
+                            if (!string.IsNullOrEmpty(o.ImageURL))
+                                o.ImageURL = Commons._PublicImages + "Products/" + o.ImageURL;
+                        });
+                    }
+
+                    model.ListProduct = data.OrderByDescending(x => x.CreatedDate).Skip(0).Take(10).ToList();
+                    if (model.ListProduct != null && model.ListProduct.Any())
+                    {
+                        var dataImg = _fac.GetListImage();
+                        model.ListProduct.ForEach(o =>
                         {
                             o.ImageURL = dataImg.Where(z => z.ProductId.Equals(o.Id)).Select(z => z.ImageURL).FirstOrDefault();
                             if (!string.IsNullOrEmpty(o.ImageURL))

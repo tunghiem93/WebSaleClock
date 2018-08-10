@@ -1,26 +1,32 @@
 ﻿@model CMS_DTO.CMSProduct.ProductViewModels
 @using CMS_Shared;
-
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Chi tiết";
     var _count = 0;
 }
+<style>
+    .owl-item {
+        display: inline-table;
+    }
 
+    .zoomWrapper {
+        display: block !important;
+    }
+</style>
 <main class="main-content" ng-controller="CartCtrl">
     <section id="breadcrumbs">
         <div class="container">
             <nav aria-label="breadcrumbs" class="breadcrumbs">
-                <h3 class="titile-collecitions">Bộ sưu tập</h3>
+
                 <ol class="breadcrumb">
-                    <li>
-                        <a href="@Url.Action("Index","Home")" title="Trở lại trang chủ">
-                            <span>Trang chủ</span>
+                    <li itemprop="itemListElement" itemscope="">
+                        <a href="@Url.Action("Index","Home")" title="Back to the frontpage" itemprop="item">
+                            <span itemprop="name">Home</span>
                         </a>
                         <meta itemprop="position" content="1">
                     </li>
-                    <li class="active">
-                        <span><span>Chi tiết</span></span>
+                    <li class="active" itemprop="itemListElement" itemscope="">
+                        <span itemprop="item"><span itemprop="name">@Model.ProductModel.ProductName</span></span>
                         <meta itemprop="position" content="2">
                     </li>
                 </ol>
@@ -31,64 +37,150 @@
     <section id="columns" class="columns-container product">
         <div class="container">
             <div class="row">
-                <div id="center_column" class="center_column col-sm-12 col-md-12">
+                <aside>
+                    <div id="left_column" class="left_column sidebar col-sm-4 col-md-3">
+                        @if (Model.ListCate != null && Model.ListCate.Any())
+                        {
+                            <div id="categories_block" class="block sidebarCategories ">
+                                <h4 class="title_block">Bộ sưu tập</h4>
+                                <div class="block_content" style="">
+                                    <ul class="listSidebar list-unstyled">
+                                        @foreach (var item in Model.ListCate)
+                                        {
+                                            <li>
+                                                <a href="@Url.Action("Detail","Collection",new { id=item.Id})" title="@item.CategoryName">
+                                                    @item.CategoryName
+                                                    <span id="apolloQty257630531" class="apolloQty pull-right">@item.NumberOfProduct</span>
+                                                </a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        }
+
+                        @if (Model.ListBrand != null && Model.ListBrand.Any())
+                        {
+                            <div id="shopbyvendor" class="block block_shopby ">
+                                <div class="title_block">
+                                    Thương hiệu
+                                </div>
+
+                                <div class="block_content" style="">
+                                    <ul id="ul_catalog_vendor" class="listSidebar list-unstyled">
+                                        @foreach (var item in Model.ListBrand)
+                                        {
+                                            <li data-group="BRANDS">
+                                                <a style="cursor:pointer" title="@item.BrandName">@item.BrandName</a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        }
+
+                        @if (Model.ListProduct != null && Model.ListProduct.Any())
+                        {
+                            <div id="products_sider_block" class="block products_block nopadding ">
+                                <h4 class="title_block">
+                                    <a style="cursor:pointer" title="Sản phẩm mới nhất">Sản phẩm mới nhất</a>
+                                </h4>
+
+                                <div class="block_content products-block" style="">
+                                    <ul class="products products-block list-unstyled">
+                                        @foreach (var item in Model.ListProduct)
+                                        {
+                                            <li class="media clearfix">
+                                                <div class="product-block">
+                                                    <div class="product-container media">
+                                                        <a class="products-block-image img pull-left" href="@Url.Action("Detail","Shop",new { id=item.Id})" title="@item.ProductName">
+                                                            <img class="replace-2x img-responsive" src="@item.ImageURL" alt="@item.ProductName">
+                                                        </a>
+                                                        <div class="media-body">
+                                                            <div class="product-content">
+                                                                <h5 class="name media-heading">
+                                                                    <a class="product-name" href="@Url.Action("Detail","Shop",new { id=item.Id})" title="@item.ProductName">@item.ProductName</a>
+                                                                </h5>
+
+                                                                <div class="content_price price">
+                                                                    <span class="price product-price">
+                                                                        <span class="money">
+                                                                            @if (item.ProductExtraPrice > 0 && item.ProductExtraPrice < item.ProductPrice)
+                                                                            {
+                                                                                <span class="old-price product-price"><span class="money">@item.ProductPrice.ToString("#,00") VNĐ</span></span>
+                                                                                <span class="price product-price sale-price">
+                                                                                    <span class="money">@item.ProductExtraPrice.ToString("#,00") VNĐ</span>
+                                                                                </span>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <span class="price product-price ">
+                                                                                    <span class="money">@item.ProductPrice.ToString("#,00") VNĐ</span>
+                                                                                </span>
+                                                                            }
+                                                                        </span>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </aside>
+                <div id="center_column" class="center_column col-xs-12 col-sm-8 col-md-9">
                     @if (Model.ProductModel != null)
                     {
-                        var item = Model.ProductModel;
-                        <div itemscope="" itemtype="@item.ProductName">
+                        <div itemscope="">
                             <div class="primary_block">
                                 <div class="row">
                                     <div class="product-left-column col-xs-12 col-sm-12 col-md-5">
                                         <div id="image-block" class="clearfix">
                                             <span id="view_full_size">
                                                 <div style="height:345px;width:345px;" class="zoomWrapper">
-                                                <div style="height:345px;width:345px;" class="zoomWrapper">
-                                                    <img id="proimage" class="img-responsive" itemprop="image" src="@item.ImageURL" alt="Cup Of Coffee" data-zoom-image="@item.ImageURL" width="480" height="480" style="position: absolute;">
-                                                </div>
+                                                    <div style="height:345px;width:345px;" class="zoomWrapper">
+                                                        <img id="proimage" class="img-responsive" itemprop="image" src="@Model.ProductModel.ImageURL" alt="@Model.ProductModel.ProductName" data-zoom-image="@Model.ProductModel.ImageURL" width="480" height="480" style="position: absolute;">
+                                                    </div>
                                                 </div>
                                             </span>
-                                            @*<div style="height:470px;width:470px;" class="zoomWrapper">
-                                                <div style="height:470px;width:470px;" class="zoomWrapper">
-                                                    <img id="proimage" class="img-responsive" itemprop="image" src="@item.ImageURL" alt="Clock handmade" data-zoom-image="@item.ImageURL" style="position: absolute; width: 470px; height: 470px;">
-                                                </div>
-                                            </div>*@
-                                            @*<div style="background: url(&quot;//cdn.shopify.com/s/files/1/1359/9953/t/2/assets/loading.gif?6880591645775336984&quot;) center center no-repeat; z-index: 2000; position: absolute; display: none;">
-        </div>
-        <div style="background: url('//cdn.shopify.com/s/files/1/1359/9953/t/2/assets/loading.gif?6880591645775336984') no-repeat center;height:undefinedpx;width:undefinedpx;z-index: 2000;position: absolute; background-position: center center;">
-        </div>
-        <div style="background: url('//cdn.shopify.com/s/files/1/1359/9953/t/2/assets/loading.gif?6880591645775336984') no-repeat center;height:undefinedpx;width:undefinedpx;z-index: 2000;position: absolute; background-position: center center;">
-
-        </div>*@
                                         </div>
-                                        <div id="views_block" class="clearfix ">
-                                            <div id="thumbs_list">
-                                                <div class="owl-thumblist">
-                                                    <div class="owl-carousel owl-theme" style="opacity: 1; display: block;">
-                                                        <div class="owl-wrapper-outer">
-                                                            <div class="owl-wrapper" style="width: 630px; left: 0px; display: block;">
-                                                                @if (item.ListImages != null && item.ListImages.Any())
-                                                                {
-                                                                    foreach (var itemImg in item.ListImages)
+                                        @if (Model.ProductModel.ListImages != null && Model.ProductModel.ListImages.Any())
+                                        {
+                                            var _index = 1;
+                                            <div id="views_block" class="clearfix ">
+                                                <div id="thumbs_list">
+                                                    <div class="owl-thumblist">
+                                                        <div class="owl-carousel owl-theme" style="opacity: 1; display: block;">
+                                                            <div class="owl-wrapper-outer">
+                                                                <div class="owl-wrapper" style="width: 444px; left: 0px; display: block; transition: all 0ms ease 0s; transform: translate3d(0px, 0px, 0px);">
+                                                                    @foreach (var item in Model.ProductModel.ListImages)
                                                                     {
-                                                                        <div class="owl-item" style="width: 105px;">
-                                                                            <div id="thumbnail_1" class="thumb_item ">
-                                                                                <a class="active">
-                                                                                    <img class="img-responsive" id="thumb_1" src="@itemImg.ImageURL" alt="@item.ProductName" itemprop="image">
+                                                                        <div class="owl-item" style="width: 74px;">
+                                                                            <div id="thumbnail_@_index" class="thumb_item ">
+                                                                                <a href="javascript:void(0)" data-image="@item.ImageURL" data-zoom-image="@item.ImageURL">
+                                                                                    <img class="img-responsive" id="thumb_1" src="@item.ImageURL" alt="Cup Of Coffee" itemprop="image" width="128" height="128">
                                                                                 </a>
                                                                             </div>
                                                                         </div>
                                                                     }
-                                                                }
+                                                                </div>
                                                             </div>
+                                                            <div class="owl-controls" style="display: none;"><div class="owl-pagination"><div class="owl-page"><span class=""></span></div></div><div class="owl-buttons"><div class="owl-prev">prev</div><div class="owl-next">next</div></div></div>
                                                         </div>
-                                                        <div class="owl-controls clickable" style="display: none;"><div class="owl-pagination"><div class="owl-page"><span class=""></span></div></div><div class="owl-buttons"><div class="owl-prev">prev</div><div class="owl-next">next</div></div></div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        }
                                     </div>
                                     <div class="product-center-column col-xs-12 col-sm-12 col-md-7">
-                                        <h1 itemprop="name">@item.ProductName</h1>
+
+                                        <h1 itemprop="name">@Model.ProductModel.ProductName</h1>
+
                                         <div class="socialsharing_product no-print">
                                             <ul class="social-sharing list-unstyled">
                                                 <li>
@@ -144,41 +236,40 @@
                                                 });
                                             });
                                         </script>
-
                                         <div class="line-product-name"></div>
-                                        @*<div class="review">
-                                                <span class="spr-badge" id="spr_badge_7254049923" data-rating="4.0">
-                                                    <span class="spr-starrating spr-badge-starrating"><i class="spr-icon spr-icon-star"></i><i class="spr-icon spr-icon-star"></i><i class="spr-icon spr-icon-star"></i><i class="spr-icon spr-icon-star"></i><i class="spr-icon spr-icon-star-empty"></i></span><span class="spr-badge-caption">1 review</span>
-                                                </span>
-
-                                            </div>*@
                                         <div class="price price-detail clearfix">
-                                            <span id="ProductPrice" class="h4" itemprop="price">
-                                                <span class="money">
-                                                    @if (item.ProductExtraPrice > 0 && item.ProductExtraPrice < item.ProductPrice)
-                                                    {
-                                                        <span class="old-price product-price"><span class="money">@item.ProductPrice.ToString("#,00") VNĐ</span></span>
-                                                        <span class="price product-price sale-price">
-                                                            <span class="money">@item.ProductExtraPrice.ToString("#,00") VNĐ</span>
-                                                        </span>
-                                                    }
-                                                    else
-                                                    {
-                                                        <span class="price product-price ">
-                                                            <span class="money">@item.ProductPrice.ToString("#,00") VNĐ</span>
-                                                        </span>
-                                                    }
+                                            <span class="price-product-detail">
+                                                <span class="old-price product-price">
+                                                    <span class="money">
+                                                        @if (Model.ProductModel.ProductExtraPrice > 0 && Model.ProductModel.ProductExtraPrice < Model.ProductModel.ProductPrice)
+                                                        {
+                                                            <span class="old-price product-price"><span class="money">@Model.ProductModel.ProductPrice.ToString("#,00") VNĐ</span></span>
+                                                            <span class="price product-price sale-price">
+                                                                <span class="money">@Model.ProductModel.ProductExtraPrice.ToString("#,00") VNĐ</span>
+                                                            </span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="price product-price ">
+                                                                <span class="money">@Model.ProductModel.ProductPrice.ToString("#,00") VNĐ</span>
+                                                            </span>
+                                                        }
+                                                    </span>
                                                 </span>
                                             </span>
                                         </div>
                                     </div>
                                     <div class="product-right-column col-xs-12 col-sm-12 col-md-7">
-                                        <div>
+                                        <div itemprop="offers" itemscope="">
+                                            @*<meta itemprop="priceCurrency" content="USD">
+                                                <link itemprop="availability" href="http://schema.org/InStock">*@
+
                                             <div class="condition-product">
-                                                <h5 class="brand" itemprop="brand"><span>Nhà cung cấp: </span><a href="javascript:void(0);" title="@item.BrandName">@item.BrandName</a></h5>
+                                                <h5 class="brand" itemprop="brand"><span>THƯƠNG HIỆU: </span><a style="cursor:pointer" title="">@Model.ProductModel.BrandName</a></h5>
+
                                                 <div class="availability ">
                                                     <p class="available instock">
-                                                        @if (item.TypeState == (byte)Commons.EStateType.Avalable)
+                                                        @if (Model.ProductModel.TypeState == (byte)Commons.EStateType.Avalable)
                                                         {
                                                             <span>Còn hàng</span>
                                                         }
@@ -191,69 +282,45 @@
                                             </div>
 
                                             <div class="product-description rte" itemprop="description">
-                                                @string.Format("{0}", string.IsNullOrEmpty(item.Short_Description) ? item.Short_Description : "")
+                                                @string.Format("{0}", string.IsNullOrEmpty(Model.ProductModel.Short_Description) ? Model.ProductModel.Short_Description : "")
                                             </div>
-                                          @*  <form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm" class="form-ajaxtocart">*@
-                                                <div class="line-product-top"></div>
-                                                <div class="quantity_wanted_p">
-                                                    <label for="Quantity" class="quantity-selector">Quantity</label>
-                                                    <div class="apQty">
-                                                        <button type="button" class="apQtyAdjust apQtyAdjustMinus" data-id="" data-qty="0" ng-click="QtyAdjustNoOrder(0)">−</button>
-                                                        <input type="text" class="apQtyNum" ng-model="Qty" ng-init="Qty=1" ng-blur="ngBlur();" ng-change="ngChangeQty();" min="1" data-id="" aria-label="quantity" restrict-to="[0-9]" name="quantity" id="Quantity">
-                                                        <button type="button" class="apQtyAdjust apQtyAdjustPlus" data-id="" data-qty="11" ng-click="QtyAdjustNoOrder(1)">+</button>
-                                                    </div>
+
+                                            @*<form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm" class="form-ajaxtocart">*@
+                                            <div class="line-product-top"></div>
+                                            <div class="quantity_wanted_p">
+                                                <label for="Quantity" class="quantity-selector">Quantity</label>
+                                                <div class="apQty">
+                                                    <button type="button" class="apQtyAdjust apQtyAdjustMinus" data-id="" data-qty="0" ng-click="QtyAdjustNoOrder(0)">−</button>
+                                                    <input type="text" class="apQtyNum" ng-model="Qty" ng-init="Qty=1" ng-blur="ngBlur();" ng-change="ngChangeQty();" min="1" data-id="" aria-label="quantity" restrict-to="[0-9]" name="quantity" id="Quantity">
+                                                    <button type="button" class="apQtyAdjust apQtyAdjustPlus" data-id="" data-qty="11" ng-click="QtyAdjustNoOrder(1)">+</button>
                                                 </div>
-                                                @*<div class="proVariants clearfix">
-                                                    <div class="swatch clearfix" data-option-index="0">
-                                                        <div class="header">Size</div>
-                                                        <div data-value="XS" class="swatch-element xs available">
-                                                            @Html.CheckBoxFor(model =>model.IsXS, new { @class = "sizeChecked"})
-                                                            <label class="clsSize" for="IsXS">XS</label>
-                                                        </div>
-                                                        <div data-value="XL" class="swatch-element s available">
-                                                            @Html.CheckBoxFor(model => model.IsS, new { @class = "sizeChecked" })
-                                                            <label class="clsSize" for="IsS">S</label>
-                                                        </div>
-                                                        <div data-value="XL" class="swatch-element m available">
-                                                            @Html.CheckBoxFor(model => model.IsM, new { @class = "sizeChecked" })
-                                                            <label class="clsSize" for="IsM">M</label>
-                                                        </div>
-                                                        <div data-value="XL" class="swatch-element l available">
-                                                            @Html.CheckBoxFor(model => model.IsL, new { @class = "sizeChecked" })
-                                                            <label class="clsSize" for="IsL">L</label>
-                                                        </div>
-                                                        <div data-value="XL" class="swatch-element xl available">
-                                                            @Html.CheckBoxFor(model => model.IsXL, new { @class = "sizeChecked" })
-                                                            <label class="clsSize" for="IsXL">XL</label>
-                                                        </div>
-                                                    </div>
-                                                </div>*@
-                                                <div class="line-product"></div>
-                                                <div class="total-price">
-                                                    <label>Subtotal: </label>
-                                                    <span>$15.00</span>
-                                                </div>
-                                            @if (item.ProductExtraPrice > 0 && item.ProductExtraPrice < item.ProductPrice)
+                                            </div>
+
+                                            <div class="line-product"></div>
+                                            <div class="total-price">
+                                                <label>Subtotal: </label>
+                                                <span>$28.86</span>
+                                            </div>
+                                            @if (Model.ProductModel.ProductExtraPrice > 0 && Model.ProductModel.ProductExtraPrice < Model.ProductModel.ProductPrice)
                                             {
-                                                <button type="button" ng-click="AddToCart('@item.Id','',Qty,@item.ProductExtraPrice,'@item.ImageURL','@item.ProductName')" name="add" id="AddToCart" class="btn add_to_cart_detail ajax_addtocart">
+                                                <button type="button" ng-click="AddToCart('@Model.ProductModel.Id','',Qty,@Model.ProductModel.ProductExtraPrice,'@Model.ProductModel.ImageURL','@Model.ProductModel.ProductName')" name="add" id="AddToCart" class="btn add_to_cart_detail ajax_addtocart">
                                                     <i class="fa fa-shopping-cart"></i>
                                                     <span id="AddToCartText">Thêm vào giỏ hàng</span>
                                                 </button>
                                             }
                                             else
                                             {
-                                                <button type="button" ng-click="AddToCart('@item.Id','',Qty,@item.ProductPrice,'@item.ImageURL','@item.ProductName')" name="add" id="AddToCart" class="btn add_to_cart_detail ajax_addtocart">
+                                                <button type="button" ng-click="AddToCart('@Model.ProductModel.Id','',Qty,@Model.ProductModel.ProductPrice,'@Model.ProductModel.ImageURL','@Model.ProductModel.ProductName')" name="add" id="AddToCart" class="btn add_to_cart_detail ajax_addtocart">
                                                     <i class="fa fa-shopping-cart"></i>
                                                     <span id="AddToCartText">Thêm vào giỏ hàng</span>
                                                 </button>
                                             }
-
                                             @*</form>*@
                                         </div>
                                         <div class="wishlist">
-                                            <a class="btn btn-outline-inverse btn-wishlist" href="#" title="Mục ưu thích">
+                                            <a class="btn btn-outline-inverse btn-wishlist" href="#" title="Add to Wishlist">
                                                 <i class="fa fa-heart"></i>
-                                                <span>Thêm vào mục ưu thích</span>
+                                                <span>Add to Wishlist</span>
                                             </a>
                                         </div>
                                     </div>
@@ -262,342 +329,160 @@
                             <div class="more_info_block">
                                 <ul class="nav nav-tabs tab-info page-product-heading">
                                     <li class="active">
-                                        <a href="#idTab1" data-toggle="tab">Mổ tả</a>
+                                        <a href="#idTab1" data-toggle="tab">Description</a>
                                     </li>
                                     <li>
-                                        <a href="#idTab2" data-toggle="tab">Thông tin</a>
+                                        <a href="#idTab2" data-toggle="tab">Information</a>
                                     </li>
                                     <li>
-                                        <a href="#idTab4" data-toggle="tab">Nhận xét</a>
+                                        <a href="#idTab4" data-toggle="tab">Reviews</a>
                                     </li>
-
                                 </ul>
                                 <div class="tab-content">
                                     <section id="idTab1" class="tab-pane page-product-box active">
                                         <div class="rte">
-                                            @Html.Raw(item.Description)
+                                            @Html.Raw(Model.ProductModel.Description)
                                         </div>
                                     </section>
                                     <section id="idTab2" class="tab-pane page-product-box">
-                                        @Html.Raw(item.Information)
+                                        @Html.Raw(Model.ProductModel.Information)
                                     </section>
                                     <section id="idTab4" class="tab-pane page-product-box">
-                                        <div class="fb-comments" data-width="100%" data-href="http://kidswatch.com.vn/" data-numposts="5" data-colorscheme="light"></div>                                        
+                                        <div class="fb-comments" data-width="100%" data-href="http://kidswatch.com.vn/" data-numposts="5" data-colorscheme="light"></div>
                                     </section>
+                                </div>
+
+                            </div>
+                        </div>
+                    }
+
+                    @if (Model.ListSameProduct != null && Model.ListSameProduct.Any())
+                    {
+                        <div class="row">
+                            <div class="productpage col-xs-12 col-sm-12 col-md-12">
+                                <div class="product_related ">
+                                    <div id="productrelated" class="products_block exclusive block">
+                                        <h4 class="title_block text-center">
+                                            Sản phẩm tương tự<span>Chọn sản phẩm chúng tôi. </span>
+                                        </h4>
+
+                                        <div class="block_content">
+                                            <div class="row">
+                                                <div id="owl-demo">
+                                                    @foreach (var item in Model.ListSameProduct)
+                                                    {
+                                                        <div class="item" style="width: 280px;">
+                                                            <div class="product_block wow fadeIn  " data-wow-delay="0ms">
+                                                                <div class="product-container text-left product-block">
+                                                                    <div class="product-image-container image">
+                                                                        <a class="product_img_link" href="@Url.Action("Detail", "Shop", new { id = item.Id })">
+                                                                            <img class="img-responsive" src="@item.ImageURL" alt="@item.ProductName">
+                                                                        </a>
+                                                                        <span class="new-box">
+                                                                            <span class="label-new label">Mới</span>
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="product-meta">
+                                                                        <h5 class="name">
+                                                                            <a class="product-name" href="@Url.Action("Detail", "Shop", new { id = item.Id })" title="@item.ProductName">@item.ProductName</a>
+                                                                        </h5>
+                                                                        <div class="content_price">
+                                                                            <span class="price product-price ">
+                                                                                <span class="money">
+                                                                                    @if (item.ProductExtraPrice > 0 && item.ProductExtraPrice < item.ProductPrice)
+                                                                                    {
+                                                                                        <span class="old-price product-price"><span class="money">@item.ProductPrice.ToString("#,00") VNĐ</span></span>
+                                                                                        <span class="price product-price sale-price">
+                                                                                            <span class="money">@item.ProductExtraPrice.ToString("#,00") VNĐ</span>
+                                                                                        </span>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <span class="price product-price ">
+                                                                                            <span class="money">@item.ProductPrice.ToString("#,00") VNĐ</span>
+                                                                                        </span>
+                                                                                    }
+                                                                                </span>
+                                                                            </span>
+                                                                        </div>
+
+                                                                        <div class="functional-buttons clearfix">
+                                                                            <div class="quickview">
+                                                                                <a class="quick-view btn" href="#quick-view-product" data-handle="longsleeve-spacedye-nep" title="Quick View">
+                                                                                    <i class="fa fa-plus"></i>
+                                                                                    <span>Xem nhanh</span>
+                                                                                </a>
+                                                                            </div>
+                                                                            <div class="cart">
+                                                                                <div class="action">
+                                                                                    @if (item.ProductExtraPrice > 0 && item.ProductExtraPrice < item.ProductPrice)
+                                                                                    {
+                                                                                        <a class="button ajax_addtocart btn" href="" ng-click="AddToCart('@item.Id', '', 1, @item.ProductExtraPrice, '@item.ImageURL', '@item.ProductName');" title="Thêm giỏ hàng">
+                                                                                            <span class="fa fa-shopping-cart"></span>
+                                                                                            <span class="select_options">Thêm giỏ hàng</span>
+                                                                                        </a>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <a class="button ajax_addtocart btn" href="" ng-click="AddToCart('@item.Id', '', 1, @item.ProductPrice, '@item.ImageURL', '@item.ProductName');" title="Thêm giỏ hàng">
+                                                                                            <span class="fa fa-shopping-cart"></span>
+                                                                                            <span class="select_options">Thêm giỏ hàng</span>
+                                                                                        </a>
+                                                                                    }
+
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="wishlist">
+                                                                                <a class="btn btn-outline-inverse btn-wishlist" style="cursor:pointer" title="Thêm mục ưu thích">
+                                                                                    <i class="fa fa-heart"></i>
+                                                                                    <span>Thêm mục ưu thích</span>
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     }
 
-
-                    <div class="row">
-                        <div class="productpage col-xs-12 col-sm-12 col-md-12">
-                            <div class="product_related ">
-                                <div id="productrelated" class="products_block exclusive block">
-                                    <h4 class="title_block text-center">
-                                        Sản phẩm tương tự<span>Chọn sản phẩm chúng tôi. </span>
-                                    </h4>
-                                    <div class="block_content">
-                                        <div class="row">
-                                            <div class="owl-carousel slide owl-theme owl-loaded" style="opacity: 1; display: block;">
-                                                <div class="owl-wrapper-outer">
-                                                    <div class="owl-wrapper" style="width: 5400px; left: 0px; display: block;">
-                                                        @if (Model.ListSameProduct != null && Model.ListSameProduct.Any())
-                                                        {
-                                                            for (int i = 0; i < Model.ListSameProduct.Count; i++)
-                                                            {
-                                                                var item = Model.ListSameProduct[i];
-                                                                if (i == 0)
-                                                                {
-                                                                    <div class="owl-item active first" style="width: 300px;">
-                                                                        <div class="item">
-                                                                            <div class="product_block wow fadeIn" data-wow-delay="@i*100 ms" style="visibility: visible; animation-delay: " 0ms; animation-name: none;">
-                                                                                <div class="product-container text-left product-block">
-                                                                                    <div class="product-image-container image">
-                                                                                        <a class="product_img_link" href="@Url.Action("Detail", "Shop", new { id = item.Id })">
-                                                                                            <img class="img-responsive" src="@item.ImageURL" alt="@item.ProductName">
-                                                                                        </a>
-                                                                                        <span class="new-box">
-                                                                                            <span class="label-new label">Mới</span>
-                                                                                        </span>
-                                                                                    </div>
-                                                                                    <div class="product-meta">
-                                                                                        <h5 class="name">
-                                                                                            <a class="product-name" href="@Url.Action("Detail", "Shop", new { id = item.Id })" title="@item.ProductName">@item.ProductName</a>
-                                                                                        </h5>
-                                                                                        <div class="content_price">
-                                                                                            <span class="price product-price ">
-                                                                                                <span class="money">
-                                                                                                    @if (Model.ListSameProduct[i].ProductExtraPrice > 0 && Model.ListSameProduct[i].ProductExtraPrice < Model.ListSameProduct[i].ProductPrice)
-                                                                                                    {
-                                                                                                        <span class="old-price product-price"><span class="money">@Model.ListSameProduct[i].ProductPrice.ToString("#,00") VNĐ</span></span>
-                                                                                                        <span class="price product-price sale-price">
-                                                                                                            <span class="money">@Model.ListSameProduct[i].ProductExtraPrice.ToString("#,00") VNĐ</span>
-                                                                                                        </span>
-                                                                                                    }
-                                                                                                    else
-                                                                                                    {
-                                                                                                        <span class="price product-price ">
-                                                                                                            <span class="money">@Model.ListSameProduct[i].ProductPrice.ToString("#,00") VNĐ</span>
-                                                                                                        </span>
-                                                                                                    }
-                                                                                                </span>
-                                                                                            </span>
-                                                                                        </div>
-                                                                                        <div class="functional-buttons clearfix">
-                                                                                            <div class="quickview">
-                                                                                                <a class="quick-view btn" href="#quick-view-product" data-handle="longsleeve-spacedye-nep" title="Quick View">
-                                                                                                    <i class="fa fa-plus"></i>
-                                                                                                    <span>Xem nhanh</span>
-                                                                                                </a>
-                                                                                            </div>
-                                                                                            <div class="cart">
-                                                                                                <div class="action">
-                                                                                                    @if (Model.ListSameProduct[i].ProductExtraPrice > 0 && Model.ListSameProduct[i].ProductExtraPrice < Model.ListSameProduct[i].ProductPrice)
-                                                                                                    {
-                                                                                                        <a class="button ajax_addtocart btn" href="" ng-click="AddToCart('@Model.ListSameProduct[i].Id', '', 1, @Model.ListSameProduct[i].ProductExtraPrice, '@Model.ListSameProduct[i].ImageURL', '@Model.ListSameProduct[i].ProductName');" title="Thêm giỏ hàng">
-                                                                                                            <span class="fa fa-shopping-cart"></span>
-                                                                                                            <span class="select_options">Thêm giỏ hàng</span>
-                                                                                                        </a>
-                                                                                                    }
-                                                                                                    else
-                                                                                                    {
-                                                                                                        <a class="button ajax_addtocart btn" href="" ng-click="AddToCart('@Model.ListSameProduct[i].Id', '', 1, @Model.ListSameProduct[i].ProductPrice, '@Model.ListSameProduct[i].ImageURL', '@Model.ListSameProduct[i].ProductName');" title="Thêm giỏ hàng">
-                                                                                                            <span class="fa fa-shopping-cart"></span>
-                                                                                                            <span class="select_options">Thêm giỏ hàng</span>
-                                                                                                        </a>
-                                                                                                    }
-
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="wishlist">
-                                                                                                <a class="btn btn-outline-inverse btn-wishlist" style="cursor:pointer" title="Thêm mục ưu thích">
-                                                                                                    <i class="fa fa-heart"></i>
-                                                                                                    <span>Thêm mục ưu thích</span>
-                                                                                                </a>
-                                                                                            </div>
-                                                                                            @*<div class="view_detail">
-                                                                                                    <a class="btn lnk_view" href="/collections/best-seller/products/longsleeve-spacedye-nep" title="View product">
-                                                                                                        <i class="fa fa-eye"></i><span>View product</span>
-                                                                                                    </a>
-                                                                                                </div>*@
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                }
-                                                                else
-                                                                {
-                                                                    if (i == 3)
-                                                                    {
-                                                                        <div class="owl-item active last" style="width: 300px;">
-                                                                            <div class="item">
-                                                                                <div class="product_block wow fadeIn" data-wow-delay="@i*100 ms" style="visibility: visible; animation-delay: 0ms; animation-name: none;">
-                                                                                    <div class="product-container text-left product-block">
-                                                                                        <div class="product-image-container image">
-                                                                                            <a class="product_img_link" href="@Url.Action("Detail", "Shop", new { id = item.Id })">
-                                                                                                <img class="img-responsive" src="@item.ImageURL" alt="@item.ProductName">
-                                                                                            </a>
-                                                                                            <span class="new-box">
-                                                                                                <span class="label-new label">Mới</span>
-                                                                                            </span>
-                                                                                        </div>
-                                                                                        <div class="product-meta">
-                                                                                            <h5 class="name">
-                                                                                                <a class="product-name" href="@Url.Action("Detail", "Shop", new { id = item.Id })" title="@item.ProductName">@item.ProductName</a>
-                                                                                            </h5>
-                                                                                            <div class="content_price">
-                                                                                                <span class="price product-price ">
-                                                                                                    <span class="money">
-                                                                                                        @if (Model.ListSameProduct[i].ProductExtraPrice > 0 && Model.ListSameProduct[i].ProductExtraPrice < Model.ListSameProduct[i].ProductPrice)
-                                                                                                        {
-                                                                                                            <span class="old-price product-price"><span class="money">@Model.ListSameProduct[i].ProductPrice.ToString("#,00") VNĐ</span></span>
-                                                                                                            <span class="price product-price sale-price">
-                                                                                                                <span class="money">@Model.ListSameProduct[i].ProductExtraPrice.ToString("#,00") VNĐ</span>
-                                                                                                            </span>
-                                                                                                        }
-                                                                                                        else
-                                                                                                        {
-                                                                                                            <span class="price product-price ">
-                                                                                                                <span class="money">@Model.ListSameProduct[i].ProductPrice.ToString("#,00") VNĐ</span>
-                                                                                                            </span>
-                                                                                                        }
-                                                                                                    </span>
-                                                                                                </span>
-                                                                                            </div>
-                                                                                            <div class="functional-buttons clearfix">
-                                                                                                <div class="quickview">
-                                                                                                    <a class="quick-view btn" href="#quick-view-product" data-handle="longsleeve-spacedye-nep" title="Quick View">
-                                                                                                        <i class="fa fa-plus"></i>
-                                                                                                        <span>Xem nhanh</span>
-                                                                                                    </a>
-                                                                                                </div>
-                                                                                                <div class="cart">
-                                                                                                    <div class="action">
-                                                                                                        @if (Model.ListSameProduct[i].ProductExtraPrice > 0 && Model.ListSameProduct[i].ProductExtraPrice < Model.ListSameProduct[i].ProductPrice)
-                                                                                                        {
-                                                                                                            <a class="button ajax_addtocart btn" href="" ng-click="AddToCart('@Model.ListSameProduct[i].Id', '', 1, @Model.ListSameProduct[i].ProductExtraPrice, '@Model.ListSameProduct[i].ImageURL', '@Model.ListSameProduct[i].ProductName');" title="Thêm giỏ hàng">
-                                                                                                                <span class="fa fa-shopping-cart"></span>
-                                                                                                                <span class="select_options">Thêm giỏ hàng</span>
-                                                                                                            </a>
-                                                                                                        }
-                                                                                                        else
-                                                                                                        {
-                                                                                                            <a class="button ajax_addtocart btn" href="" ng-click="AddToCart('@Model.ListSameProduct[i].Id', '', 1, @Model.ListSameProduct[i].ProductPrice, '@Model.ListSameProduct[i].ImageURL', '@Model.ListSameProduct[i].ProductName');" title="Thêm giỏ hàng">
-                                                                                                                <span class="fa fa-shopping-cart"></span>
-                                                                                                                <span class="select_options">Thêm giỏ hàng</span>
-                                                                                                            </a>
-                                                                                                        }
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="wishlist">
-                                                                                                    <a class="btn btn-outline-inverse btn-wishlist" style="cursor:pointer" title="Thêm mục ưu thích">
-                                                                                                        <i class="fa fa-heart"></i>
-                                                                                                        <span>Thêm mục ưu thích</span>
-                                                                                                    </a>
-                                                                                                </div>
-                                                                                                @*<div class="view_detail">
-                                                                                                        <a class="btn lnk_view" href="/collections/best-seller/products/longsleeve-spacedye-nep" title="View product">
-                                                                                                            <i class="fa fa-eye"></i><span>View product</span>
-                                                                                                        </a>
-                                                                                                    </div>*@
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <div class="owl-item active" style="width: 300px;">
-                                                                            <div class="item">
-                                                                                <div class="product_block wow fadeIn" data-wow-delay="@i*100 ms" style="visibility: visible; animation-delay: 0ms; animation-name: none;">
-                                                                                    <div class="product-container text-left product-block">
-                                                                                        <div class="product-image-container image">
-                                                                                            <a class="product_img_link" href="@Url.Action("Detail","Shop",new { id=item.Id})">
-                                                                                                <img class="img-responsive" src="@item.ImageURL" alt="@item.ProductName">
-                                                                                            </a>
-                                                                                            <span class="new-box">
-                                                                                                <span class="label-new label">Mới</span>
-                                                                                            </span>
-                                                                                        </div>
-                                                                                        <div class="product-meta">
-                                                                                            <h5 class="name">
-                                                                                                <a class="product-name" href="@Url.Action("Detail", "Shop", new { id = item.Id })" title="@item.ProductName">@item.ProductName</a>
-                                                                                            </h5>
-                                                                                            <div class="content_price">
-                                                                                                <span class="price product-price ">
-                                                                                                    <span class="money">
-                                                                                                        @if (Model.ListSameProduct[i].ProductExtraPrice > 0 && Model.ListSameProduct[i].ProductExtraPrice < Model.ListSameProduct[i].ProductPrice)
-                                                                                                        {
-                                                                                                            <span class="old-price product-price"><span class="money">@Model.ListSameProduct[i].ProductPrice.ToString("#,00") VNĐ</span></span>
-                                                                                                            <span class="price product-price sale-price">
-                                                                                                                <span class="money">@Model.ListSameProduct[i].ProductExtraPrice.ToString("#,00") VNĐ</span>
-                                                                                                            </span>
-                                                                                                        }
-                                                                                                        else
-                                                                                                        {
-                                                                                                            <span class="price product-price ">
-                                                                                                                <span class="money">@Model.ListSameProduct[i].ProductPrice.ToString("#,00") VNĐ</span>
-                                                                                                            </span>
-                                                                                                        }
-                                                                                                    </span>
-                                                                                                </span>
-                                                                                            </div>
-                                                                                            <div class="functional-buttons clearfix">
-                                                                                                <div class="quickview">
-                                                                                                    <a class="quick-view btn" href="#quick-view-product" data-handle="longsleeve-spacedye-nep" title="Quick View">
-                                                                                                        <i class="fa fa-plus"></i>
-                                                                                                        <span>Xem nhanh</span>
-                                                                                                    </a>
-                                                                                                </div>
-                                                                                                <div class="cart">
-                                                                                                    <div class="action">
-                                                                                                        @if (Model.ListSameProduct[i].ProductExtraPrice > 0 && Model.ListSameProduct[i].ProductExtraPrice < Model.ListSameProduct[i].ProductPrice)
-                                                                                                        {
-                                                                                                            <a class="button ajax_addtocart btn" href="" ng-click="AddToCart('@Model.ListSameProduct[i].Id', '', 1, @Model.ListSameProduct[i].ProductExtraPrice, '@Model.ListSameProduct[i].ImageURL', '@Model.ListSameProduct[i].ProductName');" title="Thêm giỏ hàng">
-                                                                                                                <span class="fa fa-shopping-cart"></span>
-                                                                                                                <span class="select_options">Thêm giỏ hàng</span>
-                                                                                                            </a>
-                                                                                                        }
-                                                                                                        else
-                                                                                                        {
-                                                                                                            <a class="button ajax_addtocart btn" href="" ng-click="AddToCart('@Model.ListSameProduct[i].Id', '', 1, @Model.ListSameProduct[i].ProductPrice, '@Model.ListSameProduct[i].ImageURL', '@Model.ListSameProduct[i].ProductName');" title="Thêm giỏ hàng">
-                                                                                                                <span class="fa fa-shopping-cart"></span>
-                                                                                                                <span class="select_options">Thêm giỏ hàng</span>
-                                                                                                            </a>
-                                                                                                        }
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="wishlist">
-                                                                                                    <a class="btn btn-outline-inverse btn-wishlist" style="cursor:pointer" title="Thêm mục ưu thích">
-                                                                                                        <i class="fa fa-heart"></i>
-                                                                                                        <span>Thêm mục ưu thích</span>
-                                                                                                    </a>
-                                                                                                </div>
-                                                                                                @*<div class="view_detail">
-                                                                                                        <a class="btn lnk_view" href="/collections/best-seller/products/longsleeve-spacedye-nep" title="View product">
-                                                                                                            <i class="fa fa-eye"></i><span>View product</span>
-                                                                                                        </a>
-                                                                                                    </div>*@
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    </div>
-                                                </div>
-                                                <div class="owl-controls clickable"><div class="owl-pagination"><div class="owl-page active"><span class=""></span></div><div class="owl-page"><span class=""></span></div><div class="owl-page"><span class=""></span></div></div><div class="owl-buttons"><div class="owl-prev">Prev</div><div class="owl-next">Next</div></div></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <script type="text/javascript">
-                                    $(document).ready(function () {
-                                        $('#productrelated .owl-carousel').each(function () {
-                                            $(this).owlCarousel({
-                                                items: 4,
-                                                lazyLoad: true,
-                                                navigation: true,
-                                                addClassActive: true,
-                                                afterInit: OwlLoaded,
-                                                afterAction: SetOwlCarouselFirstLast,
-                                                navigationText: ["Prev", "Next"]
-                                            });
-                                        });
-                                        function SetOwlCarouselFirstLast(el) {
-                                            el.find(".owl-item").removeClass("first");
-                                            el.find(".owl-item.active").first().addClass("first");
-                                            el.find(".owl-item").removeClass("last");
-                                            el.find(".owl-item.active").last().addClass("last");
-                                        };
-                                    });
-                                </script>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
     </section>
 </main>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#owl-demo").owlCarousel({
+            //autoPlay: 3000, //Set AutoPlay to 3 seconds
+            items: 3,
+            lazyLoad: true,
+            navigation: true,
+            addClassActive: true,
+            afterInit: OwlLoaded,
+            afterAction: SetOwlCarouselFirstLast,
 
-<script>    
-    $(".clsSize").click(function (e) {
-        debugger;
-        $(".clsSize").prop("checked", false);
-        $('.clsSize').css("background-color", "#fff"); 
-        $(this).addClass("bgcolorSize");
-        $(this).prop("checked", true);
-        $('.bgcolorSize').css("background-color", "#72c13d"); 
-        $(this).removeClass("bgcolorSize");
+            itemsDesktop: [1199, 2],
+            itemsDesktopSmall: [979, 2],
+            itemsTablet: [768, 2],
+            itemsTabletSmall: [480, 1],
+            itemsMobile: [360, 1],
+
+        });
+        function SetOwlCarouselFirstLast(el) {
+            el.find(".owl-item").removeClass("first");
+            el.find(".owl-item.active").first().addClass("first");
+
+            el.find(".owl-item").removeClass("last");
+            el.find(".owl-item.active").last().addClass("last");
+        };
+
     });
 </script>
