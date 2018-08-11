@@ -104,7 +104,7 @@ namespace CMS_Web.Areas.Admin.Controllers
                     {
                         if (!string.IsNullOrEmpty(x.ImageURL) && x.PictureByte == null)
                         {
-                            x.ImageURL = x.ImageURL.Replace(Commons._PublicImages +"Products/", "").Replace(Commons.Image270_270, "");
+                            x.ImageURL = x.ImageURL.Replace(Commons._PublicImages +"Products/", "").Replace(Commons.Image480_480, "");
                             data.Add(new CMS_ImagesModels
                             {
                                 ImageURL = x.ImageURL,
@@ -221,7 +221,7 @@ namespace CMS_Web.Areas.Admin.Controllers
                     {
                         if (!string.IsNullOrEmpty(x.ImageURL) && x.PictureByte == null)
                         {
-                            x.ImageURL = x.ImageURL.Replace(Commons._PublicImages + "Products/", "").Replace(Commons.Image270_270, "");
+                            x.ImageURL = x.ImageURL.Replace(Commons._PublicImages + "Products/", "").Replace(Commons.Image480_480, "");
                             data.Add(new CMS_ImagesModels
                             {
                                 ImageURL = x.ImageURL,

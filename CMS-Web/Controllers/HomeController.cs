@@ -20,7 +20,7 @@ namespace CMS_Web.Controllers
         private CMSProductFactory _fac;
         private CMSCategoriesFactory _facCate;
         private CMSBrandsFactory _facBrand;
-        private int PageSize = 2;
+        private int PageSize = 12;
         public HomeController()
         {
             _fac = new CMSProductFactory();
@@ -307,6 +307,49 @@ namespace CMS_Web.Controllers
             catch (Exception ex)
             {
                 NSLog.Logger.Error("LoadDataPagging :", ex);
+            }
+            return PartialView("_ListItem", model);
+        }
+
+        public ActionResult LoadDataFilterPrice(int type)
+        {
+            ProductViewModels model = new ProductViewModels();
+            try
+            {
+                //Product
+                model.ListProduct = _fac.GetList().ToList();
+                var dataImage = _fac.GetListImage();
+                if (model.ListProduct != null && model.ListProduct.Any())
+                {
+                    model.ListProduct.ForEach(x =>
+                    {
+                        var _Image = dataImage.FirstOrDefault(z => z.ProductId.Equals(x.Id));
+                        if (_Image != null)
+                        {
+                            x.ImageURL = _Image.ImageURL;
+                            if (!string.IsNullOrEmpty(x.ImageURL))
+                            {
+                                x.ImageURL = Commons._PublicImages + "Products/" + x.ImageURL;
+                            }
+                            else
+                            {
+                                x.ImageURL = "";
+                            }
+                        }
+                    });
+                    if (type == (byte)Commons.ERangeType.Hightest)
+                    {
+                        model.ListProduct = model.ListProduct.OrderBy(o=>o.ProductPrice).Skip(0).Take(PageSize).ToList();
+                    }
+                    else
+                    {
+                        model.ListProduct = model.ListProduct.OrderByDescending(o => o.ProductPrice).Skip(0).Take(PageSize).ToList();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                NSLog.Logger.Error("FilterListProduct :", ex);
             }
             return PartialView("_ListItem", model);
         }

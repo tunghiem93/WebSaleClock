@@ -262,7 +262,7 @@ $(document).on('click', '.quickview-close, #quick-view-product .quickview-overla
 function initSelectors() { var numInputs = $('input[type="number"]'); numInputs.length && (numInputs.each(function () { var a = $(this), b = a.val(), c = a.attr("name"), d = a.attr("id"), e = b + 1, f = b - 1, g = b, h = $("#apQty").html(), i = Handlebars.compile(h), j = { id: a.data("id"), itemQty: g, itemAdd: e, itemMinus: f, inputName: c, inputId: d }; a.after(i(j)).remove() }), $(".apQtyAdjust").on("click", function () { var a = $(this), c = (a.data("id"), a.siblings(".apQtyNum")), d = parseInt(c.val().replace(/\D/g, "")), d = validateQty(d); a.hasClass("apQtyAdjustPlus") ? d += 1 : (d -= 1, d <= 1 && (d = 1)), c.val(d), updatePricing() }), $(".apQtyNum").on("change", function () { updatePricing() })); }
 function productImage() {
     $('#thumbs_list .owl-carousel').owlCarousel({ navigation: true, items: 4, itemsDesktop: [1199, 4], itemsDesktopSmall: [979, 4], itemsTablet: [768, 4], itemsTabletSmall: [540, 4], itemsMobile: [360, 4] });
-    //$("#thumblist").height(parseInt($("#thumblist >li").outerHeight(!0)*$("#thumblist >li").height)+"px"),$("#thumbs_list").serialScroll({items:"li:visible",prev:"#view_scroll_left",next:"#view_scroll_right",axis:"y",start:0,stop:!0,duration:700,step:2,lazy:!0,lock:!1,force:!1,cycle:!1});
+    $("#thumblist").height(parseInt($("#thumblist >li").outerHeight(!0)*$("#thumblist >li").height)+"px"),$("#thumbs_list").serialScroll({items:"li:visible",prev:"#view_scroll_left",next:"#view_scroll_right",axis:"y",start:0,stop:!0,duration:700,step:2,lazy:!0,lock:!1,force:!1,cycle:!1});
     $('.thumbs_list_frame').height(parseInt($('.thumbs_list_frame >li').outerHeight(true) * $('.thumbs_list_frame >li').height) + 'px');
     $('.thumbs_list').serialScroll({ items: 'li:visible', prev: '.view_scroll_left', next: '.view_scroll_right', axis: 'y', start: 0, stop: true, duration: 700, step: 2, lazy: true, lock: false, force: false, cycle: false });
     if (!!$.prototype.fancybox) { $('li:visible .fancybox, .fancybox.shown').fancybox({ 'hideOnContentClick': true, 'openEffect': 'elastic', 'closeEffect': 'elastic' }); }
@@ -322,7 +322,7 @@ function callBackAjaxCart() {
         isFilterAjaxClick: false,
         init: function () {
             this.loginForms();
-            this.initFilter();
+            //this.initFilter();
 
             this.ajaxSearch();
 

@@ -16,7 +16,7 @@ namespace CMS_Web.Controllers
         private CMSProductFactory _fac;
         private CMSCategoriesFactory _facCate;
         private CMSBrandsFactory _facBrand;
-        private int PageSize = 2;
+        private int PageSize = 12;
         public ShopController()
         {
             _fac = new CMSProductFactory();
@@ -126,6 +126,7 @@ namespace CMS_Web.Controllers
                             if (!string.IsNullOrEmpty(o.ImageURL))
                                 o.ImageURL = Commons._PublicImages + "Products/" + o.ImageURL;
                         });
+                        model.ListProductTopSales = model.ListProduct.Skip(0).Take(5).ToList();
                     }
                 }
 
