@@ -21,7 +21,7 @@ namespace CMS_Shared.Utilities
                 bool enableSSL = true;
                 string emailFrom = Commons.ClockMail;
                 string password = Commons.ClockPass;
-                string _emailToAdmin = Commons.Email2;
+                string _emailToAdmin = Commons.ClockMail;
                 using (MailMessage mail = new MailMessage())
                 {
                     mail.From = new MailAddress(emailFrom);
