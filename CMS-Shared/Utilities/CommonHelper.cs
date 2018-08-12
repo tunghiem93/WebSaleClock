@@ -1,6 +1,7 @@
 ﻿using CMS_DTO.CMSContact;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Configuration;
 using System.Linq;
 using System.Net;
@@ -19,8 +20,8 @@ namespace CMS_Shared.Utilities
             try
             {
 
-                string email = ConfigurationManager.AppSettings["ClockMail"];
-                string passWord = ConfigurationManager.AppSettings["ClockPass"];
+                string email = Commons.ClockMail;
+                string passWord = Commons.ClockPass;
                 string smtpServer = "smtp.gmail.com";
                 if (email != "" && passWord != "")
                 {
