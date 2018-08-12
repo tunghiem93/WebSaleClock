@@ -19,17 +19,17 @@ namespace CMS_Shared.CMSCustomers
             {
                 using (var trans = cxt.Database.BeginTransaction())
                 {
-                    var _isExits = cxt.CMS_Customers.Any(x => x.Email.Equals(model.Email));
-                    if (_isExits)
+                    var _isExits = cxt.CMS_Customers.Any(x => x.Email.Equals(model.Email)); 
+                    try
                     {
-                        msg = "Địa chỉ email đã tồn tại";
-                        result = false;
-                    }
-                    else
-                    {
-                        try
+                        if (string.IsNullOrEmpty(model.ID))
                         {
-                            if (string.IsNullOrEmpty(model.ID))
+                            if (_isExits)
+                            {
+                                msg = "Địa chỉ email đã tồn tại";
+                                result = false;
+                            }
+                            else
                             {
                                 Id = Guid.NewGuid().ToString();
                                 var e = new CMS_Customers
@@ -57,11 +57,14 @@ namespace CMS_Shared.CMSCustomers
                                     UpdatedDate = DateTime.Now
                                 };
                                 cxt.CMS_Customers.Add(e);
-                            }
-                            else
+                            }                            
+                        }
+                        else
+                        {
+                            var e = cxt.CMS_Customers.Find(model.ID);
+                            if (e != null)
                             {
-                                var e = cxt.CMS_Customers.Find(model.ID);
-                                if (e != null)
+                                if (e.Email.Equals(model.Email) || !_isExits)
                                 {
                                     e.Address = model.Address;
                                     e.BirthDate = model.BirthDate;
@@ -81,21 +84,26 @@ namespace CMS_Shared.CMSCustomers
                                     e.Phone = model.Phone;
                                     e.Street = model.Street;
                                 }
+                                else
+                                {
+                                    msg = "Địa chỉ email đã tồn tại";
+                                    result = false;
+                                }                                    
                             }
-                            cxt.SaveChanges();
-                            trans.Commit();
                         }
-                        catch (Exception ex)
-                        {
-                            result = false;
-                            trans.Rollback();
-                            msg = "Lỗi đường truyền mạng";
-                        }
-                        finally
-                        {
-                            cxt.Dispose();
-                        }
-                    }                    
+                        cxt.SaveChanges();
+                        trans.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        result = false;
+                        trans.Rollback();
+                        msg = "Lỗi đường truyền mạng";
+                    }
+                    finally
+                    {
+                        cxt.Dispose();
+                    }               
                 }
             }
             return result;
