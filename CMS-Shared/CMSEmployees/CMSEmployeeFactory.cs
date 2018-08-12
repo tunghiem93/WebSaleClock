@@ -18,7 +18,7 @@ namespace CMS_Shared.CMSEmployees
             {
                 using (var trans = cxt.Database.BeginTransaction())
                 {
-                    var _isExits = cxt.CMS_Customers.Any(x => x.Email.Equals(model.Employee_Email));                    
+                    var _isExits = cxt.CMS_Employees.Any(x => x.Employee_Email.Equals(model.Employee_Email));                    
                     try
                     {
                         if (string.IsNullOrEmpty(model.Id))
