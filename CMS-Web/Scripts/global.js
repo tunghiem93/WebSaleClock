@@ -348,7 +348,7 @@ function callBackAjaxCart() {
         reloadFilter: function () { $('.advanced-filter.active-filter').removeClass('active-filter'); if (Shopify.queryParams.view) { $('.change-view.change-view--active').removeClass('change-view--active'); var view = Shopify.queryParams.view; if (view.indexOf('list') >= 0) { $('.change-view').data('view', 'list').addClass('change-view--active'); } else { $('.change-view').data('view', 'grid').addClass('change-view--active'); } } },
         ajaxProductItems: function () {
             var result = new Array();
-            var search_url = '/collections/all?view=ajax';
+            var search_url = '';
             $.ajax({
                 type: 'GET',
                 url: search_url,
