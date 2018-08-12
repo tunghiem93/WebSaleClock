@@ -339,11 +339,11 @@ namespace CMS_Web.Controllers
                     });
                     if (type == (byte)Commons.ERangeType.Hightest)
                     {
-                        model.ListProduct = model.ListProduct.OrderBy(o=>o.ProductPrice).Skip(0).Take(PageSize).ToList();
+                        model.ListProduct = model.ListProduct.OrderByDescending(o => o.ProductPrice).Skip(0).Take(PageSize).ToList();                        
                     }
                     else
                     {
-                        model.ListProduct = model.ListProduct.OrderByDescending(o => o.ProductPrice).Skip(0).Take(PageSize).ToList();
+                        model.ListProduct = model.ListProduct.OrderBy(o => o.ProductPrice).Skip(0).Take(PageSize).ToList();
                     }
                 }
             }

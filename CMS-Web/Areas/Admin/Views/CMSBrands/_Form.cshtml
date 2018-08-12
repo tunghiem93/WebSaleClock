@@ -29,7 +29,7 @@
         </div>
         <div class="col-md-1 col-sm-3 col-xs-12" style="line-height:55px;">
             <div class="upload-btn-wrapper" style="cursor:pointer;">
-                <button class="btn btn-default" type="button" onclick="showPictureUpload();" style="margin-top:-6%;margin-left:50px">Chọn hình</button>
+                <button class="btn btn-default" type="button" onclick="showPictureUpload();" style="margin-top:-6%;margin-left:50px">Chọn hình (870px-225px)</button>
                 @Html.TextBoxFor(model => model.PictureUpload, new { @type = "file", @onchange = "PreviewImage(this,\"upload-preview\")", @accept = "*.jpg", @class = "hidden", @id = "urlImage" })
             </div>
             @Html.ValidationMessageFor(model => model.PictureUpload, null, new { @class = "label label-danger" })

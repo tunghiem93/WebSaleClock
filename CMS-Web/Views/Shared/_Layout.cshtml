@@ -461,24 +461,40 @@
     <script src="@Url.Content("~/Scripts/jquery.currencies.min.js")"></script>
 
     <script src="@Url.Content("~/Scripts/master.js")"></script>
-</body>
-</html>
+    <script src="@Url.Content("~/Scripts/js.cookie.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/InitCookie.js")"></script>
+    <script type="text/javascript">
 
-<script src="@Url.Content("~/Scripts/js.cookie.min.js")"></script>
-<script src="@Url.Content("~/Scripts/InitCookie.js")"></script>
-<script type="text/javascript">
-   
-    function SearchKeyWord() {
-        var _key = $("#txtsearch").val();
-        if (_key.length > 0)
-        {
+        function SearchKeyWord() {
+            var _key = $("#txtsearch").val();
+            if (_key.length > 0) {
+                $.ajax({
+                    url: "/Clients/Home/SearchKey",
+                    type: "post",
+                    data: { Key: _key },
+                    beforeSend: function () {
+                        $("#loading-mask").show();
+                    },
+                    success: function (content) {
+                        $(".list-group").html(content);
+                    },
+                    complete: function () {
+                        $("#loading-mask").hide();
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                    }
+                });
+            }
+        }
+
+        function LoadPagging(index, id, _key) {
             $.ajax({
-                url: "/Clients/Home/SearchKey",
+                url: "/Clients/Home/LoadPagging",
                 type: "post",
-                data: { Key: _key },
                 beforeSend: function () {
                     $("#loading-mask").show();
                 },
+                data: { pageIndex: index, Key: _key, Id: id },
                 success: function (content) {
                     $(".list-group").html(content);
                 },
@@ -489,140 +505,138 @@
                 }
             });
         }
-    }
 
-    function LoadPagging(index,id,_key) {
-        $.ajax({
-            url: "/Clients/Home/LoadPagging",
-            type: "post",
-            beforeSend: function () {
-                $("#loading-mask").show();
-            },
-            data: { pageIndex: index, Key: _key, Id: id },
-            success: function (content) {
-                $(".list-group").html(content);
-            },
-            complete: function () {
-                $("#loading-mask").hide();
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
+        var app = angular.module("appWebClock", []);
+        app.directive('restrictTo', function () {
+            return {
+                restrict: 'A',
+                link: function (scope, element, attrs) {
+                    var re = RegExp(attrs.restrictTo);
+                    var exclude = /Backspace|Enter|Tab|Delete|Del|ArrowUp|Up|ArrowDown|Down|ArrowLeft|Left|ArrowRight|Right/;
+
+                    element[0].addEventListener('keypress', function (event) {
+                        if (!exclude.test(event.key) && !re.test(event.key)) {
+                            event.preventDefault();
+                        }
+                    });
+                }
             }
         });
-    }
-
-    var app = angular.module("appWebClock", []);
-    app.directive('restrictTo', function () {
-        return {
-            restrict: 'A',
-            link: function (scope, element, attrs) {
-                var re = RegExp(attrs.restrictTo);
-                var exclude = /Backspace|Enter|Tab|Delete|Del|ArrowUp|Up|ArrowDown|Down|ArrowLeft|Left|ArrowRight|Right/;
-
-                element[0].addEventListener('keypress', function (event) {
-                    if (!exclude.test(event.key) && !re.test(event.key)) {
-                        event.preventDefault();
-                    }
-                });
-            }
-        }
-    });
-    app.controller("CartCtrl", ["$scope", "$rootScope", function ($scope, $rootScope) {
-        $rootScope.Products = getListOrder();
-        /* add cart */
-        $scope.AddToCart = function (ItemId, UnitId, Qty, Price, ImageUrl, Name) {    
-            var _Order = {
-                ItemId: ItemId,
-                UnitId: UnitId,
-                Quantity: Qty,
-                Price: Price,
-                Name: Name,
-                ImageUrl: ImageUrl
-            };
-            CreateOrUpdateOrder(_Order);
+        app.controller("CartCtrl", ["$scope", "$rootScope", function ($scope, $rootScope) {
             $rootScope.Products = getListOrder();
-            $scope.setTotals($rootScope.Products);
-            $('[id=AjaxifyModal]').removeClass("hidden");
-            $(window).scrollTop(0);
-        }
-        /* close modal */
-        $scope.CloseCart = function () {
-            $('[id=AjaxifyModal]').addClass("hidden");
-        }
-
-        /* update qty of order by order id */
-        $scope.UpdateQtyOrder = function ($index) {
-            UpdateQuantity($rootScope.Products[$index].ItemId, $rootScope.Products[$index].Quantity);
-            var Orders = getListOrder();
-            $scope.setTotals(Orders);
-        }
-        /* count total bill of order */
-        $scope.setTotals = function (Orders) {
-            var _OrderTotal = 0;
-            angular.forEach(Orders, function (item, index) {
-                _OrderTotal += item.Quantity * item.Price;
-            });
-            $rootScope.OrderTotal = _OrderTotal;
-        }
-
-        $scope.QtyAdjust = function ($index, type)
-        {
-            if (type == 0)
-            {
-                $rootScope.Products[$index].Quantity -= 1;
-                if (parseInt($rootScope.Products[$index].Quantity) < 1)
-                    $rootScope.Products[$index].Quantity = 1;
+            /* add cart */
+            $scope.AddToCart = function (ItemId, UnitId, Qty, Price, ImageUrl, Name) {
+                var _Order = {
+                    ItemId: ItemId,
+                    UnitId: UnitId,
+                    Quantity: Qty,
+                    Price: Price,
+                    Name: Name,
+                    ImageUrl: ImageUrl
+                };
+                CreateOrUpdateOrder(_Order);
+                $rootScope.Products = getListOrder();
+                $scope.setTotals($rootScope.Products);
+                $('[id=AjaxifyModal]').removeClass("hidden");
+                $(window).scrollTop(0);
             }
-            else {
-                $rootScope.Products[$index].Quantity += 1;
+            /* close modal */
+            $scope.CloseCart = function () {
+                $('[id=AjaxifyModal]').addClass("hidden");
             }
-            UpdateQuantity($rootScope.Products[$index].ItemId, $rootScope.Products[$index].Quantity);
-            var Orders = getListOrder();
-            $scope.setTotals(Orders);
-        }
 
-        $scope.QtyAdjustNoOrder = function (type)
-        {
-            if (type == 0) {
-
-                $scope.Qty = $scope.Qty - 1;
-                if (parseInt($scope.Qty) < 1)
-                    $scope.Qty = 1;
-            }
-            else {
-                $scope.Qty = $scope.Qty + 1;
-            }
-        }
-
-        $scope.ngChangeQty = function () {
-            if (parseInt($scope.Qty) < 1)
-                $scope.Qty = 1;
-        }
-
-        $scope.ngBlur = function () {
-            if ($scope.Qty.length == 0)
-                $scope.Qty = 1;
-        }
-        $scope.ngBlurModal = function ($index) {
-            if ($rootScope.Products[$index].Quantity.length == 0)
-            {
-                $rootScope.Products[$index].Quantity = 1;
+            /* update qty of order by order id */
+            $scope.UpdateQtyOrder = function ($index) {
                 UpdateQuantity($rootScope.Products[$index].ItemId, $rootScope.Products[$index].Quantity);
                 var Orders = getListOrder();
                 $scope.setTotals(Orders);
             }
-           
-        }
+            /* count total bill of order */
+            $scope.setTotals = function (Orders) {
+                var _OrderTotal = 0;
+                angular.forEach(Orders, function (item, index) {
+                    _OrderTotal += item.Quantity * item.Price;
+                });
+                $rootScope.OrderTotal = _OrderTotal;
+            }
 
-        $scope.RemoveItemOrder = function ($index)
-        {
-            RemoveOrderByItemId($rootScope.Products[$index].ItemId);
-            var Orders = getListOrder();
-            $rootScope.Products = Orders;
-            $scope.setTotals(Orders);
-        }
-    }]);
+            $scope.QtyAdjust = function ($index, type) {
+                if (type == 0) {
+                    $rootScope.Products[$index].Quantity -= 1;
+                    if (parseInt($rootScope.Products[$index].Quantity) < 1)
+                        $rootScope.Products[$index].Quantity = 1;
+                }
+                else {
+                    $rootScope.Products[$index].Quantity += 1;
+                }
+                UpdateQuantity($rootScope.Products[$index].ItemId, $rootScope.Products[$index].Quantity);
+                var Orders = getListOrder();
+                $scope.setTotals(Orders);
+            }
 
-    $(document).ready(function () {
-        getListOrder();
-    });
-</script>
+            $scope.QtyAdjustNoOrder = function (type) {
+                if (type == 0) {
+
+                    $scope.Qty = $scope.Qty - 1;
+                    if (parseInt($scope.Qty) < 1)
+                        $scope.Qty = 1;
+                }
+                else {
+                    $scope.Qty = $scope.Qty + 1;
+                }
+            }
+
+            $scope.ngChangeQty = function () {
+                if (parseInt($scope.Qty) < 1)
+                    $scope.Qty = 1;
+            }
+
+            $scope.ngBlur = function () {
+                if ($scope.Qty.length == 0)
+                    $scope.Qty = 1;
+            }
+            $scope.ngBlurModal = function ($index) {
+                if ($rootScope.Products[$index].Quantity.length == 0) {
+                    $rootScope.Products[$index].Quantity = 1;
+                    UpdateQuantity($rootScope.Products[$index].ItemId, $rootScope.Products[$index].Quantity);
+                    var Orders = getListOrder();
+                    $scope.setTotals(Orders);
+                }
+
+            }
+
+            $scope.RemoveItemOrder = function ($index) {
+                RemoveOrderByItemId($rootScope.Products[$index].ItemId);
+                var Orders = getListOrder();
+                $rootScope.Products = Orders;
+                $scope.setTotals(Orders);
+            }
+        }]);
+
+        $(document).ready(function () {
+            getListOrder();
+        });
+
+    </script>
+
+    <div class="fb-customerchat" page_id="1679443508797902" minimized="true"></div>
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '301258240630616',
+                autoLogAppEvents: true,
+                xfbml: true,
+                version: 'v2.11'
+            });
+        };
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) { return; }
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+</body>
+</html>
+
