@@ -4,6 +4,7 @@ using CMS_Shared.Factory;
 using CMS_Web.Web.App_Start;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -94,6 +95,13 @@ namespace CMS_Web.Areas.Admin.Controllers
 
                         Session.Add("User", userSession);
                         //
+                        // create cookie user
+                        string myObjectJson = JsonConvert.SerializeObject(userSession);  //new JavaScriptSerializer().Serialize(userSession);
+                        HttpCookie userCookie = new HttpCookie("UserCookie");
+                        userCookie.Expires = DateTime.Now.AddDays(1);
+                        userCookie.Value = Server.UrlEncode(myObjectJson);
+                        HttpContext.Response.Cookies.Add(userCookie);
+
                         if (!string.IsNullOrEmpty(mController))
                             return RedirectToAction("Index", mController, new { area = "Admin" });
                         if (returnUrl == null)
@@ -123,6 +131,9 @@ namespace CMS_Web.Areas.Admin.Controllers
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             if(HttpContext.Session != null && HttpContext.Session["User"] != null)
                 HttpContext.Session.Remove("User");
+            HttpCookie cookie = new HttpCookie("UserCookie");
+            HttpContext.Response.Cookies.Remove("UserCookie");
+            HttpContext.Response.SetCookie(cookie);
             return RedirectToAction("Index", "CMSAccount");
         }
 
