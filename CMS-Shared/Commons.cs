@@ -30,14 +30,15 @@ namespace CMS_Shared
         public static string Phone1 = ConfigurationManager.AppSettings["Phone1"];
         public static string Phone2 = ConfigurationManager.AppSettings["Phone2"];
         public static string Email1 = ConfigurationManager.AppSettings["Email1"];
-        public static string ClockMail = ConfigurationManager.AppSettings["ClockMail"];
-        public static string ClockPass = ConfigurationManager.AppSettings["ClockPass"];
         public static string Email2 = ConfigurationManager.AppSettings["Email2"];
         public static string AddressCompany = ConfigurationManager.AppSettings["AddressCompnay"];
         public static string CompanyTitle = ConfigurationManager.AppSettings["CompanyTitle"];
         public static string Website = ConfigurationManager.AppSettings["Website"];
         public static string HostImage = ConfigurationManager.AppSettings["HostImage"];
         public static string _PublicImages = string.IsNullOrEmpty(ConfigurationManager.AppSettings["PublicImages"]) ? "" : ConfigurationManager.AppSettings["PublicImages"];
+        
+        public static string ClockMail = "tunxktl@gmail.com";
+        public static string ClockPass = "pass";
 
         public const string PasswordChar = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 

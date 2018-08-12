@@ -122,6 +122,7 @@ namespace CMS_Web.Controllers
                 {
                     var data = _factory.GetDetail(cusId);
                     UserSession userSession = new UserSession();
+                    userSession.UserId = data.ID;
                     userSession.Email = data.Email;
                     userSession.UserName = data.Name;
                     Session.Add("UserClient", userSession);
