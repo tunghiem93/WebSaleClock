@@ -220,10 +220,10 @@
 
             <!-- Html modal-->
             <div id="AjaxifyModal" class="ajaxcart ajaxcartModal is-visible hidden" style="opacity: 1; margin-left: -450px;" ng-controller="CartCtrl">
-                <button type="button" class="ajaxcartClose" title="Close Cart" style="top: 25px;" ng-click="CloseCart();">Close Cart</button>
+                <button type="button" class="ajaxcartClose" title="Close Cart" style="top: 25px;" ng-click="CloseCart();">Đóng giỏ hàng</button>
                 <div id="AjaxifyCart" class="">
                     <form action="/cart" method="post" novalidate="" class="cart">
-                        <h1 class="cartTitle">Shopping Cart</h1>
+                        <h1 class="cartTitle">Giỏ hàng</h1>
                         <div class="page-content">
                             <div class="cart_header_labels clearfix">
                                 <div class="label_item col-xs-12 col-sm-1 col-md-1">
@@ -303,17 +303,17 @@
                                 <div class="note_item col-xs-12 col-sm-6 col-md-6">
 
                                     <div class="note_cart">
-                                        <label class="control-label" for="CartSpecialInstructions">Special instructions for seller</label>
+                                        <label class="control-label" for="CartSpecialInstructions">Ưu đãi đặc biệt khi mua hàng chúng tôi!</label>
                                         <textarea name="note" class="form-control" id="CartSpecialInstructions"></textarea>
                                     </div>
 
                                 </div>
                                 <div class="note_buton col-xs-12 col-sm-6 col-md-6 text-right">
                                     <p>
-                                        <span class="cart__subtotal-title">Subtotal</span>
+                                        <span class="cart__subtotal-title">Tổng</span>
                                         <span class="h3 cart__subtotal"><span class="money" data-currency-usd="{{OrderTotal}}">{{OrderTotal | currency : "" : 0}} đ</span></span>
                                     </p>
-                                    <p><em>Shipping &amp; taxes calculated at checkout</em></p>
+                                    <p><em>Vận chuyển &amp; thuế sẽ tính khi thanh toán</em></p>
                                     <a class="btn con-ajax-cart btn-outline" href="@Url.Action("Index","Shop")" title="Tiếp tục mua hàng">Tiếp tục mua hàng</a>
                                     <a class="btn btn-outline update-cart" href="@Url.Action("Index","Cart")">Giỏ hàng</a>
                                     <a class="btn btn-outline" href="@Url.Action("CheckOut","Cart")">Thanh toán</a>

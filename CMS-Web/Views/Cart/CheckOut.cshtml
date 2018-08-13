@@ -1,16 +1,21 @@
 ﻿@model CMS_DTO.CMSOrder.CMS_CheckOutModels
+
+@{ 
+    Layout = null;
+}
+
 <html lang="en" dir="ltr" class="no-js windows chrome desktop page--no-banner page--logo-main page--show page--show card-fields">
 <head>
     <link rel="stylesheet" media="all" href="@Url.Content("~/Content/v2-ltr-edge-8101d204339d452facb9ddfc67fe9847-11162765398729174149.css")" />
     <script src="@Url.Content("~/Scripts/checkout-6795f878e66cbd16d8abdef46810b664978f7166f94bf17ba396972153fdc967.js")"></script>
 
-    <script>window.ShopifyPaypalV4VisibilityTracking = true;</script>
+    @*<script>window.ShopifyPaypalV4VisibilityTracking = true;</script>*@
 
 
     <script src="@Url.Content("~/Scripts/countries-ce7b81792c26ff1f5150a686c6b62d259bc63ce3-1470881547.js")"></script>
-    <script type="text/javascript">
+    @*<script type="text/javascript">
         Shopify.Checkout.AddressFormat = { "N_p_c_sc_a_a": [["company"], ["last_name", "first_name"], ["zip"], ["country"], ["province", "city"], ["address1"], ["address2"], ["phone"]], "N_p_c_c_a_a": [["company"], ["last_name", "first_name"], ["zip"], ["country"], ["city"], ["address1"], ["address2"], ["phone"]], "n_a_a_c_csp": [["first_name", "last_name"], ["company"], ["address1"], ["address2"], ["city"], ["country", "province", "zip"], ["phone"]], "n_a_a_c_cs": [["first_name", "last_name"], ["company"], ["address1"], ["address2"], ["city"], ["country", "province"], ["phone"]], "n_a_a_c_cp": [["first_name", "last_name"], ["company"], ["address1"], ["address2"], ["city"], ["country", "zip"], ["phone"]], "n_a_a_c_c": [["first_name", "last_name"], ["company"], ["address1"], ["address2"], ["city"], ["country"], ["phone"]] };
-    </script>
+    </script>*@
 </head>
 <body>
     <div class="content" data-content>
@@ -19,7 +24,7 @@
             <div class="">
                 <div class="alert alert-danger fade in text-center">
                     <i class="fa-fw fa fa-remove"></i>
-                    <strong>Error! </strong>
+                    <strong>Lỗi xảy ra! </strong>
                     <span>Đơn hàng của bạn giao dịch không thành công, vui lòng thử lại</span>
                 </div>
             </div>
@@ -30,11 +35,11 @@
                 <div class="main__header">
                     <a class="logo logo--left" href="@Url.Action("Index","Home")">
                         <span class="logo__text heading-1">
-                            Ap Wooden
+                            KidsWatch
                         </span>
                     </a>
                     <h1 class="visually-hidden">
-                        Customer information
+                        Thông tin khách hàng
                     </h1>
                 </div>
                 <div class="main__content">
@@ -148,7 +153,7 @@
                                     </span>
                                     <svg class="icon-svg icon-svg--size-18 btn__spinner icon-svg--spinner-button" aria-hidden="true" focusable="false"> <use xlink:href="#spinner-button" /> </svg>
                                 </button>
-                                <a class="step__footer__previous-link" data-trekkie-id="previous_step_link" href="@Url.Action("Index","Cart")"><svg focusable="false" aria-hidden="true" class="icon-svg icon-svg--color-accent icon-svg--size-10 previous-link__icon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><path d="M8 1L7 0 3 4 2 5l1 1 4 4 1-1-4-4" /></svg><span class="step__footer__previous-link-content">Return to cart</span></a>
+                                <a class="step__footer__previous-link" data-trekkie-id="previous_step_link" href="@Url.Action("Index","Cart")"><svg focusable="false" aria-hidden="true" class="icon-svg icon-svg--color-accent icon-svg--size-10 previous-link__icon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><path d="M8 1L7 0 3 4 2 5l1 1 4 4 1-1-4-4" /></svg><span class="step__footer__previous-link-content">Quay lại giỏ hàng</span></a>
                             </div>
                         </form>
 
@@ -160,11 +165,11 @@
 
                     <a class="logo logo--left" href="@Url.Action("Index","Home")">
                         <span class="logo__text heading-1">
-                            Ap Wooden
+                            KidsWatch
                         </span>
                     </a>
                     <h1 class="visually-hidden">
-                        Customer information
+                        Thông tin khách hàng
                     </h1>
 
 
@@ -173,19 +178,19 @@
                     @if (Model.ListItem != null && Model.ListItem.Any())
                     {
                         <div id="order-summary" class="order-summary order-summary--is-collapsed" data-order-summary>
-                            <h2 class="visually-hidden-if-js">Order summary</h2>
+                            <h2 class="visually-hidden-if-js">Danh sách đơn hàng</h2>
                             <div class="order-summary__sections">
 
                                 <div class="order-summary__section order-summary__section--product-list">
                                     <div class="order-summary__section__content">
                                         <table class="product-table">
-                                            <caption class="visually-hidden">Shopping cart</caption>
+                                            <caption class="visually-hidden">Giỏ hàng</caption>
                                             <thead>
                                                 <tr>
-                                                    <th scope="col"><span class="visually-hidden">Product image</span></th>
-                                                    <th scope="col"><span class="visually-hidden">Description</span></th>
-                                                    <th scope="col"><span class="visually-hidden">Quantity</span></th>
-                                                    <th scope="col"><span class="visually-hidden">Price</span></th>
+                                                    <th scope="col"><span class="visually-hidden">Hình ảnh</span></th>
+                                                    <th scope="col"><span class="visually-hidden">Mô tả</span></th>
+                                                    <th scope="col"><span class="visually-hidden">Số lượng</span></th>
+                                                    <th scope="col"><span class="visually-hidden">Giá</span></th>
                                                 </tr>
                                             </thead>
                                             <tbody data-order-summary-section="line-items">
@@ -219,7 +224,7 @@
                                         </table>
 
                                         <div class="order-summary__scroll-indicator" aria-hidden="true" tabindex="-1">
-                                            Scroll for more items
+                                            Cuộn chuột để xem
                                             <svg xmlns="http://www.w3.org/2000/svg" width="10" height="12" viewBox="0 0 10 12"><path d="M9.817 7.624l-4.375 4.2c-.245.235-.64.235-.884 0l-4.375-4.2c-.244-.234-.244-.614 0-.848.245-.235.64-.235.884 0L4.375 9.95V.6c0-.332.28-.6.625-.6s.625.268.625.6v9.35l3.308-3.174c.122-.117.282-.176.442-.176.16 0 .32.06.442.176.244.234.244.614 0 .848" /></svg>
                                         </div>
                                     </div>
@@ -232,13 +237,13 @@
                                         <caption class="visually-hidden">Cost summary</caption>
                                         <thead>
                                             <tr>
-                                                <th scope="col"><span class="visually-hidden">Description</span></th>
-                                                <th scope="col"><span class="visually-hidden">Price</span></th>
+                                                <th scope="col"><span class="visually-hidden">Mô tả</span></th>
+                                                <th scope="col"><span class="visually-hidden">Giá</span></th>
                                             </tr>
                                         </thead>
                                         <tbody class="total-line-table__tbody">
                                             <tr class="total-line total-line--subtotal">
-                                                <th class="total-line__name" scope="row">Subtotal</th>
+                                                <th class="total-line__name" scope="row">Tổng</th>
                                                 <td class="total-line__price">
                                                     <span class="order-summary__emphasis" data-checkout-subtotal-price-target="12002">
                                                         @Model.SubTotalPrice.ToString("#,00") đ
@@ -248,10 +253,10 @@
 
 
                                             <tr class="total-line total-line--shipping">
-                                                <th class="total-line__name" scope="row">Shipping</th>
+                                                <th class="total-line__name" scope="row">Phí vận chuyển</th>
                                                 <td class="total-line__price">
                                                     <span class="order-summary__emphasis" data-checkout-total-shipping-target="0">
-                                                        <span aria-hidden="true">—</span><span class="visually-hidden">Not yet available</span>
+                                                        <span aria-hidden="true">—</span><span class="visually-hidden">Chưa sẵn sàng</span>
                                                     </span>
                                                 </td>
                                             </tr>
@@ -259,7 +264,7 @@
                                         <tfoot class="total-line-table__footer">
                                             <tr class="total-line">
                                                 <th class="total-line__name payment-due-label" scope="row">
-                                                    <span class="payment-due-label__total">Total</span>
+                                                    <span class="payment-due-label__total">Tổng tiền</span>
                                                 </th>
                                                 <td class="total-line__price payment-due">
                                                     <span class="payment-due__price" data-checkout-payment-due-target="13202">
@@ -271,7 +276,7 @@
                                     </table>
 
                                     <div class="visually-hidden" aria-live="polite" aria-atomic="true" role="status">
-                                        Updated total price:
+                                        Cập nhập giá:
                                         <span data-checkout-payment-due-target="13202">
                                             @Model.TotalPrice.ToString("#,00") đ
                                         </span>
