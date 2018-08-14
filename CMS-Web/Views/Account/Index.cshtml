@@ -12,6 +12,7 @@
                     <h1>Tạo tài khoản</h1>
                     @using (@Html.BeginForm("Index", "Account", FormMethod.Post, new { @id = "create_customer", @class = "form-horizontal create-form", @enctype = "multipart/form-data", }))
                     {
+                        @Html.HiddenFor(model => model.ID)
                         <input type="hidden" name="form_type" value="create_customer"><input type="hidden" name="utf8" value="✓">
                         <h3 class="page-subheading">Thông tin tài khoản</h3>
                         <label for="FirstName" class="label-register">Họ</label>

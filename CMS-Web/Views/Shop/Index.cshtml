@@ -151,7 +151,8 @@
                                     {
                                         @class = "",
                                         @id = "SortBy",
-                                        @style = ""
+                                        @style = "",
+                                        @onchange = "LoadDataFilterPrice(this)"
                                     })
                                 </div>
                             </div>
@@ -199,90 +200,103 @@
     {
         $("[id=pagination]").find("li").removeClass("active");
         $(that).addClass("active");
-                                        if (pageIndex != 1)
-                                        {
-            $(".pagination_previous").removeClass("disabled");
-                                        }
-                                        else {
-            $(".pagination_previous").addClass("disabled");
-                                        }
-
-                                        if (pageIndex == '@Model.TotalPage')
-            $(".pagination_next").addClass("disabled");
-        else
-            $(".pagination_next").removeClass("disabled");
-
-                                        LoadDataPagging(pageIndex);
-                                    }
-
-                                    function PrevPage() {
-                                        var pageIndex = 1;
-        $("#pagination li").each(function (index) {
-                                            if ($(this).hasClass("active"))
+            if (pageIndex != 1)
             {
-                                        var PageIndex = parseInt($(this).attr("data-page"));
-                $("[id=pagination]").find("li").removeClass("active");
-                                        if (PageIndex > 1)
-                                        {
-                                            pageIndex = PageIndex - 1;
-                    $('[id=page_' + (PageIndex - 1) + ']').addClass("active");
-                                        }
-                                        else
-                    $('[id=page_1]').addClass("active");
-                                        if ((PageIndex - 1) == 1)
-                                        {
-                    $(".pagination_previous").addClass("disabled");
-                                        }
+                $(".pagination_previous").removeClass("disabled");
+            }
+            else {
+                $(".pagination_previous").addClass("disabled");
+            }
+            if (pageIndex == '@Model.TotalPage')
+                $(".pagination_next").addClass("disabled");
+            else
+                $(".pagination_next").removeClass("disabled");
+                    LoadDataPagging(pageIndex);
+                }
 
-                                        return false;
-                                    }
-                                });
-        LoadDataPagging(pageIndex);
-                            }
-
-                            function NextPage() {
-        $(".pagination_previous").removeClass("disabled");
-                                var totalPage = '@Model.TotalPage';
-                                var pageIndex = '@Model.TotalPage';
+    function PrevPage() {
+        var pageIndex = 1;
         $("#pagination li").each(function (index) {
-                                    if ($(this).hasClass("active")) {
-                                        var PageIndex = parseInt($(this).attr("data-page"));
+            if ($(this).hasClass("active"))
+            {
+                var PageIndex = parseInt($(this).attr("data-page"));
                 $("[id=pagination]").find("li").removeClass("active");
-                                        if (PageIndex > totalPage) {
+                if (PageIndex > 1)
+                {
+                    pageIndex = PageIndex - 1;
+                    $('[id=page_' + (PageIndex - 1) + ']').addClass("active");
+                }
+                else
+                    $('[id=page_1]').addClass("active");
+                if ((PageIndex - 1) == 1)
+                {
+                    $(".pagination_previous").addClass("disabled");
+                }
+                return false;
+            }
+        });
+        LoadDataPagging(pageIndex);
+    }
+
+    function NextPage() {
+        $(".pagination_previous").removeClass("disabled");
+        var totalPage = '@Model.TotalPage';
+        var pageIndex = '@Model.TotalPage';
+        $("#pagination li").each(function (index) {
+            if ($(this).hasClass("active")) {
+                var PageIndex = parseInt($(this).attr("data-page"));
+                $("[id=pagination]").find("li").removeClass("active");
+                if (PageIndex > totalPage) {
                     $('[id=page_' + totalPage + ']').addClass("active");
-                                        }
-                                        else {
-                                            pageIndex = parseInt(PageIndex) + 1;
+                }
+                else {
+                    pageIndex = parseInt(PageIndex) + 1;
                     $('[id=page_' + pageIndex + ']').addClass("active");
-                                        }
-
-                                        if ((PageIndex + 1) == '@Model.TotalPage') {
+                }
+                if ((PageIndex + 1) == '@Model.TotalPage') {
                     $(".pagination_next").addClass("disabled");
-                                        }
-                                        return false;
-                                    }
-                                });
-                                LoadDataPagging(pageIndex);
-                            }
+                }
+                return false;
+            }
+        });
+        LoadDataPagging(pageIndex);
+    }
 
-                            function LoadDataPagging(pageIndex)
-                            {
+    function LoadDataPagging(pageIndex)
+    {
          $.ajax({
-                                    url: "@Url.Action("LoadDataPagging", "Shop")",
-                type: "GET",
-                data: { pageIndex: pageIndex },
-                dataType: 'html',
-                beforeSend: function () {
-                                        //  $('.se-pre-con').show();
-                                    },
-                success: function (data) {
-                    $('[id=product_list]').html(data);
-                                    },
-                complete: function () {
-                                        //  $('.se-pre-con').hide();
-                                    },
-                error: function (jqXHR, textStatus, errorThrown) {
-                                    }
-                                });
-                            }
+            url: "@Url.Action("LoadDataPagging", "Shop")",
+            type: "GET",
+            data: { pageIndex: pageIndex },
+            dataType: 'html',
+            beforeSend: function () {
+                //  $('.se-pre-con').show();
+            },
+            success: function (data) {
+                $('[id=product_list]').html(data);
+            },
+            complete: function () {
+                //  $('.se-pre-con').hide();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+            }
+        });     
+    }
+
+    function LoadDataFilterPrice(e) {
+        var type = $(e).val();
+        $.ajax({
+            url: "@Url.Action("LoadDataFilterPrice", "Home")",
+            type: "GET",
+            data: { type: type },
+            dataType: 'html',
+            beforeSend: function () { },
+            success: function (data) {
+                $('[id=product_list]').html(data);
+            },
+            complete: function () { },
+            error: function (jqXHR, textStatus, errorThrown) {
+            }
+        });
+    }
 </script>

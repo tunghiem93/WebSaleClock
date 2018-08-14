@@ -72,7 +72,8 @@
                                     {
                                         @class = "",
                                         @id = "SortBy",
-                                        @style = ""
+                                        @style = "",
+                                        @onchange = "LoadDataFilterPrice(this)"
                                     })
                                 </div>
                             </div>
@@ -271,21 +272,38 @@
     function LoadDataPagging(pageIndex)
     {
          $.ajax({
-                url: "@Url.Action("LoadDataPagging", "Collection")",
-                type: "GET",
-                data: { pageIndex: pageIndex,cateId :'@cateId' },
-                dataType: 'html',
-                beforeSend: function () {
-                  //  $('.se-pre-con').show();
-                },
-                success: function (data) {
-                    $('[id=product_list]').html(data);
-                },
-                complete: function () {
-                  //  $('.se-pre-con').hide();
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                }
-            });
+            url: "@Url.Action("LoadDataPagging", "Collection")",
+            type: "GET",
+            data: { pageIndex: pageIndex,cateId :'@cateId' },
+            dataType: 'html',
+            beforeSend: function () {
+                //  $('.se-pre-con').show();
+            },
+            success: function (data) {
+                $('[id=product_list]').html(data);
+            },
+            complete: function () {
+                //  $('.se-pre-con').hide();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+            }
+        });
+    }
+
+    function LoadDataFilterPrice(e) {
+        var type = $(e).val();
+        $.ajax({
+            url: "@Url.Action("LoadDataFilterPrice", "Home")",
+            type: "GET",
+            data: { type: type },
+            dataType: 'html',
+            beforeSend: function () { },
+            success: function (data) {
+                $('[id=product_list]').html(data);
+            },
+            complete: function () { },
+            error: function (jqXHR, textStatus, errorThrown) {
+            }
+        });
     }
 </script>

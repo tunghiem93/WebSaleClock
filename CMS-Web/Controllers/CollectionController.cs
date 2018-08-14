@@ -17,7 +17,7 @@ namespace CMS_Web.Controllers
         private CMSProductFactory _fac;
         private CMSCategoriesFactory _facCate;
         private CMSBrandsFactory _facBrand;
-        private int PageSize = 2;
+        private int PageSize = 12;
         public CollectionController()
         {
             _fac = new CMSProductFactory();
@@ -79,13 +79,14 @@ namespace CMS_Web.Controllers
                             }
                         }
                     });
+                    model.ListProductTopSales = model.ListProduct.Skip(0).Take(5).ToList();
                     var TotalProduct = model.ListProduct.Count(o => o.CategoryId.Equals(id));
                     if (TotalProduct % PageSize == 0)
                         model.TotalPage = TotalProduct / PageSize;
                     else
                         model.TotalPage = Convert.ToInt32(TotalProduct / PageSize) + 1;
                     model.ListProduct = model.ListProduct.Where(o=>o.CategoryId.Equals(id)).Skip(0).Take(PageSize).ToList();
-                    model.ListProductTopSales = model.ListProduct.Skip(0).Take(5).ToList();
+                    
                 }
                 if (!string.IsNullOrEmpty(id))
                 {
