@@ -148,12 +148,16 @@
                             </div>
 
                             <div class="step__footer" data-step-footer>
-                                <button name="button" type="submit" class="step__footer__continue-btn btn " data-trekkie-id="continue_to_shipping_method_button" aria-busy="false">
-                                    <span class="btn__content">
-                                       Thanh toán
-                                    </span>
-                                    <svg class="icon-svg icon-svg--size-18 btn__spinner icon-svg--spinner-button" aria-hidden="true" focusable="false"> <use xlink:href="#spinner-button" /> </svg>
-                                </button>
+                                @if (Model.ListItem != null && Model.ListItem.Count > 0)
+                                {
+                                    <button name="button" type="submit" class="step__footer__continue-btn btn " data-trekkie-id="continue_to_shipping_method_button" aria-busy="false">
+                                        <span class="btn__content">
+                                            Thanh toán
+                                        </span>
+                                        <svg class="icon-svg icon-svg--size-18 btn__spinner icon-svg--spinner-button" aria-hidden="true" focusable="false"> <use xlink:href="#spinner-button" /> </svg>
+                                    </button>
+                                }
+
                                 <a class="step__footer__previous-link" data-trekkie-id="previous_step_link" href="@Url.Action("Index","Cart")"><svg focusable="false" aria-hidden="true" class="icon-svg icon-svg--color-accent icon-svg--size-10 previous-link__icon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><path d="M8 1L7 0 3 4 2 5l1 1 4 4 1-1-4-4" /></svg><span class="step__footer__previous-link-content">Quay lại giỏ hàng</span></a>
                             </div>
                         </form>

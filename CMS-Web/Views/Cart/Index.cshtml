@@ -90,7 +90,7 @@
                                 </form>
                                 <p class="cart_navigation clearfix">
                                     <a class="btn btn-outline" href="@Url.Action("Index","Shop")" title="Continue shopping">Tiếp tục mua hàng</a>
-                                    <a class="btn btn-outline" href="@Url.Action("CheckOut","Cart")" title="Thanh toán">Thanh toán</a>
+                                    <a class="btn btn-outline" href="@Url.Action("CheckOut","Cart")" title="Thanh toán" ng-show="Products !=null">Thanh toán</a>
                                 </p>
 
                             </div>
