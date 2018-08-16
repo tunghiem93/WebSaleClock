@@ -69,7 +69,7 @@
                                         foreach (var item in Model.ListNewsOld)
                                         {
                                             <li>
-                                                <a href="@Url.Action("Detail", "News", new { id = item.Id })">Nam enim odio sodales condimentum molestie</a>
+                                                <a href="@Url.Action("Detail", "News", new { id = item.Id })">@item.Title</a>
                                                 <time>@item.CreatedDate</time>
                                             </li>
                                         }
