@@ -106,6 +106,17 @@ namespace CMS_Web
                     Session.Add("UserClient", userSession);
                 }
             }
+
+            HttpCookie _UserAdminCookie = Request.Cookies["UserCookie"];
+            if (_UserAdminCookie != null)
+            {
+                var input = Server.UrlDecode(_UserAdminCookie.Value);
+                UserSession userSession = JsonConvert.DeserializeObject<UserSession>(input); //new JavaScriptSerializer().Deserialize<UserSession>(input);
+                if (userSession != null && HttpContext.Current.Session != null)
+                {
+                    Session.Add("User", userSession);
+                }
+            }
         }
     }
 }
