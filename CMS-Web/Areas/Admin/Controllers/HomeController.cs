@@ -126,7 +126,7 @@ namespace CMS_Web.Areas.Admin.Controllers
                     ms.Write(imgByte, 0, imgByte.Length);
                     System.Drawing.Image imageTmp = System.Drawing.Image.FromStream(ms, true);
                     photoByte = null;
-                    ImageHelper.Me.SaveCroppedImage(imageTmp, path, model.Silder.ImageURL2, ref photoByte);
+                    ImageHelper.Me.SaveCroppedImage(imageTmp, path, model.Silder.ImageURL2, ref photoByte, 400, Commons.WidthImageSilder, Commons.HeightImageSilder);
                     model.Silder.ImageURL2 = string.Empty;
                 }
             }
@@ -152,7 +152,7 @@ namespace CMS_Web.Areas.Admin.Controllers
                     ms.Write(imgByte, 0, imgByte.Length);
                     System.Drawing.Image imageTmp = System.Drawing.Image.FromStream(ms, true);
                     photoByte = null;
-                    ImageHelper.Me.SaveCroppedImage(imageTmp, path, model.Silder.ImageURL3, ref photoByte);
+                    ImageHelper.Me.SaveCroppedImage(imageTmp, path, model.Silder.ImageURL3, ref photoByte, 400, Commons.WidthImageSilder, Commons.HeightImageSilder);
                     model.Silder.ImageURL3 = string.Empty;
                 }
             }
@@ -178,7 +178,7 @@ namespace CMS_Web.Areas.Admin.Controllers
                     ms.Write(imgByte, 0, imgByte.Length);
                     System.Drawing.Image imageTmp = System.Drawing.Image.FromStream(ms, true);
                     photoByte = null;
-                    ImageHelper.Me.SaveCroppedImage(imageTmp, path, model.Silder.ImageURL4, ref photoByte);
+                    ImageHelper.Me.SaveCroppedImage(imageTmp, path, model.Silder.ImageURL4, ref photoByte, 400, Commons.WidthImageSilder, Commons.HeightImageSilder);
                     model.Silder.ImageURL4 = string.Empty;
                 }
             }
@@ -204,7 +204,7 @@ namespace CMS_Web.Areas.Admin.Controllers
                     ms.Write(imgByte, 0, imgByte.Length);
                     System.Drawing.Image imageTmp = System.Drawing.Image.FromStream(ms, true);
                     photoByte = null;
-                    ImageHelper.Me.SaveCroppedImage(imageTmp, path, model.Silder.ImageURL5, ref photoByte);
+                    ImageHelper.Me.SaveCroppedImage(imageTmp, path, model.Silder.ImageURL5, ref photoByte, 400, Commons.WidthImageSilder, Commons.HeightImageSilder);
                     model.Silder.ImageURL5 = string.Empty;
                 }
             }
@@ -230,7 +230,7 @@ namespace CMS_Web.Areas.Admin.Controllers
                     ms.Write(imgByte, 0, imgByte.Length);
                     System.Drawing.Image imageTmp = System.Drawing.Image.FromStream(ms, true);
                     photoByte = null;
-                    ImageHelper.Me.SaveCroppedImage(imageTmp, path, model.Silder.ImageURL6, ref photoByte);
+                    ImageHelper.Me.SaveCroppedImage(imageTmp, path, model.Silder.ImageURL6, ref photoByte, 400, Commons.WidthImageSilder, Commons.HeightImageSilder);
                     model.Silder.ImageURL6 = string.Empty;
                 }
             }
