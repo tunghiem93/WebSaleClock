@@ -20,7 +20,7 @@
                 <ol class="breadcrumb">
                     <li itemprop="itemListElement" itemscope="">
                         <a href="@Url.Action("Index","Home")" title="Back to the frontpage" itemprop="item">
-                            <span itemprop="name">Home</span>
+                            <span itemprop="name">Tramg chủ</span>
                         </a>
                         <meta itemprop="position" content="1">
                     </li>
@@ -178,7 +178,7 @@
                                     </div>
                                     <div class="product-center-column col-xs-12 col-sm-12 col-md-7">
 
-                                        <h1 itemprop="name">@Model.ProductModel.ProductName</h1>
+                                        <h3 itemprop="name">@Model.ProductModel.ProductName</h3>
 
                                         <div class="socialsharing_product no-print">
                                             <ul class="social-sharing list-unstyled">
@@ -287,7 +287,7 @@
                                             @*<form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm" class="form-ajaxtocart">*@
                                             <div class="line-product-top"></div>
                                             <div class="quantity_wanted_p">
-                                                <label for="Quantity" class="quantity-selector">Quantity</label>
+                                                <label for="Quantity" class="quantity-selector">Số lượng</label>
                                                 <div class="apQty">
                                                     <button type="button" class="apQtyAdjust apQtyAdjustMinus" data-id="" data-qty="0" ng-click="QtyAdjustNoOrder(0)">−</button>
                                                     <input type="text" class="apQtyNum" ng-model="Qty" ng-init="Qty=1" ng-blur="ngBlur();" ng-change="ngChangeQty();" min="1" data-id="" aria-label="quantity" restrict-to="[0-9]" name="quantity" id="Quantity">
@@ -297,7 +297,7 @@
 
                                             <div class="line-product"></div>
                                             <div class="total-price">
-                                                <label>Subtotal: </label>
+                                                <label>Tổng: </label>
                                                 <span>$28.86</span>
                                             </div>
                                             @if (Model.ProductModel.ProductExtraPrice > 0 && Model.ProductModel.ProductExtraPrice < Model.ProductModel.ProductPrice)
@@ -319,7 +319,7 @@
                                         <div class="wishlist">
                                             <a class="btn btn-outline-inverse btn-wishlist" href="#" title="Add to Wishlist">
                                                 <i class="fa fa-heart"></i>
-                                                <span>Add to Wishlist</span>
+                                                <span>Danh mục ưu thích</span>
                                             </a>
                                         </div>
                                     </div>
