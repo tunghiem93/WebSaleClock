@@ -14,8 +14,8 @@ namespace CMS_Entity.Mapping
         {
             this.HasKey(x => x.Id);
             this.Property(x => x.Id).HasColumnType("varchar").HasMaxLength(60);
-            this.Property(x => x.Short_Description).HasMaxLength(1000).HasColumnType("nvarchar").IsRequired();
-            this.Property(x => x.Title).HasColumnType("nvarchar").HasMaxLength(150).IsRequired();
+            this.Property(x => x.Short_Description).HasMaxLength(2000).HasColumnType("nvarchar").IsRequired();
+            this.Property(x => x.Title).HasColumnType("nvarchar").HasMaxLength(250).IsRequired();
             this.Property(x => x.Publisher).HasMaxLength(100).HasColumnType("nvarchar").IsOptional();
             this.Property(x => x.Description).HasColumnType("ntext").IsOptional();
             this.Property(x => x.ImageURL).HasColumnType("varchar").HasMaxLength(60).IsOptional();

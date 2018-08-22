@@ -16,7 +16,7 @@ namespace CMS_Entity.Mapping
             this.Property(x => x.Id).HasMaxLength(60).HasColumnType("varchar");
             this.Property(x => x.CategoryName).HasMaxLength(250).IsRequired().HasColumnType("nvarchar");
             this.Property(x => x.CategoryCode).HasMaxLength(50).IsRequired().HasColumnType("varchar");
-            this.Property(x => x.Short_Description).HasMaxLength(200).IsOptional().HasColumnType("nvarchar");
+            this.Property(x => x.Short_Description).HasMaxLength(2000).IsOptional().HasColumnType("nvarchar");
             this.Property(x => x.Description).HasColumnType("ntext").IsOptional();
             this.Property(x => x.UpdatedBy).HasMaxLength(60).IsOptional().HasColumnType("varchar");
             this.Property(x => x.CreatedBy).HasMaxLength(60).IsOptional().HasColumnType("varchar");

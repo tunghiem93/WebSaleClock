@@ -104,6 +104,18 @@
     <Compile Include="Migrations\201808050254291_UpdateDb080501.Designer.cs">
       <DependentUpon>201808050254291_UpdateDb080501.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808060602407_updateDb0608.cs" />
+    <Compile Include="Migrations\201808060602407_updateDb0608.Designer.cs">
+      <DependentUpon>201808060602407_updateDb0608.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808070533177_UpdateDB07081233.cs" />
+    <Compile Include="Migrations\201808070533177_UpdateDB07081233.Designer.cs">
+      <DependentUpon>201808070533177_UpdateDB07081233.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808221515373_updatePropertiesTable.cs" />
+    <Compile Include="Migrations\201808221515373_updatePropertiesTable.Designer.cs">
+      <DependentUpon>201808221515373_updatePropertiesTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -141,6 +153,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808050254291_UpdateDb080501.resx">
       <DependentUpon>201808050254291_UpdateDb080501.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808060602407_updateDb0608.resx">
+      <DependentUpon>201808060602407_updateDb0608.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808070533177_UpdateDB07081233.resx">
+      <DependentUpon>201808070533177_UpdateDB07081233.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808221515373_updatePropertiesTable.resx">
+      <DependentUpon>201808221515373_updatePropertiesTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

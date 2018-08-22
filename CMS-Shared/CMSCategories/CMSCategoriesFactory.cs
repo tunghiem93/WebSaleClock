@@ -56,7 +56,7 @@ namespace CMS_Shared.CMSCategories
                                 {
                                     e.CategoryCode = model.CategoryCode;
                                     e.CategoryName = model.CategoryName;
-                                    e.Short_Description = model.sStatus;
+                                    //e.IsActive = model.sStatus;
                                     e.Description = model.Description;
                                     e.Short_Description = model.Short_Description;
                                     e.IsActive = model.IsActive;
