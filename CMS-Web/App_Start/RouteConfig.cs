@@ -12,6 +12,18 @@ namespace CMS_Web
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+
+            /* route product */
+            routes.MapRoute(
+            name: "Product",
+            url: "san-pham",
+            defaults: new
+            {
+                controller = "Shop",
+                action = "Index",
+            });
+
+            /* route product detail */
             routes.MapRoute(
             name: "Detail",
             url: "san-pham/{q}",
@@ -22,6 +34,17 @@ namespace CMS_Web
                 q = UrlParameter.Optional,
             });
 
+
+            /* Route collection */
+            routes.MapRoute(
+            name: "Collection",
+            url: "bo-suu-tap",
+            defaults: new
+            {
+                controller = "Collection",
+                action = "Index",
+            });
+            /* Routes collection detail */
             routes.MapRoute(
             name: "CollectionDetail",
             url: "bo-suu-tap/{q}",
