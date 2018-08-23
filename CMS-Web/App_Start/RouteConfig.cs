@@ -33,6 +33,16 @@ namespace CMS_Web
             });
 
             routes.MapRoute(
+            name: "NewsDetail",
+            url: "tin-tuc/{q}",
+            defaults: new
+            {
+                controller = "News",
+                action = "Detail",
+                q = UrlParameter.Optional,
+            });
+
+            routes.MapRoute(
                  "Default", // Route name
                  "{controller}/{action}/{id}", // URL with parameters
                  new { area = "", controller = "Home", action = "Index", id = UrlParameter.Optional }, // Parameter defaults
