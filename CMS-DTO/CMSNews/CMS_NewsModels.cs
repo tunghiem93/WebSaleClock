@@ -30,7 +30,7 @@ namespace CMS_DTO.CMSNews
         public string UpdatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
         public string sStatus { get; set; }
-
+        public string Alias { get; set; }
         public CMS_NewsModels()
         {
             IsActive = true;

@@ -37,7 +37,7 @@
                                         foreach (var item in Model.ListNewsNew)
                                         {
                                             <div class="blog-item">
-                                                <h3><a href="@Url.Action("Detail", "News", new { id = item.Id })">@Html.Raw(item.Title)</a></h3>
+                                                <h3><a href="@Url.Action("Detail", "News", new { q = item.Alias })">@Html.Raw(item.Title)</a></h3>
                                                 <div class="blog-meta clearfix">
                                                     <div class="postby">
                                                         Đăng bởi <strong>@Html.Raw(item.Publisher)</strong> on <time>@item.CreatedDate</time>
@@ -51,7 +51,7 @@
                                                     </div>
                                                     <p>@string.Format("{0}", (string.IsNullOrEmpty(item.Short_Description) || item.Short_Description.Length < 200) ? item.Short_Description : item.Short_Description.Substring(0, 200) + "...")</p>
                                                 </div>
-                                                <p><a class="btn btn-readmore" href="@Url.Action("Detail", "News", new { id = item.Id })">Chi tiết →</a></p>
+                                                <p><a class="btn btn-readmore" href="@Url.Action("Detail", "News", new { q = item.Alias })">Chi tiết →</a></p>
                                             </div>
                                         }
                                     }
@@ -69,7 +69,7 @@
                                         foreach (var item in Model.ListNewsOld)
                                         {
                                             <li>
-                                                <a href="@Url.Action("Detail", "News", new { id = item.Id })">@item.Title</a>
+                                                <a href="@Url.Action("Detail", "News", new { q = item.Alias })">@item.Title</a>
                                                 <time>@item.CreatedDate</time>
                                             </li>
                                         }

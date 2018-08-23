@@ -34,7 +34,7 @@
                                     @if (Model.CMS_News != null)
                                     {
                                         <div class="blog-item">
-                                            <h3><a href="@Url.Action("Detail", "News", new { id = Model.CMS_News.Id })">@Html.Raw(Model.CMS_News.Title)</a></h3>
+                                            <h3><a href="@Url.Action("Detail", "News", new { q = Model.CMS_News.Alias })">@Html.Raw(Model.CMS_News.Title)</a></h3>
                                             <div class="blog-meta clearfix">
                                                 <div class="postby">
                                                     Đăng bởi <strong>@Html.Raw(Model.CMS_News.Publisher)</strong> on <time>@Model.CMS_News.CreatedDate</time>
@@ -48,7 +48,7 @@
                                                 </div>
                                                 <p>@string.Format("{0}", (string.IsNullOrEmpty(Model.CMS_News.Short_Description) || Model.CMS_News.Short_Description.Length < 200) ? Model.CMS_News.Short_Description : Model.CMS_News.Short_Description.Substring(0, 200) + "...")</p>
                                             </div>
-                                            <p><a class="btn btn-readmore" href="@Url.Action("Detail", "News", new { id = Model.CMS_News.Id })">Thông tin chi tiết</a></p>
+                                            <p><a class="btn btn-readmore" href="@Url.Action("Detail", "News", new { q = Model.CMS_News.Alias })">Thông tin chi tiết</a></p>
                                             <div>
                                                 @Html.Raw(@Model.CMS_News.Description)
                                             </div>
@@ -68,7 +68,7 @@
                                         foreach (var item in Model.ListNewsOld)
                                         {
                                             <li>
-                                                <a href="@Url.Action("Detail", "News", new { id = item.Id })">Nam enim odio sodales condimentum molestie</a>
+                                                <a href="@Url.Action("Detail", "News", new { q = item.Alias })">@Html.Raw(item.Title)</a>
                                                 <time>@item.CreatedDate</time>
                                             </li>
                                         }

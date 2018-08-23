@@ -3,6 +3,7 @@ using CMS_Shared;
 using CMS_Shared.CMSCategories;
 using CMS_Shared.CMSNews;
 using CMS_Shared.CMSProducts;
+using CMS_Shared.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +32,7 @@ namespace CMS_Web.Controllers
             {
                 data.ForEach(x =>
                 {
+                    x.Alias = CommonHelper.RemoveUnicode(x.Title.Trim().Replace(" ", "-")).ToLower();
                     x.ImageURL = Commons.HostImage + "News/" + x.ImageURL;
                 });
 
@@ -41,18 +43,19 @@ namespace CMS_Web.Controllers
             return View(model);
         }
         
-        public ActionResult Detail(string id)
+        public ActionResult Detail(string q)
         {
             var model = new CMS_NewsViewModel();
             try
             {
-                if(string.IsNullOrEmpty(id))
+                if(string.IsNullOrEmpty(q))
                 {
                     return RedirectToAction("Index", "NotFound");
                 }
                 else
                 {
-                    var data = _fac.GetDetail(id);
+                    q = q.Trim().Replace("-", " ");
+                    var data = _fac.GetList().Where(o => CommonHelper.RemoveUnicode(o.Title.Trim().ToLower()).Equals(q)).FirstOrDefault();
                     if (data != null)
                     {
                         if(!string.IsNullOrEmpty(data.ImageURL))
@@ -62,7 +65,14 @@ namespace CMS_Web.Controllers
                     }
 
                     model.CMS_News = data;
-                    model.ListNewsOld = _fac.GetList().OrderByDescending(x => x.CreatedDate).Skip(0).Take(5).ToList();                   
+                    model.ListNewsOld = _fac.GetList().OrderByDescending(x => x.CreatedDate).Skip(0).Take(5).ToList();   
+                    if(model.ListNewsOld != null && model.ListNewsOld.Any())
+                    {
+                        model.ListNewsOld.ForEach(x =>
+                        {
+                            x.Alias = CommonHelper.RemoveUnicode(x.Title.Trim().Replace(" ", "-")).ToLower();
+                        });
+                    }
                 }
             }
             catch(Exception ex)
