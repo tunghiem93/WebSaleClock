@@ -324,7 +324,7 @@ function callBackAjaxCart() {
             this.loginForms();
             //this.initFilter();
 
-            this.ajaxSearch();
+            //this.ajaxSearch();
 
         },
         loginForms: function () { function showRecoverPasswordForm() { $('#RecoverPasswordForm').show(); $('#CustomerLoginForm').hide(); } function hideRecoverPasswordForm() { $('#RecoverPasswordForm').hide(); $('#CustomerLoginForm').show(); } $('#RecoverPassword').on('click', function (evt) { evt.preventDefault(); showRecoverPasswordForm(); }); $('#HideRecoverPasswordLink').on('click', function (evt) { evt.preventDefault(); hideRecoverPasswordForm(); }); if (getHash() == '#recover') { showRecoverPasswordForm(); } },
@@ -377,7 +377,45 @@ function callBackAjaxCart() {
             });
             return result;
         },
-        ajaxSearch: function () { var products = apollo.ajaxProductItems(); $("#search_query_top").keyup(function () { var $this = $(this); var keyword = $this.val().toLowerCase(); $('#ap-ajax-search').hide(); if (keyword.length >= 2) { $(this).removeClass('error warning valid').addClass('valid'); var result = $('#ap-ajax-search .aps-results').empty(); var j = 0; for (var i = 0; i < products.length; i++) { var item = products[i]; var title = item.title; var price = item.price; var handle = item.handle; var image = item.featured_image; if (title.toLowerCase().indexOf(keyword) > -1) { var j = j + 1; var markedString = title.replace(new RegExp('(' + keyword + ')', 'gi'), '<span class="marked">$1</span>'); var template = '<li class="product-block"><a class="product_img_link" href="/products/' + handle + '">' + '<img style="max-width: 80px; float: left;margin-right: 5px" src="' + image + '" />' + '</a><a class="product-name" href="/products/' + handle + '">' + markedString + '</a><div class="content_price"><span class="price product-price">' + price + '</span></div></li>'; if (j <= 5) { result.append(template); } } } if ($('#ap-ajax-search .aps-results li').length < 1) { result.append('<li><p>No result found for your search.</p></li>') } if ($('#ap-ajax-search .aps-results li').length) { $('#ap-ajax-search').show(); } } else { if (keyword.length == 1) { $(this).removeClass('error warning valid').addClass('error'); var text = '<li><p>You must enter at least 2 characters.</p></li>'; var result = $('#ap-ajax-search .aps-results').empty(); result.append(text); $('#ap-ajax-search').show(); } else { $('#ap-ajax-search').hide(); } } }); $(document).on('click', '#page_content', function (e) { $('#ap-ajax-search').hide(); }); }
+        ajaxSearch: function () {
+            var products = apollo.ajaxProductItems();
+            $("#search_query_top").keyup(function () {
+                var $this = $(this);
+                var keyword = $this.val().toLowerCase(); $('#ap-ajax-search').hide();
+                if (keyword.length >= 2) {
+                    $(this).removeClass('error warning valid').addClass('valid');
+                    var result = $('#ap-ajax-search .aps-results').empty();
+                    var j = 0;
+                    for (var i = 0; i < products.length; i++) {
+                        var item = products[i];
+                        var title = item.title;
+                        var price = item.price;
+                        var handle = item.handle;
+                        var image = item.featured_image;
+                        if (title.toLowerCase().indexOf(keyword) > -1) {
+                            var j = j + 1;
+                            var markedString = title.replace(new RegExp('(' + keyword + ')', 'gi'), '<span class="marked">$1</span>');
+                            var template = '<li class="product-block"><a class="product_img_link" href="/products/' + handle + '">' + '<img style="max-width: 80px; float: left;margin-right: 5px" src="' + image + '" />' + '</a><a class="product-name" href="/products/' + handle + '">' + markedString + '</a><div class="content_price"><span class="price product-price">' + price + '</span></div></li>';
+                            if (j <= 5) {
+                                result.append(template);
+                            }
+                        }
+                    } if ($('#ap-ajax-search .aps-results li').length < 1) {
+                        result.append('<li><p>No result found for your search.</p></li>')
+                    } if ($('#ap-ajax-search .aps-results li').length) {
+                        $('#ap-ajax-search').show();
+                    }
+                } else {
+                    if (keyword.length == 1) {
+                        $(this).removeClass('error warning valid').addClass('error');
+                        var text = '<li><p>You must enter at least 2 characters.</p></li>';
+                        var result = $('#ap-ajax-search .aps-results').empty(); result.append(text); $('#ap-ajax-search').show();
+                    } else {
+                        $('#ap-ajax-search').hide();
+                    }
+                }
+            }); $(document).on('click', '#page_content', function (e) { $('#ap-ajax-search').hide(); });
+        }
     }
 
 })(jQuery);
