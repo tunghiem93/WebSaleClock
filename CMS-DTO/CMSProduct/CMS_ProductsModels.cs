@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -49,6 +50,7 @@ namespace CMS_DTO.CMSProduct
         public string Short_Description { get; set; }
         public string Information { get; set; }
         public string Vendor { get; set; }
+        public string Alias { get; set; }
 
         public CMS_ProductsModels()
         {

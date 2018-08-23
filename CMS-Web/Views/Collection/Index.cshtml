@@ -24,7 +24,7 @@
                                         <div class="block_collection col-xs-12 col-sm-6 col-md-4">
                                             <div class="collection_item">
                                                 <div class="collection-top effect_banner">
-                                                    <a href="@Url.Action("Detail", "Collection", new { id = Model.ListCate[i].Id })" title="@Model.ListCate[i].CategoryName">
+                                                    <a href="@Url.Action("Detail", "Collection", new { q = Model.ListCate[i].Alias })" title="@Model.ListCate[i].CategoryName">
                                                         <img src="@Model.ListCate[i].ImageURL" alt="@Model.ListCate[i].CategoryName" class="img-responsive">
                                                     </a>
                                                 </div>

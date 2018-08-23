@@ -99,7 +99,7 @@
                                         foreach (var item in Model.ListCate)
                                         {
                                             <li>
-                                                <a href="@Url.Action("Detail","Collection",new { id=item.Id})" title="@item.CategoryName">
+                                                <a href="@Url.Action("Detail","Collection",new { q=item.Alias})" title="@item.CategoryName">
                                                     @string.Format("{0}", item.CategoryName.Length > 30 ? item.CategoryName.Substring(0, 30) + "..." : item.CategoryName)
                                                     <span id="" class="apolloQty pull-right">@item.NumberOfProduct</span>
                                                 </a>
@@ -143,13 +143,13 @@
                                             <li class="media clearfix">
                                                 <div class="product-block">
                                                     <div class="product-container media">
-                                                        <a class="products-block-image img pull-left" href="@Url.Action("Detail","Shop",new { id=item.Id})" title="@item.ProductName">
+                                                        <a class="products-block-image img pull-left" href="@Url.Action("Detail","Shop",new { q= item.Alias})" title="@item.ProductName">
                                                             <img class="replace-2x img-responsive" src="@item.ImageURL" alt="@item.ProductName">
                                                         </a>
                                                         <div class="media-body">
                                                             <div class="product-content">
                                                                 <h5 class="name media-heading">
-                                                                    <a class="product-name" href="@Url.Action("Detail", "Shop",new { id= item.Id})" title="Clock Wooden">@string.Format("{0}", item.ProductName.Length > 20 ? item.ProductName.Substring(0, 20) + "..." : item.ProductName)</a>
+                                                                    <a class="product-name" href="@Url.Action("Detail","Shop",new { q= item.Alias})" title="Clock Wooden">@string.Format("{0}", item.ProductName.Length > 20 ? item.ProductName.Substring(0, 20) + "..." : item.ProductName)</a>
                                                                 </h5>
                                                                 <div class="content_price price">
                                                                     <span class="price product-price">

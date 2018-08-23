@@ -13,6 +13,26 @@ namespace CMS_Web
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.MapRoute(
+            name: "Detail",
+            url: "san-pham/{q}",
+            defaults: new
+            {
+                controller = "Shop",
+                action = "Detail",
+                q = UrlParameter.Optional,
+            });
+
+            routes.MapRoute(
+            name: "CollectionDetail",
+            url: "bo-suu-tap/{q}",
+            defaults: new
+            {
+                controller = "Collection",
+                action = "Detail",
+                q = UrlParameter.Optional,
+            });
+
+            routes.MapRoute(
                  "Default", // Route name
                  "{controller}/{action}/{id}", // URL with parameters
                  new { area = "", controller = "Home", action = "Index", id = UrlParameter.Optional }, // Parameter defaults

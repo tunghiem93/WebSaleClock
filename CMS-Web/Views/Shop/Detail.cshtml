@@ -47,7 +47,7 @@
                                         @foreach (var item in Model.ListCate)
                                         {
                                             <li>
-                                                <a href="@Url.Action("Detail","Collection",new { id=item.Id})" title="@item.CategoryName">
+                                                <a href="@Url.Action("Detail","Collection",new { q=item.Alias})" title="@item.CategoryName">
                                                     @item.CategoryName
                                                     <span id="apolloQty257630531" class="apolloQty pull-right">@item.NumberOfProduct</span>
                                                 </a>
@@ -92,13 +92,13 @@
                                             <li class="media clearfix">
                                                 <div class="product-block">
                                                     <div class="product-container media">
-                                                        <a class="products-block-image img pull-left" href="@Url.Action("Detail","Shop",new { id=item.Id})" title="@item.ProductName">
+                                                        <a class="products-block-image img pull-left" href="@Url.Action("Detail","Shop",new { q= item.Alias})" title="@item.ProductName">
                                                             <img class="replace-2x img-responsive" src="@item.ImageURL" alt="@item.ProductName">
                                                         </a>
                                                         <div class="media-body">
                                                             <div class="product-content">
                                                                 <h5 class="name media-heading">
-                                                                    <a class="product-name" href="@Url.Action("Detail","Shop",new { id=item.Id})" title="@item.ProductName">@item.ProductName</a>
+                                                                    <a class="product-name" href="@Url.Action("Detail","Shop",new { q= item.Alias})" title="@item.ProductName">@item.ProductName</a>
                                                                 </h5>
 
                                                                 <div class="content_price price">
@@ -374,7 +374,7 @@
                                                             <div class="product_block wow fadeIn  " data-wow-delay="0ms">
                                                                 <div class="product-container text-left product-block">
                                                                     <div class="product-image-container image">
-                                                                        <a class="product_img_link" href="@Url.Action("Detail", "Shop", new { id = item.Id })">
+                                                                        <a class="product_img_link" href="@Url.Action("Detail","Shop",new { q= item.Alias})">
                                                                             <img class="img-responsive" src="@item.ImageURL" alt="@item.ProductName">
                                                                         </a>
                                                                         <span class="new-box">
@@ -383,7 +383,7 @@
                                                                     </div>
                                                                     <div class="product-meta">
                                                                         <h5 class="name">
-                                                                            <a class="product-name" href="@Url.Action("Detail", "Shop", new { id = item.Id })" title="@item.ProductName">@item.ProductName</a>
+                                                                            <a class="product-name" href="@Url.Action("Detail","Shop",new { q= item.Alias})" title="@item.ProductName">@item.ProductName</a>
                                                                         </h5>
                                                                         <div class="content_price">
                                                                             <span class="price product-price ">

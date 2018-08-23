@@ -36,6 +36,13 @@ namespace CMS_Web.Controllers
                 ProductViewModels model = new ProductViewModels();
                 //Category
                 model.ListCate = _facCate.GetList().OrderByDescending(x => x.CreatedDate).Skip(0).Take(10).ToList();
+                if (model.ListCate != null && model.ListCate.Any())
+                {
+                    model.ListCate.ForEach(o =>
+                    {
+                        o.Alias = CommonHelper.RemoveUnicode(o.CategoryName.Trim().Replace(" ", "-")).ToLower();
+                    });
+                }
                 //Category
                 model.ListBrand = _facBrand.GetList().OrderByDescending(x => x.CreatedDate).Skip(0).Take(5).ToList();
                 //Product
@@ -45,6 +52,7 @@ namespace CMS_Web.Controllers
                 {
                     model.ListProduct.ForEach(x =>
                     {
+                        x.Alias = CommonHelper.RemoveUnicode(x.ProductName.Trim().Replace(" ", "-")).ToLower();
                         var _Image = dataImage.FirstOrDefault(z => z.ProductId.Equals(x.Id));
                         if (_Image != null)
                         {
@@ -93,6 +101,7 @@ namespace CMS_Web.Controllers
                 var dataImage = _fac.GetListImage();
                 data.ForEach(x =>
                 {
+                    x.Alias = CommonHelper.RemoveUnicode(x.ProductName.Trim().Replace(" ", "-")).ToLower();
                     var _Image = dataImage.FirstOrDefault(y => y.ProductId.Equals(x.Id));
                     if (_Image != null)
                     {
@@ -127,6 +136,13 @@ namespace CMS_Web.Controllers
                 ProductViewModels model = new ProductViewModels();
                 //Category
                 model.ListCate = _facCate.GetList().OrderByDescending(x => x.CreatedDate).Skip(0).Take(10).ToList();
+                if (model.ListCate != null && model.ListCate.Any())
+                {
+                    model.ListCate.ForEach(o =>
+                    {
+                        o.Alias = CommonHelper.RemoveUnicode(o.CategoryName.Trim().Replace(" ", "-")).ToLower();
+                    });
+                }
                 //Category
                 model.ListBrand = _facBrand.GetList().OrderByDescending(x => x.CreatedDate).Skip(0).Take(5).ToList();
                 //For product
@@ -136,6 +152,7 @@ namespace CMS_Web.Controllers
                 {
                     model.ListProduct.ForEach(x =>
                     {
+                        x.Alias = CommonHelper.RemoveUnicode(x.ProductName.Trim().Replace(" ", "-")).ToLower();
                         var _Image = dataImage.FirstOrDefault(z => z.ProductId.Equals(x.Id));
                         if (_Image != null)
                         {
@@ -323,6 +340,7 @@ namespace CMS_Web.Controllers
                 {
                     model.ListProduct.ForEach(x =>
                     {
+                        x.Alias = CommonHelper.RemoveUnicode(x.ProductName.Trim().Replace(" ", "-")).ToLower();
                         var _Image = dataImage.FirstOrDefault(z => z.ProductId.Equals(x.Id));
                         if (_Image != null)
                         {
