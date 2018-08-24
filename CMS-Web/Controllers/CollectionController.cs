@@ -91,17 +91,17 @@ namespace CMS_Web.Controllers
                     });
                     q = q.Trim().Replace("-", " ");
                     model.ListProductTopSales = model.ListProduct.Skip(0).Take(5).ToList();
-                    var TotalProduct = model.ListProduct.Count(o => CommonHelper.RemoveUnicode(o.CategoryName.Trim()).ToLower().Equals(q.ToLower()));
+                    var TotalProduct = model.ListProduct.Count(o => CommonHelper.RemoveUnicode(o.CategoryName.Trim().Replace("-"," ")).ToLower().Equals(q.ToLower()));
                     if (TotalProduct % PageSize == 0)
                         model.TotalPage = TotalProduct / PageSize;
                     else
                         model.TotalPage = Convert.ToInt32(TotalProduct / PageSize) + 1;
-                    model.ListProduct = model.ListProduct.Where(o=> CommonHelper.RemoveUnicode(o.CategoryName.Trim()).ToLower().Equals(q.ToLower())).Skip(0).Take(PageSize).ToList();
+                    model.ListProduct = model.ListProduct.Where(o=> CommonHelper.RemoveUnicode(o.CategoryName.Trim().Replace("-"," ")).ToLower().Equals(q.ToLower())).Skip(0).Take(PageSize).ToList();
                     
                 }
                 if (!string.IsNullOrEmpty(q))
                 {
-                    var dataDetail = _facCate.GetList().Where(o => CommonHelper.RemoveUnicode(o.CategoryName.Trim()).ToLower().Equals(q.ToLower())).FirstOrDefault();
+                    var dataDetail = _facCate.GetList().Where(o => CommonHelper.RemoveUnicode(o.CategoryName.Trim().Replace("-"," ")).ToLower().Equals(q.ToLower())).FirstOrDefault();
                     if (dataDetail != null)
                     {
                         if (dataDetail.ImageURL != null)
