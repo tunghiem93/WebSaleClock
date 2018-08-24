@@ -110,7 +110,7 @@ namespace CMS_Web.Controllers
                         o.Alias = CommonHelper.RemoveUnicode(o.ProductName.Trim().Replace(" ", "-")).ToLower();
                     });
                 }
-                model.ProductModel = data.Where(o => CommonHelper.RemoveUnicode(o.ProductName.Trim()).ToLower().Equals(q.ToLower())).FirstOrDefault();
+                model.ProductModel = data.Where(o => CommonHelper.RemoveUnicode(o.ProductName.Trim().Replace("-"," ")).ToLower().Equals(q.ToLower())).FirstOrDefault();
                 if(model.ProductModel != null)
                 {
                     model.ProductModel.ListImages = _fac.GetListImageOfProduct(model.ProductModel.Id);
