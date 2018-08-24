@@ -130,7 +130,7 @@ namespace CMS_Web.Areas.Admin.Controllers
                 {
                     if (!string.IsNullOrEmpty(model.RawImageUrl) && model.PictureByte != null)
                     {
-                        var path = Server.MapPath("~/Uploads/Images/Product/" + model.RawImageUrl);
+                        var path = Server.MapPath("~/Uploads/Products/" + model.RawImageUrl);
                         MemoryStream ms = new MemoryStream(photoByte, 0, photoByte.Length);
                         ms.Write(photoByte, 0, photoByte.Length);
                         System.Drawing.Image imageTmp = System.Drawing.Image.FromStream(ms, true);
@@ -142,7 +142,7 @@ namespace CMS_Web.Areas.Admin.Controllers
                     {
                         if (!string.IsNullOrEmpty(item.ImageURL) && item.PictureByte != null)
                         {
-                            var path = Server.MapPath("~/Uploads/Images/Product/" + item.ImageURL);
+                            var path = Server.MapPath("~/Uploads/Products/" + item.ImageURL);
                             MemoryStream ms = new MemoryStream(lstImgByte[item.OffSet], 0, lstImgByte[item.OffSet].Length);
                             ms.Write(lstImgByte[item.OffSet], 0, lstImgByte[item.OffSet].Length);
                             System.Drawing.Image imageTmp = System.Drawing.Image.FromStream(ms, true);
@@ -251,7 +251,7 @@ namespace CMS_Web.Areas.Admin.Controllers
                         {
                             if (!item.Equals(Commons.Image200_100))
                             {
-                                var filePath = Server.MapPath("~/Uploads/Images/Product/" + item);
+                                var filePath = Server.MapPath("~/Uploads/Products/" + item);
                                 if (System.IO.File.Exists(filePath))
                                 {
                                     System.IO.File.Delete(filePath);
@@ -262,7 +262,7 @@ namespace CMS_Web.Areas.Admin.Controllers
 
                     if (!string.IsNullOrEmpty(model.RawImageUrl) && model.PictureByte != null)
                     {
-                        var path = Server.MapPath("~/Uploads/Images/Product/" + model.RawImageUrl);
+                        var path = Server.MapPath("~/Uploads/Products/" + model.RawImageUrl);
                         MemoryStream ms = new MemoryStream(photoByte, 0, photoByte.Length);
                         ms.Write(photoByte, 0, photoByte.Length);
                         System.Drawing.Image imageTmp = System.Drawing.Image.FromStream(ms, true);
@@ -274,7 +274,7 @@ namespace CMS_Web.Areas.Admin.Controllers
                     {
                         if (!string.IsNullOrEmpty(item.ImageURL) && item.PictureByte != null)
                         {
-                            var path = Server.MapPath("~/Uploads/Images/Product/" + item.ImageURL);
+                            var path = Server.MapPath("~/Uploads/Products/" + item.ImageURL);
                             MemoryStream ms = new MemoryStream(lstImgByte[item.OffSet], 0, lstImgByte[item.OffSet].Length);
                             ms.Write(lstImgByte[item.OffSet], 0, lstImgByte[item.OffSet].Length);
                             System.Drawing.Image imageTmp = System.Drawing.Image.FromStream(ms, true);
