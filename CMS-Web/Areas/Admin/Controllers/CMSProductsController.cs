@@ -88,16 +88,7 @@ namespace CMS_Web.Areas.Admin.Controllers
         {
             try
             {
-                byte[] photoByte = null;
-                if (model.PictureUpload != null && model.PictureUpload.ContentLength > 0)
-                {
-                    Byte[] imgByte = new Byte[model.PictureUpload.ContentLength];
-                    model.PictureUpload.InputStream.Read(imgByte, 0, model.PictureUpload.ContentLength);
-                    model.PictureByte = imgByte;
-                    model.RawImageUrl = Guid.NewGuid() + Path.GetExtension(model.PictureUpload.FileName);
-                    model.PictureUpload = null;
-                    photoByte = imgByte;
-                }
+                byte[] photoByte = null;                
                 if (!ModelState.IsValid)
                 {
                     Response.StatusCode = (int)HttpStatusCode.BadRequest;
@@ -127,17 +118,7 @@ namespace CMS_Web.Areas.Admin.Controllers
                 var msg = "";
                 var result = _factory.CreateOrUpdate(model, ref msg);
                 if (result)
-                {
-                    if (!string.IsNullOrEmpty(model.RawImageUrl) && model.PictureByte != null)
-                    {
-                        var path = Server.MapPath("~/Uploads/Products/" + model.RawImageUrl);
-                        MemoryStream ms = new MemoryStream(photoByte, 0, photoByte.Length);
-                        ms.Write(photoByte, 0, photoByte.Length);
-                        System.Drawing.Image imageTmp = System.Drawing.Image.FromStream(ms, true);
-
-                        ImageHelper.Me.SaveCroppedImage(imageTmp, path, model.RawImageUrl, ref photoByte, 400, Commons.WidthProduct, Commons.HeightProduct);
-                    }
-
+                {                    
                     foreach (var item in ListImage)
                     {
                         if (!string.IsNullOrEmpty(item.ImageURL) && item.PictureByte != null)
@@ -177,48 +158,35 @@ namespace CMS_Web.Areas.Admin.Controllers
             try
             {
                 List<string> ListNotChangeImg = new List<string>();
-                byte[] photoByte = null;
-
-                if (!string.IsNullOrEmpty(model.ImageURL))
-                {
-                    model.ImageURL = model.ImageURL.Replace(Commons._PublicImages, "").Replace(Commons.Image200_100, "");
-                    model.RawImageUrl = model.ImageURL;
-                }
-                if (model.PictureUpload != null && model.PictureUpload.ContentLength > 0)
-                {
-                    Byte[] imgByte = new Byte[model.PictureUpload.ContentLength];
-                    model.PictureUpload.InputStream.Read(imgByte, 0, model.PictureUpload.ContentLength);
-                    model.PictureByte = imgByte;
-                    model.RawImageUrl = Guid.NewGuid() + Path.GetExtension(model.PictureUpload.FileName);
-                    model.PictureUpload = null;
-                    photoByte = imgByte;
-                    if (!string.IsNullOrEmpty(model.ImageURL))
-                    {
-                        model.ImageURL = model.ImageURL.Replace(Commons._PublicImages, "").Replace(Commons.Image200_100, "");
-                        ListNotChangeImg.Add(model.ImageURL);
-                    }
-                }
+                byte[] photoByte = null;                
                 if (!ModelState.IsValid)
                 {
                     Response.StatusCode = (int)HttpStatusCode.BadRequest;
                     return PartialView("_Edit", model);
-                }
-
-                if (!string.IsNullOrEmpty(model.RawImageUrl))
-                {
-                    model.ListImageUrl.Add(model.RawImageUrl);
-                }
+                }               
 
                 //========
                 Dictionary<int, byte[]> lstImgByte = new Dictionary<int, byte[]>();
-                var ListImage = model.ListImg.Where(x => !x.IsDelete).ToList();
-                foreach (var item in ListImage)
+                var ListImageDelete = model.ListImg.Where(o => o.IsDelete).ToList();
+                if (ListImageDelete != null && ListImageDelete.Any())
                 {
+                    foreach (var item in ListImageDelete)
+                    {
+                        if (!string.IsNullOrEmpty(item.ImageURL) && item.PictureUpload == null)
+                        {
+                            item.ImageURL = item.ImageURL.Replace(Commons._PublicImages, "").Replace("Products/", "").Replace(Commons.Image200_100, "");
+                            ListNotChangeImg.Add(item.ImageURL);
+                        }
+                    }
+                }
+                var ListImage = model.ListImg.Where(o => !o.IsDelete).ToList();
+                foreach (var item in ListImage)
+                {                    
                     if (item.PictureUpload != null && item.PictureUpload.ContentLength > 0)
                     {
                         if (!string.IsNullOrEmpty(item.ImageURL))
                         {
-                            item.ImageURL = item.ImageURL.Replace(Commons._PublicImages, "").Replace(Commons.Image200_100, "");
+                            item.ImageURL = item.ImageURL.Replace(Commons._PublicImages, "").Replace("Products/", "").Replace(Commons.Image200_100, "");
                             ListNotChangeImg.Add(item.ImageURL);
                         }
 
@@ -234,7 +202,7 @@ namespace CMS_Web.Areas.Admin.Controllers
                     {
                         if (!string.IsNullOrEmpty(item.ImageURL))
                         {
-                            item.ImageURL = item.ImageURL.Replace(Commons._PublicImages, "").Replace(Commons.Image200_100, "");
+                            item.ImageURL = item.ImageURL.Replace(Commons._PublicImages, "").Replace("Products/", "").Replace(Commons.Image200_100, "");
                             model.ListImageUrl.Add(item.ImageURL);
                         }
                     }
@@ -249,7 +217,7 @@ namespace CMS_Web.Areas.Admin.Controllers
                         //Delete image on forder
                         foreach (var item in ListNotChangeImg)
                         {
-                            if (!item.Equals(Commons.Image200_100))
+                            if (!item.Equals(Commons.Image480_480))
                             {
                                 var filePath = Server.MapPath("~/Uploads/Products/" + item);
                                 if (System.IO.File.Exists(filePath))
@@ -259,17 +227,6 @@ namespace CMS_Web.Areas.Admin.Controllers
                             }
                         }
                     }
-
-                    if (!string.IsNullOrEmpty(model.RawImageUrl) && model.PictureByte != null)
-                    {
-                        var path = Server.MapPath("~/Uploads/Products/" + model.RawImageUrl);
-                        MemoryStream ms = new MemoryStream(photoByte, 0, photoByte.Length);
-                        ms.Write(photoByte, 0, photoByte.Length);
-                        System.Drawing.Image imageTmp = System.Drawing.Image.FromStream(ms, true);
-
-                        ImageHelper.Me.SaveCroppedImage(imageTmp, path, model.RawImageUrl, ref photoByte, 400, Commons.WidthProduct, Commons.HeightProduct);
-                    }
-
                     foreach (var item in ListImage)
                     {
                         if (!string.IsNullOrEmpty(item.ImageURL) && item.PictureByte != null)
