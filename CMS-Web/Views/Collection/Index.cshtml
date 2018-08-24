@@ -30,7 +30,7 @@
                                                 </div>
                                                 <div class="collection-meta">
                                                     <h3 class="h5">
-                                                        <a href="@Url.Action("Detail", "Collection", new { id = Model.ListCate[i].Id })" title="@Model.ListCate[i].CategoryName">@Html.Raw(Model.ListCate[i].CategoryName)</a>
+                                                        <a href="@Url.Action("Detail", "Collection", new { q = Model.ListCate[i].Alias })" title="@Model.ListCate[i].CategoryName">@Html.Raw(Model.ListCate[i].CategoryName)</a>
                                                     </h3>
                                                     <div class="collection_products">@Html.Raw(Model.ListCate[i].NumberOfProduct + " Sản phẩm")</div>
                                                     <p class="collection_desc">@string.Format("{0}", (string.IsNullOrEmpty(Model.ListCate[i].Short_Description) || Model.ListCate[i].Short_Description.Length < 100) ? Model.ListCate[i].Short_Description : Model.ListCate[i].Short_Description.Substring(0, 100) + "...")</p>

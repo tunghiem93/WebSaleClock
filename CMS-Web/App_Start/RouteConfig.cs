@@ -13,14 +13,82 @@ namespace CMS_Web
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            routes.MapRoute(
+            name: "Account",
+            url: "tai-khoan/{q}",
+            defaults: new
+            {
+                controller = "Account",
+                action = "Index",
+                q = UrlParameter.Optional,
+                namespaces = new[] { "CMS_Web.Controllers" }
+            });
+
+            routes.MapRoute(
+            name: "Location",
+            url: "vi-tri/{q}",
+            defaults: new
+            {
+                controller = "Location",
+                action = "Index",
+                q = UrlParameter.Optional,
+                namespaces = new[] { "CMS_Web.Controllers" }
+            });
+
+            routes.MapRoute(
+            name: "LoginSignIn",
+            url: "dang-nhap/{q}",
+            defaults: new
+            {
+                controller = "Login",
+                action = "SignIn",
+                q = UrlParameter.Optional,
+                namespaces = new[] { "CMS_Web.Controllers" }
+            });
+
+            routes.MapRoute(
+            name: "LoginSignUp",
+            url: "dang-ky/{q}",
+            defaults: new
+            {
+                controller = "Login",
+                action = "SignUp",
+                q = UrlParameter.Optional,
+                namespaces = new[] { "CMS_Web.Controllers" }
+            });
+
+            routes.MapRoute(
+            name: "Cart",
+            url: "gio-hang/",
+            defaults: new
+            {
+                controller = "Cart",
+                action = "Index",
+                q = UrlParameter.Optional,
+                namespaces = new[] { "CMS_Web.Controllers" }
+            });
+
+            routes.MapRoute(
+            name: "CartCheckOut",
+            url: "thanh-toan/{q}",
+            defaults: new
+            {
+                controller = "Cart",
+                action = "CheckOut",
+                q = UrlParameter.Optional,
+                namespaces = new[] { "CMS_Web.Controllers" }
+            });
+
             /* route product */
             routes.MapRoute(
             name: "Product",
-            url: "san-pham",
+            url: "san-pham/",
             defaults: new
             {
                 controller = "Shop",
                 action = "Index",
+                q = UrlParameter.Optional,
+                namespaces = new[] { "CMS_Web.Controllers" }
             });
 
             /* route product detail */
@@ -32,17 +100,20 @@ namespace CMS_Web
                 controller = "Shop",
                 action = "Detail",
                 q = UrlParameter.Optional,
+                namespaces = new[] { "CMS_Web.Controllers" }
             });
 
 
             /* Route collection */
             routes.MapRoute(
             name: "Collection",
-            url: "bo-suu-tap",
+            url: "bo-suu-tap/",
             defaults: new
             {
                 controller = "Collection",
                 action = "Index",
+                q = UrlParameter.Optional,
+                namespaces = new[] { "CMS_Web.Controllers" }
             });
             /* Routes collection detail */
             routes.MapRoute(
@@ -53,6 +124,18 @@ namespace CMS_Web
                 controller = "Collection",
                 action = "Detail",
                 q = UrlParameter.Optional,
+                namespaces = new[] { "CMS_Web.Controllers" }
+            });
+
+            routes.MapRoute(
+            name: "NewsHome",
+            url: "tin-tuc/",
+            defaults: new
+            {
+                controller = "News",
+                action = "Index",
+                q = UrlParameter.Optional,
+                namespaces = new[] { "CMS_Web.Controllers" }
             });
 
             routes.MapRoute(
@@ -63,8 +146,9 @@ namespace CMS_Web
                 controller = "News",
                 action = "Detail",
                 q = UrlParameter.Optional,
+                namespaces = new[] { "CMS_Web.Controllers" }
             });
-
+            
             routes.MapRoute(
                  "Default", // Route name
                  "{controller}/{action}/{id}", // URL with parameters
