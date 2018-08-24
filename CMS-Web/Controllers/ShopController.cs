@@ -113,16 +113,16 @@ namespace CMS_Web.Controllers
                 model.ProductModel = data.Where(o => CommonHelper.RemoveUnicode(o.ProductName.Trim().Replace("-"," ")).ToLower().Equals(q.ToLower())).FirstOrDefault();
                 if(model.ProductModel != null)
                 {
-                    if(model.ProductModel.ListImageUrl != null && model.ProductModel.ListImageUrl.Any())
+                    if(model.ProductModel.ListImg != null && model.ProductModel.ListImg.Any())
                     {
-                        model.ProductModel.ListImageUrl.ForEach(o =>
+                        model.ProductModel.ListImg.ForEach(o =>
                         {
-                            if (!string.IsNullOrEmpty(o))
-                                o = Commons._PublicImages + "Products/" + o;
+                            if (!string.IsNullOrEmpty(o.ImageURL))
+                                o.ImageURL = Commons._PublicImages + "Products/" + o.ImageURL;
                             else
-                                o = "";
+                                o.ImageURL = "";
                         });
-                        model.ProductModel.ImageURL = model.ProductModel.ListImageUrl.Select(o => o).FirstOrDefault();
+                        model.ProductModel.ImageURL = model.ProductModel.ListImg.Select(o => o.ImageURL).FirstOrDefault();
                     }
 
 

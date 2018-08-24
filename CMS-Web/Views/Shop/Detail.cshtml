@@ -148,7 +148,7 @@
                                                 </div>
                                             </span>
                                         </div>
-                                        @if (Model.ProductModel.ListImages != null && Model.ProductModel.ListImages.Any())
+                                        @if (Model.ProductModel.ListImg != null && Model.ProductModel.ListImg.Any())
                                         {
                                             var _index = 1;
                                             <div id="views_block" class="clearfix ">
@@ -157,7 +157,7 @@
                                                         <div class="owl-carousel owl-theme" style="opacity: 1; display: block;">
                                                             <div class="owl-wrapper-outer">
                                                                 <div class="owl-wrapper" style="width: 444px; left: 0px; display: block; transition: all 0ms ease 0s; transform: translate3d(0px, 0px, 0px);">
-                                                                    @foreach (var item in Model.ProductModel.ListImages)
+                                                                    @foreach (var item in Model.ProductModel.ListImg)
                                                                     {
                                                                         <div class="owl-item" style="width: 74px;">
                                                                             <div id="thumbnail_@_index" class="thumb_item ">

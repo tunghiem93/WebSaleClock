@@ -189,7 +189,18 @@ namespace CMS_Web.Controllers
                     var dataDetail = _fac.GetDetail(id);
                     if (dataDetail != null)
                     {                        
-                        dataDetail.ListImageUrl = dataDetail.ListImageUrl.Skip(0).Take(4).ToList();
+                        dataDetail.ListImg = dataDetail.ListImg.Skip(0).Take(4).ToList();
+                        if (dataDetail.ListImg != null)
+                        {
+                            dataDetail.ListImg.ForEach(x =>
+                            {
+                                if (x != null)
+                                {
+                                    if (!string.IsNullOrEmpty(x.ImageURL))
+                                        x.ImageURL = Commons.HostImage + "Products/" + x.ImageURL;
+                                }
+                            });
+                        }
 
                         var oldData = _fac.GetList().Where(x => !x.Id.Equals(id) && x.CategoryId.Equals(dataDetail.CategoryId)).OrderBy(x => x.CreatedDate).Skip(0).Take(5).ToList();
                         if(oldData != null && oldData.Any())
