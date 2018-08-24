@@ -177,7 +177,7 @@ namespace CMS_Shared.CMSProducts
                                              .Where(x=>x.p.Id.Equals(Id)).FirstOrDefault();
                     if(e != null)
                     {
-                        var o = new CMS_ProductsModels
+                        var result = new CMS_ProductsModels
                         {
                             Id = e.p.Id,
                             CategoryId = e.p.CategoryId,
@@ -198,7 +198,34 @@ namespace CMS_Shared.CMSProducts
                             UpdatedDate = e.p.UpdatedDate,
                             CategoryName = e.CategoryName
                         };
-                        return o;
+
+                        var _images = cxt.CMS_Images.Select(x => new
+                        {
+                            ID = x.Id,
+                            ProductID = x.ProductId,
+                            ImageUrL = x.ImageURL
+                        }).Where(z => z.ProductID == Id).ToList();
+
+                        if (_images != null && _images.Any())
+                        {
+                            /// add list image
+                            var _temp = _images.Select(m => new ImageProduct
+                                                 {
+                                                     ImageURL = m.ImageUrL,
+                                                     IsDelete = true
+                                                 }).ToList();
+                            var _offSet = 0;
+                            _temp.ForEach(k =>
+                            {
+                                k.OffSet = _offSet;
+                                _offSet++;
+                            });
+                            if (_temp != null && _temp.Any())
+                            {
+                                result.ListImg.AddRange(_temp);
+                            }
+                        }
+                        return result;
                     }
                 }
             }
@@ -212,7 +239,7 @@ namespace CMS_Shared.CMSProducts
             {
                 using (var cxt = new CMS_Context())
                 {
-                    var data = cxt.CMS_Products.Join(cxt.CMS_Categories,
+                    var lstResult = cxt.CMS_Products.Join(cxt.CMS_Categories,
                                                     p => p.CategoryId,
                                                     c => c.Id,
                                                     (p, c) => new { p, CategoryName = c.CategoryName })
@@ -237,7 +264,39 @@ namespace CMS_Shared.CMSProducts
                                                    UpdatedDate = x.p.UpdatedDate,
                                                    CategoryName = x.CategoryName
                                                }).ToList();
-                    return data;
+                    var _images = cxt.CMS_Images.Select(x => new
+                    {
+                        ID = x.Id,
+                        ProductID = x.ProductId,
+                        ImageUrL = x.ImageURL
+                    }).ToList();
+
+                    lstResult.ForEach(x =>
+                    {
+                        if (_images != null && _images.Any())
+                        {
+                            /// add list image
+                            var _temp = _images.Where(z => z.ProductID.Equals(x.Id))
+                                                    .Select(m => new ImageProduct
+                                                    {
+                                                        ImageURL = m.ImageUrL,
+                                                        IsDelete = true
+                                                    }).ToList();
+                            var _offSet = 0;
+                            _temp.ForEach(k =>
+                            {
+                                k.OffSet = _offSet;
+                                _offSet++;
+                            });
+                            if (_temp != null && _temp.Any())
+                            {
+                                x.ListImg.AddRange(_temp);
+                            }
+
+                        }
+                    });
+
+                    return lstResult;
                 }
             }
             catch (Exception) { }
