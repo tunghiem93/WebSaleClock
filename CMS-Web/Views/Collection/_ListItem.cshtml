@@ -29,7 +29,7 @@
                                     </span>
                                 </div>
                                 <h5 class="name">
-                                    <a class="product-name" href="@Url.Action("Detail","Shop",new { q=Model.ListProduct[i].Alias})" title="@Model.ListProduct[i].ProductName">@Html.Raw(string.Format("{0}", Model.ListProduct[i].ProductName.Length > 35 ? Model.ListProduct[i].ProductName.Substring(0, 35) + "..." : Model.ListProduct[i].ProductName))</a>
+                                    <a id="idLinkName" class="product-name" href="@Url.Action("Detail","Shop",new { q= Model.ListProduct[i].Alias})" title="@Model.ListProduct[i].ProductName">@Html.Raw(string.Format("{0}", Model.ListProduct[i].ProductName.Length > 35 ? Model.ListProduct[i].ProductName.Substring(0, 35) + "..." : Model.ListProduct[i].ProductName))</a>
                                 </h5>
                                 <div class="product-desc">@Model.ListProduct[i].Short_Description</div>
                                 <div class="content_price">
