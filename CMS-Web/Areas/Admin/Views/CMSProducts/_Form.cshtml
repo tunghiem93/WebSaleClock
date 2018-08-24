@@ -190,7 +190,7 @@
         <!--IMAGE-->
         @*List Image*@
         <div class="form-group">
-            <label class="col-sm-3 control-label"></label>
+            <label class="col-sm-2 control-label"></label>
             <div class="col-md-6 col-sm-12">
                 <div class="form-group" style="background-color: lightgrey; border: 10px solid green; padding: 5px; margin: 5px; width: 100%; ">
                     <div class="col-md-10 col-sm-12">
@@ -246,9 +246,10 @@
     }
 
     function AddImageItem(elemnetFillData) {
+        debugger;
         var _OffSet = $('.ng-image-product').length;
         $.ajax({
-            url: '@Url.Action("AddImageItem", "Product")',
+            url: '@Url.Action("AddImageItem", "CMSProducts")',
             type: 'GET',
             data: {
                 OffSet: _OffSet
