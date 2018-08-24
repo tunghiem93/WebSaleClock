@@ -55,7 +55,7 @@ namespace CMS_Web.Controllers
                 else
                 {
                     q = q.Trim().Replace("-", " ");
-                    var data = _fac.GetList().Where(o => CommonHelper.RemoveUnicode(o.Title.Trim().ToLower()).Equals(q)).FirstOrDefault();
+                    var data = _fac.GetList().Where(o => CommonHelper.RemoveUnicode(o.Title.Trim().ToLower().Replace("-"," ")).Equals(q)).FirstOrDefault();
                     if (data != null)
                     {
                         if(!string.IsNullOrEmpty(data.ImageURL))
