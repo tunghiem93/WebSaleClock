@@ -39,12 +39,11 @@ namespace CMS_DTO.CMSProduct
         
         public string sStatus { get; set; }
 
-        public HttpPostedFileBase[] PictureUpload { get; set; }
-        public byte[] PictureByte { get; set; }
         public string ImageURL { get; set; }
-
-        public List<CMS_ImagesModels> ListImages { get; set; }
-
+        [DataType(DataType.Upload)]
+        public HttpPostedFileBase PictureUpload { get; set; }
+        public byte[] PictureByte { get; set; }
+        
         public int TypeSize { get; set; }
         public int TypeState { get; set; }
         public string Short_Description { get; set; }
@@ -52,12 +51,28 @@ namespace CMS_DTO.CMSProduct
         public string Vendor { get; set; }
         public string Alias { get; set; }
 
+        //Image
+        public List<string> ListImageUrl { get; set; }
+        public List<ImageProduct> ListImg { get; set; }
+        public string RawImageUrl { get; set; }
+
         public CMS_ProductsModels()
         {
             IsActive = true;
             ProductPrice = 0;
             ProductExtraPrice = 0;
-            ListImages = new List<CMS_ImagesModels>();
+            ListImageUrl = new List<string>();
+            ListImg = new List<ImageProduct>();
         }
+    }
+
+    public class ImageProduct
+    {
+        public int OffSet { get; set; }
+        public bool IsDelete { get; set; }
+        public string ImageURL { get; set; }
+        [DataType(DataType.Upload)]
+        public HttpPostedFileBase PictureUpload { get; set; }
+        public byte[] PictureByte { get; set; }
     }
 }

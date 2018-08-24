@@ -51,7 +51,36 @@ namespace CMS_Web.Areas.Admin.Controllers
 
         public CMS_ProductsModels GetDetail(string Id)
         {
-            return _factory.GetDetail(Id);
+            CMS_ProductsModels model = _factory.GetDetail(Id);
+            try
+            {
+                if (model != null)
+                {
+                    if (!string.IsNullOrEmpty(model.ImageURL))
+                        model.ImageURL = Commons.HostImage + model.ImageURL;
+                    if (model.ListImg != null && model.ListImg.Count > 0)
+                    {
+                        model.ListImg.ForEach(o => {
+                            if (!string.IsNullOrEmpty(o.ImageURL))
+                            {
+                                o.ImageURL = Commons.HostImage + "Products/" + o.ImageURL;
+                            }
+                            o.IsDelete = false;
+                        });
+                    }
+                    return model;
+                }
+                else
+                {
+                    model = new CMS_ProductsModels();
+                    return model;
+                }
+            }
+            catch (Exception ex)
+            {
+                NSLog.Logger.Error("Product_Detail: ", ex);
+                return null;
+            }
         }
 
         [HttpPost]
@@ -59,83 +88,66 @@ namespace CMS_Web.Areas.Admin.Controllers
         {
             try
             {
+                byte[] photoByte = null;
+                if (model.PictureUpload != null && model.PictureUpload.ContentLength > 0)
+                {
+                    Byte[] imgByte = new Byte[model.PictureUpload.ContentLength];
+                    model.PictureUpload.InputStream.Read(imgByte, 0, model.PictureUpload.ContentLength);
+                    model.PictureByte = imgByte;
+                    model.RawImageUrl = Guid.NewGuid() + Path.GetExtension(model.PictureUpload.FileName);
+                    model.PictureUpload = null;
+                    photoByte = imgByte;
+                }
                 if (!ModelState.IsValid)
                 {
                     Response.StatusCode = (int)HttpStatusCode.BadRequest;
                     return PartialView("_Create", model);
                 }
-                byte[] photoByte = null;
-                Dictionary<int, byte[]> lstImgByte = new Dictionary<int, byte[]>();
-                var data = new List<CMS_ImagesModels>();
-                if (model.PictureUpload.Length > 0 && model.PictureUpload.Any() && model.PictureUpload[0] != null)
+                if (!string.IsNullOrEmpty(model.RawImageUrl))
                 {
-                    foreach (HttpPostedFileBase File in model.PictureUpload)
+                    model.ListImageUrl.Add(model.RawImageUrl);
+                }
+                //========
+                Dictionary<int, byte[]> lstImgByte = new Dictionary<int, byte[]>();
+                var ListImage = model.ListImg.Where(x => !x.IsDelete).ToList();
+                foreach (var item in ListImage)
+                {
+                    if (item.PictureUpload != null && item.PictureUpload.ContentLength > 0)
                     {
-                        if (model.ListImages != null && model.ListImages.Any())
-                        {
-                            var _temp = model.ListImages.Where(x => x.ImageName.Equals(File.FileName) && !x.IsDeleted).FirstOrDefault();
-                            if (_temp != null)
-                            {
-                                if (File != null && File.ContentLength > 0)
-                                {
-                                    Byte[] imgByte = new Byte[File.ContentLength];
-                                    File.InputStream.Read(imgByte, 0, File.ContentLength);
-                                    _temp.PictureByte = imgByte;
-                                    _temp.TempImageURL = _temp.ImageURL;
-                                    _temp.ImageURL = Guid.NewGuid() + Path.GetExtension(File.FileName);
-                                    _temp.PictureUpload = null;
-                                    lstImgByte.Add(_temp.OffSet, imgByte);
-                                }
-                                data.Add(new CMS_ImagesModels
-                                {
-                                    ImageURL = _temp.ImageURL,
-                                    TempImageURL = _temp.TempImageURL,
-                                    PictureByte = _temp.PictureByte,
-                                    OffSet = _temp.OffSet
-                                });
-                            }
-                        }
+                        Byte[] imgByte = new Byte[item.PictureUpload.ContentLength];
+                        item.PictureUpload.InputStream.Read(imgByte, 0, item.PictureUpload.ContentLength);
+                        item.PictureByte = imgByte;
+                        item.ImageURL = Guid.NewGuid() + Path.GetExtension(item.PictureUpload.FileName);
+                        item.PictureUpload = null;
+                        lstImgByte.Add(item.OffSet, imgByte);
+                        model.ListImageUrl.Add(item.ImageURL);
                     }
                 }
 
-                if (model.ListImages != null && model.ListImages.Any())
-                {
-                    model.ListImages.ForEach(x =>
-                    {
-                        if (!string.IsNullOrEmpty(x.ImageURL) && x.PictureByte == null)
-                        {
-                            x.ImageURL = x.ImageURL.Replace(Commons._PublicImages +"Products/", "").Replace(Commons.Image480_480, "");
-                            data.Add(new CMS_ImagesModels
-                            {
-                                ImageURL = x.ImageURL,
-                                PictureByte = x.PictureByte,
-                                OffSet = x.OffSet,
-                            });
-                        }
-                    });
-                }
-
                 var msg = "";
-                model.ListImages = data;
                 var result = _factory.CreateOrUpdate(model, ref msg);
                 if (result)
                 {
-                    foreach (var item in data)
+                    if (!string.IsNullOrEmpty(model.RawImageUrl) && model.PictureByte != null)
+                    {
+                        var path = Server.MapPath("~/Uploads/Images/Product/" + model.RawImageUrl);
+                        MemoryStream ms = new MemoryStream(photoByte, 0, photoByte.Length);
+                        ms.Write(photoByte, 0, photoByte.Length);
+                        System.Drawing.Image imageTmp = System.Drawing.Image.FromStream(ms, true);
+
+                        ImageHelper.Me.SaveCroppedImage(imageTmp, path, model.RawImageUrl, ref photoByte, 400, Commons.WidthProduct, Commons.HeightProduct);
+                    }
+
+                    foreach (var item in ListImage)
                     {
                         if (!string.IsNullOrEmpty(item.ImageURL) && item.PictureByte != null)
                         {
-                            if (System.IO.File.Exists(Server.MapPath("~/Uploads/Products/" + item.TempImageURL)))
-                            {
-                                ImageHelper.Me.TryDeleteImageUpdated(Server.MapPath("~/Uploads/Products/" + item.TempImageURL));
-                            }
-
-                            var path = Server.MapPath("~/Uploads/Products/" + item.ImageURL);
+                            var path = Server.MapPath("~/Uploads/Images/Product/" + item.ImageURL);
                             MemoryStream ms = new MemoryStream(lstImgByte[item.OffSet], 0, lstImgByte[item.OffSet].Length);
                             ms.Write(lstImgByte[item.OffSet], 0, lstImgByte[item.OffSet].Length);
                             System.Drawing.Image imageTmp = System.Drawing.Image.FromStream(ms, true);
 
-                            ImageHelper.Me.SaveCroppedImage(imageTmp, path, item.ImageURL, ref photoByte,400,Commons.WidthProduct,Commons.HeightProduct);
-                            model.PictureByte = photoByte;
+                            ImageHelper.Me.SaveCroppedImage(imageTmp, path, item.ImageURL, ref photoByte, 400, Commons.WidthProduct, Commons.HeightProduct);
                         }
                     }
                     return RedirectToAction("Index");
@@ -156,18 +168,6 @@ namespace CMS_Web.Areas.Admin.Controllers
         public ActionResult Edit(string Id)
         {
             var model = GetDetail(Id);
-            model.ListImages = _factory.GetListImageOfProduct(Id);
-            var _OffSet = 0;
-            if (model.ListImages != null && model.ListImages.Any())
-            {
-                model.ListImages.ForEach(x =>
-                {
-                    x.OffSet = _OffSet;
-                    _OffSet = _OffSet + 1;
-                    x.ImageName = " ";
-                    x.ImageURL = Commons.HostImage + "Products/" + x.ImageURL;
-                });
-            }
             return PartialView("_Edit", model);
         }
 
@@ -176,82 +176,110 @@ namespace CMS_Web.Areas.Admin.Controllers
         {
             try
             {
+                List<string> ListNotChangeImg = new List<string>();
+                byte[] photoByte = null;
+
+                if (!string.IsNullOrEmpty(model.ImageURL))
+                {
+                    model.ImageURL = model.ImageURL.Replace(Commons._PublicImages, "").Replace(Commons.Image200_100, "");
+                    model.RawImageUrl = model.ImageURL;
+                }
+                if (model.PictureUpload != null && model.PictureUpload.ContentLength > 0)
+                {
+                    Byte[] imgByte = new Byte[model.PictureUpload.ContentLength];
+                    model.PictureUpload.InputStream.Read(imgByte, 0, model.PictureUpload.ContentLength);
+                    model.PictureByte = imgByte;
+                    model.RawImageUrl = Guid.NewGuid() + Path.GetExtension(model.PictureUpload.FileName);
+                    model.PictureUpload = null;
+                    photoByte = imgByte;
+                    if (!string.IsNullOrEmpty(model.ImageURL))
+                    {
+                        model.ImageURL = model.ImageURL.Replace(Commons._PublicImages, "").Replace(Commons.Image200_100, "");
+                        ListNotChangeImg.Add(model.ImageURL);
+                    }
+                }
                 if (!ModelState.IsValid)
                 {
                     Response.StatusCode = (int)HttpStatusCode.BadRequest;
                     return PartialView("_Edit", model);
                 }
-                byte[] photoByte = null;
-                Dictionary<int, byte[]> lstImgByte = new Dictionary<int, byte[]>();
-                var data = new List<CMS_ImagesModels>();
-                if (model.PictureUpload.Length > 0 && model.PictureUpload.Any() && model.PictureUpload[0] != null)
+
+                if (!string.IsNullOrEmpty(model.RawImageUrl))
                 {
-                    foreach (HttpPostedFileBase File in model.PictureUpload)
+                    model.ListImageUrl.Add(model.RawImageUrl);
+                }
+
+                //========
+                Dictionary<int, byte[]> lstImgByte = new Dictionary<int, byte[]>();
+                var ListImage = model.ListImg.Where(x => !x.IsDelete).ToList();
+                foreach (var item in ListImage)
+                {
+                    if (item.PictureUpload != null && item.PictureUpload.ContentLength > 0)
                     {
-                        if (model.ListImages != null && model.ListImages.Any())
+                        if (!string.IsNullOrEmpty(item.ImageURL))
                         {
-                            var _temp = model.ListImages.Where(x => x.ImageName.Equals(File.FileName) && !x.IsDeleted).FirstOrDefault();
-                            if (_temp != null)
-                            {
-                                if (File != null && File.ContentLength > 0)
-                                {
-                                    Byte[] imgByte = new Byte[File.ContentLength];
-                                    File.InputStream.Read(imgByte, 0, File.ContentLength);
-                                    _temp.PictureByte = imgByte;
-                                    _temp.TempImageURL = _temp.ImageURL;
-                                    _temp.ImageURL = Guid.NewGuid() + Path.GetExtension(File.FileName);
-                                    _temp.PictureUpload = null;
-                                    lstImgByte.Add(_temp.OffSet, imgByte);
-                                }
-                                data.Add(new CMS_ImagesModels
-                                {
-                                    ImageURL = _temp.ImageURL,
-                                    TempImageURL = _temp.TempImageURL,
-                                    PictureByte = _temp.PictureByte,
-                                    OffSet = _temp.OffSet
-                                });
-                            }
+                            item.ImageURL = item.ImageURL.Replace(Commons._PublicImages, "").Replace(Commons.Image200_100, "");
+                            ListNotChangeImg.Add(item.ImageURL);
+                        }
+
+                        Byte[] imgByte = new Byte[item.PictureUpload.ContentLength];
+                        item.PictureUpload.InputStream.Read(imgByte, 0, item.PictureUpload.ContentLength);
+                        item.PictureByte = imgByte;
+                        item.ImageURL = Guid.NewGuid() + Path.GetExtension(item.PictureUpload.FileName);
+                        item.PictureUpload = null;
+                        lstImgByte.Add(item.OffSet, imgByte);
+                        model.ListImageUrl.Add(item.ImageURL);
+                    }
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(item.ImageURL))
+                        {
+                            item.ImageURL = item.ImageURL.Replace(Commons._PublicImages, "").Replace(Commons.Image200_100, "");
+                            model.ListImageUrl.Add(item.ImageURL);
                         }
                     }
                 }
 
-                if (model.ListImages != null && model.ListImages.Any())
-                {
-                    model.ListImages.ForEach(x =>
-                    {
-                        if (!string.IsNullOrEmpty(x.ImageURL) && x.PictureByte == null)
-                        {
-                            x.ImageURL = x.ImageURL.Replace(Commons._PublicImages + "Products/", "").Replace(Commons.Image480_480, "");
-                            data.Add(new CMS_ImagesModels
-                            {
-                                ImageURL = x.ImageURL,
-                                PictureByte = x.PictureByte,
-                                OffSet = x.OffSet,
-                            });
-                        }
-                    });
-                }
                 var msg = "";
-                model.ListImages = data;
                 var result = _factory.CreateOrUpdate(model, ref msg);
                 if (result)
                 {
-                    foreach (var item in data)
+                    if (ListNotChangeImg != null && ListNotChangeImg.Any())
+                    {
+                        //Delete image on forder
+                        foreach (var item in ListNotChangeImg)
+                        {
+                            if (!item.Equals(Commons.Image200_100))
+                            {
+                                var filePath = Server.MapPath("~/Uploads/Images/Product/" + item);
+                                if (System.IO.File.Exists(filePath))
+                                {
+                                    System.IO.File.Delete(filePath);
+                                }
+                            }
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(model.RawImageUrl) && model.PictureByte != null)
+                    {
+                        var path = Server.MapPath("~/Uploads/Images/Product/" + model.RawImageUrl);
+                        MemoryStream ms = new MemoryStream(photoByte, 0, photoByte.Length);
+                        ms.Write(photoByte, 0, photoByte.Length);
+                        System.Drawing.Image imageTmp = System.Drawing.Image.FromStream(ms, true);
+
+                        ImageHelper.Me.SaveCroppedImage(imageTmp, path, model.RawImageUrl, ref photoByte, 400, Commons.WidthProduct, Commons.HeightProduct);
+                    }
+
+                    foreach (var item in ListImage)
                     {
                         if (!string.IsNullOrEmpty(item.ImageURL) && item.PictureByte != null)
                         {
-                            if (System.IO.File.Exists(Server.MapPath("~/Uploads/Products/" + item.TempImageURL)))
-                            {
-                                ImageHelper.Me.TryDeleteImageUpdated(Server.MapPath("~/Uploads/Products/" + item.TempImageURL));
-                            }
-
-                            var path = Server.MapPath("~/Uploads/Products/" + item.ImageURL);
+                            var path = Server.MapPath("~/Uploads/Images/Product/" + item.ImageURL);
                             MemoryStream ms = new MemoryStream(lstImgByte[item.OffSet], 0, lstImgByte[item.OffSet].Length);
                             ms.Write(lstImgByte[item.OffSet], 0, lstImgByte[item.OffSet].Length);
                             System.Drawing.Image imageTmp = System.Drawing.Image.FromStream(ms, true);
 
                             ImageHelper.Me.SaveCroppedImage(imageTmp, path, item.ImageURL, ref photoByte, 400, Commons.WidthProduct, Commons.HeightProduct);
-                            model.PictureByte = photoByte;
                         }
                     }
                     return RedirectToAction("Index");
@@ -271,16 +299,12 @@ namespace CMS_Web.Areas.Admin.Controllers
         public ActionResult View(string Id)
         {
             var model = GetDetail(Id);
-            model.ListImages = _factory.GetListImageOfProduct(Id);
             var _OffSet = 0;
-            if (model.ListImages != null && model.ListImages.Any())
+            if (model.ListImageUrl != null && model.ListImageUrl.Any())
             {
-                model.ListImages.ForEach(x =>
+                model.ListImageUrl.ForEach(x =>
                 {
-                    x.OffSet = _OffSet;
-                    _OffSet = _OffSet + 1;
-                    x.ImageName = " ";
-                    x.ImageURL = Commons.HostImage + "Products/" + x.ImageURL;
+                    x = Commons.HostImage + "Products/" + x;
                 });
             }
             return PartialView("_View", model);
@@ -332,62 +356,12 @@ namespace CMS_Web.Areas.Admin.Controllers
                 return PartialView("_Delete", model);
             }
         }
-
-        [HttpPost]
-        public PartialViewResult AddImageItem(int OffSet, int Length)
+        
+        public PartialViewResult AddImageItem(int OffSet)
         {
-
-            List<CMS_ImagesModels> model = new List<CMS_ImagesModels>();
-            var _OffSet = OffSet;
-            for (int i = 0; i < Length; i++)
-            {
-                model.Add(new CMS_ImagesModels
-                {
-                    OffSet = _OffSet,
-                    IsDeleted = false
-                });
-                _OffSet = _OffSet + 1;
-            }
-            return PartialView("_ListItem", model);
-        }
-
-        [HttpPost]
-        public ActionResult DeleteImage(string Id,string ProductId)
-        {
-            try
-            {
-                string msg = "";
-                var result = _factory.DeleteImage(Id,ref msg);
-                if (!result)
-                {
-                    Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                    return new HttpStatusCodeResult(400, "Have an error when you delete a Payment Method");
-                }
-                // delete image for folder
-                if (System.IO.File.Exists(Server.MapPath("~/Uploads/Products/" + msg)))
-                {
-                    ImageHelper.Me.TryDeleteImageUpdated(Server.MapPath("~/Uploads/Products/" + msg));
-                }
-                var model = new CMS_ProductsModels();
-                model.ListImages = _factory.GetListImageOfProduct(ProductId);
-                var _OffSet = 0;
-                if (model.ListImages != null && model.ListImages.Any())
-                {
-                    model.ListImages.ForEach(x =>
-                    {
-                        x.OffSet = _OffSet;
-                        _OffSet = _OffSet + 1;
-                        x.ImageName = " ";
-                        x.ImageURL = Commons.HostImage + "Products/" + x.ImageURL;
-                    });
-                }
-                return PartialView("_ListItem", model.ListImages);
-            }
-            catch (Exception ex)
-            {
-                Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                return new HttpStatusCodeResult(400, ex.Message);
-            }
-        }
+            ImageProduct model = new ImageProduct();
+            model.OffSet = OffSet;
+            return PartialView("_ImageItemProduct", model);
+        }        
     }
 }

@@ -46,17 +46,17 @@ namespace CMS_Shared.CMSProducts
                             };
                             cxt.CMS_Products.Add(e);
                             
-                            if(model.ListImages != null && model.ListImages.Any())
+                            if(model.ListImageUrl != null && model.ListImageUrl.Any())
                             {
                                 var _e = new List<CMS_Images>();
-                                model.ListImages.ForEach(x =>
+                                model.ListImageUrl.ForEach(x =>
                                 {
                                     _e.Add(new CMS_Images
                                     {
                                         Id = Guid.NewGuid().ToString(),
                                         CreatedBy = model.CreatedBy,
                                         CreatedDate = DateTime.Now,
-                                        ImageURL = x.ImageURL,
+                                        ImageURL = x,
                                         ProductId = _Id,
                                         UpdatedBy = model.UpdatedBy,
                                         UpdatedDate = DateTime.Now
@@ -86,20 +86,20 @@ namespace CMS_Shared.CMSProducts
                                 e.IsActive = model.IsActive;
                             }
 
-                            if (model.ListImages != null && model.ListImages.Any())
+                            if (model.ListImageUrl != null && model.ListImageUrl.Any())
                             {
                                 var _edel = cxt.CMS_Images.Where(x => x.ProductId.Equals(e.Id));
                                 cxt.CMS_Images.RemoveRange(_edel);
 
                                 var _e = new List<CMS_Images>();
-                                model.ListImages.ForEach(x =>
+                                model.ListImageUrl.ForEach(x =>
                                 {
                                     _e.Add(new CMS_Images
                                     {
                                         Id = Guid.NewGuid().ToString(),
                                         CreatedBy = model.CreatedBy,
                                         CreatedDate = DateTime.Now,
-                                        ImageURL = x.ImageURL,
+                                        ImageURL = x,
                                         ProductId = e.Id,
                                         UpdatedBy = model.UpdatedBy,
                                         UpdatedDate = DateTime.Now

@@ -1,0 +1,27 @@
+﻿@model CMS_DTO.CMSProduct.ImageProduct
+@using CMS_Shared
+
+<tr class="ng-image-product product-select-@Model.OffSet" data-offset="@Model.OffSet"
+    style="@string.Format("display:{0};", !Model.IsDelete ? "table-row" : "none")">
+    <td>
+        <img id="upload-preview-@Model.OffSet" src=@string.Format("{0}", string.IsNullOrEmpty(Model.ImageURL) ? Commons.Image480_480 : @Model.ImageURL) style="width: 35%; " />
+    </td>
+    <td style="line-height:95px;">
+        @Html.TextBox(string.Format("ListImg[{0}].PictureUpload", Model.OffSet), Model.PictureUpload, new
+   {
+       @type = "file",
+       @onchange = "PreviewImage(this,\"upload-preview-" + Model.OffSet + "\")",
+       @accept = "*.jpg"
+   })
+        @*<label class="label label-warning">Kích thước hình ảnh cần đưa lên máy chủ(400x600)</label>*@
+    </td>
+    <td style="line-height:95px;" class="text-center">
+        <a href="javascript:void(0)" class="" style="font-size:28px;" onclick="DeleteImage(this); return false;" title="Xóa hình ảnh">
+            <i class="fa fa-trash text-red"></i>
+        </a>
+        @Html.Hidden(string.Format("ListImg[{0}].OffSet", Model.OffSet), Model.OffSet, new { @id = "hidOffSet" })
+        @Html.Hidden(string.Format("ListImg[{0}].ImageURL", Model.OffSet), Model.ImageURL, new { @id = "hidImageURL" })
+        @Html.Hidden(string.Format("ListImg[{0}].IsDelete", Model.OffSet), Model.IsDelete, new { @class = "ImgProStatus" })
+    </td>
+</tr>
+
