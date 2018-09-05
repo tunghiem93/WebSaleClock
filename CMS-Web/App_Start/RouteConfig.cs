@@ -15,79 +15,72 @@ namespace CMS_Web
 
             routes.MapRoute(
             name: "Account",
-            url: "tai-khoan/{q}",
+            url: "tai-khoan",
             defaults: new
             {
                 controller = "Account",
                 action = "Index",
-                q = UrlParameter.Optional,
                 namespaces = new[] { "CMS_Web.Controllers" }
             });
 
             routes.MapRoute(
             name: "Location",
-            url: "vi-tri/{q}",
+            url: "vi-tri",
             defaults: new
             {
                 controller = "Location",
                 action = "Index",
-                q = UrlParameter.Optional,
                 namespaces = new[] { "CMS_Web.Controllers" }
             });
 
             routes.MapRoute(
             name: "LoginSignIn",
-            url: "dang-nhap/{q}",
+            url: "dang-nhap",
             defaults: new
             {
                 controller = "Login",
                 action = "SignIn",
-                q = UrlParameter.Optional,
                 namespaces = new[] { "CMS_Web.Controllers" }
             });
 
             routes.MapRoute(
             name: "LoginSignUp",
-            url: "dang-ky/{q}",
+            url: "dang-ky",
             defaults: new
             {
                 controller = "Login",
                 action = "SignUp",
-                q = UrlParameter.Optional,
                 namespaces = new[] { "CMS_Web.Controllers" }
             });
 
             routes.MapRoute(
             name: "Cart",
-            url: "gio-hang/",
+            url: "gio-hang",
             defaults: new
             {
                 controller = "Cart",
                 action = "Index",
-                q = UrlParameter.Optional,
                 namespaces = new[] { "CMS_Web.Controllers" }
             });
 
             routes.MapRoute(
             name: "CartCheckOut",
-            url: "thanh-toan/{q}",
+            url: "thanh-toan",
             defaults: new
             {
                 controller = "Cart",
                 action = "CheckOut",
-                q = UrlParameter.Optional,
                 namespaces = new[] { "CMS_Web.Controllers" }
             });
 
             /* route product */
             routes.MapRoute(
             name: "Product",
-            url: "san-pham/",
+            url: "san-pham",
             defaults: new
             {
                 controller = "Shop",
                 action = "Index",
-                q = UrlParameter.Optional,
                 namespaces = new[] { "CMS_Web.Controllers" }
             });
 
@@ -107,12 +100,11 @@ namespace CMS_Web
             /* Route collection */
             routes.MapRoute(
             name: "Collection",
-            url: "bo-suu-tap/",
+            url: "bo-suu-tap",
             defaults: new
             {
                 controller = "Collection",
                 action = "Index",
-                q = UrlParameter.Optional,
                 namespaces = new[] { "CMS_Web.Controllers" }
             });
             /* Routes collection detail */
@@ -129,12 +121,11 @@ namespace CMS_Web
 
             routes.MapRoute(
             name: "NewsHome",
-            url: "tin-tuc/",
+            url: "tin-tuc",
             defaults: new
             {
                 controller = "News",
                 action = "Index",
-                q = UrlParameter.Optional,
                 namespaces = new[] { "CMS_Web.Controllers" }
             });
 

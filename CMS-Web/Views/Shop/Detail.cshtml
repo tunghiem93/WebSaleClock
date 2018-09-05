@@ -106,17 +106,17 @@
                                                                         <span class="money">
                                                                             @if (item.ProductExtraPrice > 0 && item.ProductExtraPrice < item.ProductPrice)
                                                                             {
-                                                                                <span class="old-price product-price"><span class="money">@item.ProductPrice.ToString("#,00") VNĐ</span></span>
+                                                                                <span class="old-price product-price"><span class="money">@item.ProductPrice.ToString("#,00") VNĐ</span></span><br />
                                                                                 <span class="price product-price sale-price">
                                                                                     <span class="money">@item.ProductExtraPrice.ToString("#,00") VNĐ</span>
-                                                                                </span>
+                                                                                </span><br />
                                                                             }
                                                                             else
                                                                             {
                                                                                 <span class="price product-price ">
                                                                                     <span class="money">@item.ProductPrice.ToString("#,00") VNĐ</span>
                                                                                 </span>
-                                                                            }
+                                                                            }                                                                           
                                                                         </span>
                                                                     </span>
                                                                 </div>

@@ -43,6 +43,9 @@
             CKEDITOR.instances[instance].updateElement();
         }
         $.ajax({
+            beforeSend: function () {
+                $('.se-pre-con').show();
+            },
             url: $(this).attr('action'),
             type: "post",
             data: new FormData(this),
@@ -51,6 +54,9 @@
             success: function () {
                 CloseDetail();
                 LoadGrid();
+            },
+            complete: function () {
+                $('.se-pre-con').hide();
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 $(".detail-view").html(jqXHR.responseText);
