@@ -14,6 +14,23 @@ namespace CMS_Entity.Migrations
 
         protected override void Seed(CMS_Entity.CMS_Context context)
         {
+            context.CMS_Employees.AddOrUpdate(x => x.Employee_Email, new Entity.CMS_Employee
+            {
+                Employee_Email = "admin@gmail.com",
+                BirthDate = DateTime.Now,
+                CreatedDate = DateTime.Now,
+                Employee_IDCard = "1234567890",
+                Employee_Phone = "0975224063",
+                FirstName = "David",
+                Id = Guid.NewGuid().ToString(),
+                IsActive = true,
+                IsSupperAdmin = true,
+                Password = "5bodbeBGJXU=",
+                CreatedBy =Guid.NewGuid().ToString(),
+                LastName = "Tuan",
+                Employee_Address = "HCM",
+                UpdatedDate = DateTime.Now,
+            });
             //  This method will be called after migrating to the latest version.
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
